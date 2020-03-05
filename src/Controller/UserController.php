@@ -20,16 +20,7 @@ class UserController extends EasyAdminController
         }
     }
 
-    protected function updateUserEntity($user)
-    {
-        if (!$user->getCripted()){
-        $encodedPassword = $this->encodePassword($user, $user->getPassword());
-        $user->setPassword($encodedPassword);
-        $user->setCripted(true);    
-
-        parent::updateEntity($user);
-        }
-    }
+    
 
     private function encodePassword($user, $password)
     {

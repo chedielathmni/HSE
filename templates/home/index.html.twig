@@ -28,33 +28,33 @@
         <li>Your template at
             <code><a href="{{ '/home/chedi/Desktop/project/HSE/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code>
         </li>
+        <form action="{{path('alert')}}" method="POST">
+            <button class="btn btn-primary">Ping</button>
+        </form>
     </ul>
 </div>
-<div class="test"></div>
 {% endblock %}
 {% block javascripts %}
 <script>
-    // The subscriber subscribes to updates for the https://example.com/users/dunglas topic
-// and to any topic matching https://example.com/books/{id}
+
+
 const url = new URL('http://localhost:3000/.well-known/mercure');
 url.searchParams.append('topic', 'test');
-// The URL class is a convenient way to generate URLs such as https://example.com/.well-known/mercure?topic=https://example.com/books/{id}&topic=https://example.com/users/dunglas
 
 const eventSource = new EventSource(url);
 
-// The callback will be called every time an update is published
 eventSource.onmessage = e => {
     let alertDiv = document.createElement("div")
-    alertDiv.className += " alert alert-success"
+    alertDiv.className += " alert alert-danger"
     let content = document.createTextNode("Ping !")
 
     alertDiv.appendChild(content)
 
-    document.body.insertBefore(alertDiv, document.querySelector('.test'))
-    window.setTimeout(() => {
+    document.body.insertBefore(alertDiv, document.querySelector('.example-wrapper'))
+    /*window.setTimeout(() => {
         const alert = document.querySelector('.alert')
         alert.parentNode.removeChild(alert)
-    },2000)
+    },2000) */
 } // do something with the payload
 </script>
 {% endblock %}

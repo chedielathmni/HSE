@@ -35,7 +35,7 @@ easy_admin:
           - { property: 'userName', type: 'text'}
           - { property: 'firstName', type: 'text' }
           - { property: 'roles', type: 'choice', type_options: { multiple: true, expanded: true, mapped: true, choices: { 'User': 'ROLE_USER', 'Administrateur': 'ROLE_ADMIN', 'Moderateur Securité': 'ROLE_MOD_S', 'Moderateur Environnement': 'ROLE_MOD_E','Moderateur Hygiéne': 'ROLE_MOD_H','Gestionnaire de Stock': 'ROLE_GES_STOCK'} } }
-          - { property: 'department', type_options: { by_reference: false } }
+          - { property: 'department'}
       controller: App\Controller\UserController
     Product:
       label: "Products"
