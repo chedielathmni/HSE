@@ -30,14 +30,31 @@
         </li>
     </ul>
 </div>
+<div class="test"></div>
 {% endblock %}
 {% block javascripts %}
 <script>
-    const url = new URL('http://localhost:3000/.well-known/mercure');
-    url.searchParams.append('topic', 'test');
+    // The subscriber subscribes to updates for the https://example.com/users/dunglas topic
+// and to any topic matching https://example.com/books/{id}
+const url = new URL('http://localhost:3000/.well-known/mercure');
+url.searchParams.append('topic', 'test');
+// The URL class is a convenient way to generate URLs such as https://example.com/.well-known/mercure?topic=https://example.com/books/{id}&topic=https://example.com/users/dunglas
 
-    const eventSource = new EventSource(url);
+const eventSource = new EventSource(url);
 
-    eventSource.onmessage = e => console.log(e); // do something with the payload
+// The callback will be called every time an update is published
+eventSource.onmessage = e => {
+    let alertDiv = document.createElement("div")
+    alertDiv.className += " alert alert-success"
+    let content = document.createTextNode("Ping !")
+
+    alertDiv.appendChild(content)
+
+    document.body.insertBefore(alertDiv, document.querySelector('.test'))
+    window.setTimeout(() => {
+        const alert = document.querySelector('.alert')
+        alert.parentNode.removeChild(alert)
+    },2000)
+} // do something with the payload
 </script>
 {% endblock %}
