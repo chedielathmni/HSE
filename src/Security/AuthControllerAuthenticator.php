@@ -71,7 +71,7 @@ class AuthControllerAuthenticator extends AbstractFormLoginAuthenticator impleme
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Username could not be found.');
         }
-
+        
         return $user;
     }
 
@@ -94,7 +94,7 @@ class AuthControllerAuthenticator extends AbstractFormLoginAuthenticator impleme
             return new RedirectResponse($targetPath);
         }
 
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
+
         return new RedirectResponse($this->urlGenerator->generate('home'));
     }
 

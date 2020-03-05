@@ -24,7 +24,7 @@ class Department
     private $departmentName;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\User")
      */
     private $manager;
 
@@ -96,5 +96,10 @@ class Department
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->departmentName;
     }
 }

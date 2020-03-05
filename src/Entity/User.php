@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -35,21 +36,40 @@ class User implements UserInterface
      */
     private $password;
 
+
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $loginStatus;
 
+
+    /**
+     * @ORM\Column(type="string", length=180)
+     */
+    private $firstName;
+
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Profile", mappedBy="owner", cascade={"persist", "remove"})
      */
-    private $firstName;
+    private $profile;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Department", inversedBy="employees")
      */
     private $department;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $cripted;
+
+
+
+
+    public function __construct()
+    {
+        $this->cripted = false;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -135,12 +155,23 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getFirstName(): ?Profile
+    public function getFirstName(): ?string
     {
         return $this->firstName;
     }
 
-    public function setFirstName(?Profile $firstName): self
+    public function setFirstName(?string $firstName): self
+    {
+        $this->firstName = $firstName;
+        return $this;
+    }
+
+    public function getProfile(): ?Profile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?Profile $firstName): self
     {
         $this->firstName = $firstName;
 
@@ -164,4 +195,22 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->username;
+    }
+
+    public function getCripted(): ?bool
+    {
+        return $this->cripted;
+    }
+
+    public function setCripted(?bool $cripted): self
+    {
+        $this->cripted = $cripted;
+
+        return $this;
+    }
+
 }

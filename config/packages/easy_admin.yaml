@@ -1,0 +1,50 @@
+easy_admin:
+  site_name: "HSE Panel Admin"
+  design:
+    menu:
+      - { label: "Entities"}
+      - label: "Products"
+        children:
+          - {entity: Product, label: 'Products List', icon: 'th-list'}
+          - {entity: Product, label: 'Add New Product', icon: 'plus', params: {action: 'new'}}
+      - label: "Departements"
+        children:
+          - {entity: Department, label: 'Departments List', icon: 'th-list'}
+          - {entity: Department, label: 'Add New Department', icon: 'plus', params: {action: 'new'}}
+      - { label: "User Managment", permission: ROLE_ADMIN}
+      - label: "Users"
+        permission: ROLE_ADMIN
+        children:
+          - {entity: User, label: 'Users List', icon: 'th-list'}
+          - {entity: User, label: 'Add New User', icon: 'plus', params: {action: 'new'}}
+  entities:
+    User:
+      label: "Users"
+      class: App\Entity\User
+      list:
+        title: 'user'
+        item_permission: 'ROLE_ADMIN'
+        fields:
+          - userName
+          - firstName
+          - roles
+          - department
+          - { property: 'loginStatus', label: 'Online', type: 'boolean' }
+      form:
+        fields:
+          - { property: 'userName', type: 'text'}
+          - { property: 'firstName', type: 'text' }
+          - { property: 'roles', type: 'choice', type_options: { multiple: true, expanded: true, mapped: true, choices: { 'User': 'ROLE_USER', 'Administrateur': 'ROLE_ADMIN', 'Moderateur Securité': 'ROLE_MOD_S', 'Moderateur Environnement': 'ROLE_MOD_E','Moderateur Hygiéne': 'ROLE_MOD_H','Gestionnaire de Stock': 'ROLE_GES_STOCK'} } }
+          - { property: 'department', type_options: { by_reference: false } }
+      controller: App\Controller\UserController
+    Product:
+      label: "Products"
+      class: App\Entity\Product
+    Department:
+      label: "Departments"
+      class: App\Entity\Department
+      form:
+        fields:
+          - { property: 'departmentName', label: 'Nom du département', type: text }
+          - { property: 'manager', type_options: {by_reference: true}}
+          - { property: 'employees', type_options: { by_reference: false }}
