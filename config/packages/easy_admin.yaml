@@ -1,65 +1,102 @@
 easy_admin:
+
+  
   site_name: "HSE Panel Admin"
+
+
   edit:
     actions:
       - { name: 'show', css_class: "btn btn-outline-primary" }
+
+
   design:
     menu:
-      - { label: 'Homepage', url: 'http://localhost:8000', rel: 'index', icon: 'home' }
+      - { label: 'Acceuil', url: 'http://localhost:8000', rel: 'index', icon: 'home' }
       - { label: "Entities"}
-      - label: "Products"
+      - label: "Produits"
         children:
-          - {entity: Product, label: 'Products List', icon: 'th-list'}
-          - {entity: Product, label: 'Add New Product', icon: 'plus', params: {action: 'new'}}
+          - {entity: Product, label: 'Liste de Produits', icon: 'th-list'}
+          - {entity: Product, label: 'Ajouter Produit', icon: 'plus', params: {action: 'new'}}
       - label: "Departements"
         children:
-          - {entity: Department, label: 'Departments List', icon: 'th-list'}
-          - {entity: Department, label: 'Add New Department', icon: 'plus', params: {action: 'new'}}
+          - {entity: Department, label: 'Liste de Départements', icon: 'th-list'}
+          - {entity: Department, label: 'Ajouter Département', icon: 'plus', params: {action: 'new'}}
       - label: "Conseil de Prudence"
         children:
-          - {entity: ConseilPrudence, label: 'Liste de Conseil', icon: 'th-list'}
+          - {entity: ConseilPrudence, label: 'Liste de Conseils', icon: 'th-list'}
           - {entity: ConseilPrudence, label: 'Ajouter Conseil', icon: 'plus', params: {action: 'new'}}
       - label: "Mention de Danger"
         children:
-          - {entity: MentionDanger, label: 'Liste de Conseil', icon: 'th-list'}
-          - {entity: MentionDanger, label: 'Ajouter Conseil', icon: 'plus', params: {action: 'new'}}
-      - { label: "User Managment", permission: ROLE_ADMIN}
-      - label: "Users"
+          - {entity: MentionDanger, label: 'Liste Mention de Danger', icon: 'th-list'}
+          - {entity: MentionDanger, label: 'Ajouter Mention de Danger', icon: 'plus', params: {action: 'new'}}
+      - { label: "Gestion des Utilisateurs", permission: ROLE_ADMIN}
+      - label: "Utilisateur"
         permission: ROLE_ADMIN
         children:
-          - {entity: User, label: 'Users List', icon: 'th-list'}
-          - {entity: User, label: 'Add New User', icon: 'plus', params: {action: 'new'}}
+          - {entity: User, label: "Liste d'Utilisatuer", icon: 'th-list'}
+          - {entity: User, label: 'Ajouter Utilisateur', icon: 'plus', params: {action: 'new'}}
+
+
+
+
   entities:
+
+
+
+
     User:
-      label: "Users"
+
+      label: "Utilisateurs"
       class: App\Entity\User
+      controller: App\Controller\UserController
+
       list:
-        title: 'user'
+        title: 'Utilisateurs'
         item_permission: 'ROLE_ADMIN'
+        batch_actions: ['delete']
+        filters: ['username', 'department']
         fields:
-          - userName
-          - firstName
+          - { property: 'userName', label: "Nom d'utilisateur" }
+          - { property: 'fullName', label: "Nom et Prénom" }
           - roles
-          - department
-          - { property: 'loginStatus', label: 'Online', type: 'boolean' }
+          - { property: 'department', label: "Département" }
+          - { property: 'loginStatus', label: 'En ligne', type: 'boolean' }
+
       form:
         fields:
-          - { property: 'userName', type: 'text'}
-          - { property: 'firstName', type: 'text' }
+          - { property: 'userName', label: "Nom d'utilisateur", type: 'text'}
+          - { property: 'lastName', label: "Nom", type: 'text' }
+          - { property: 'firstName', label: "Prénom", type: 'text' }
+          - password
           - { property: 'roles', type: 'choice', type_options: { multiple: true, expanded: true, mapped: true, choices: { 'User': 'ROLE_USER', 'Administrateur': 'ROLE_ADMIN', 'Moderateur Securité': 'ROLE_MOD_S', 'Moderateur Environnement': 'ROLE_MOD_E','Moderateur Hygiéne': 'ROLE_MOD_H','Gestionnaire de Stock': 'ROLE_GES_STOCK'} } }
           - { property: 'department'}
-      controller: App\Controller\UserController
+
+
+
+
+      
     Product:
-      label: "Products"
+
+      label: "Produits"
       title: "Ajouter Produit"
       class: App\Entity\Product
+
+      list:
+        batch_actions: ['delete']
+        fields:
+          - { property: 'productCode', label: 'Code Produit', type: 'text'}
+          - { property: 'productName', label: 'Nom Produit', type: 'text'}
+          - { property: 'fournisseur'}
+          - { property: 'numeroUrgence', label: "Numéro d'urgene", type: 'tel'}
+
       form:
         fields:
           - { type: 'tab', label: 'Informations'}
-          - { type: 'group', columns: 12, label: 'Informations' }
+          - { type: 'group', columns: 6, label: 'Informations' }
           - productName
           - productCode
           - { property: 'numeroUrgence', label: "Numéro d'urgence", type: 'tel'}
+          - { type: 'group', columns: 6, label: 'Messages' }
           - { property: 'conseil', label: "Conseils", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
           - { property: 'mentionDangers', label: "Dangers", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
           - { type: 'tab', label: "Fournisseur"}
@@ -67,40 +104,71 @@ easy_admin:
           - { property: "fournisseur", label: " ", type: 'App\Form\FournisseurType', type_options: { by_reference: true}}
           - { type: 'group', columns: 6, label: ' ' }
           - { property: "adresseFournisseur", label: " ", type: 'App\Form\AdresseType', type_options: { by_reference: true}}
+
+
+
+
     Department:
-      label: "Departments"
+
+      label: "Departements"
       class: App\Entity\Department
+
+      list:
+        batch_actions: ['delete']
+        fields:
+          - { property: 'departmentName', label: 'Nom Groupe', type: 'text'}
+
       form:
         fields:
           - { property: 'departmentName', label: 'Nom du département', type: text }
           - { property: 'manager', type_options: {by_reference: true}}
           - { property: 'employees', type_options: { by_reference: false }}
+
+
+
+
     ConseilPrudence:
+
       label: 'Conseils de Prudence'
       class: App\Entity\ConseilPrudence
+
       list:
+        title: "Conseils de Prudence"
         fields:
           - code
-          - text
+          - { property: 'text', label: 'Message'} 
+        batch_actions: ['delete']
+
       form:
         fields:
           - code
           - text
+
       show:
         fields:
           - code
           - text
+
+
+
+
     MentionDanger:
+
       label: 'Mention de Danger'
       class: App\Entity\MentionDanger
+
       list:
+        title: "Mention de Danger"
         fields:
           - code
-          - text
+          - { property: 'text', label: 'Message'} 
+        batch_actions: ['delete']
+
       form:
         fields:
           - code
           - text
+
       show:
         fields:
           - code

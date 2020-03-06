@@ -63,6 +63,11 @@ class User implements UserInterface
      */
     private $cripted;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $lastName;
+
 
 
 
@@ -213,4 +218,20 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->firstName . ' ' . $this->lastName;
+    }
 }
