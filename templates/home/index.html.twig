@@ -49,7 +49,7 @@ eventSource.onmessage = e => {
     let content = document.createTextNode("Ping !")
 
     alertDiv.appendChild(content)
-
+    
     document.body.insertBefore(alertDiv, document.querySelector('.example-wrapper'))
     /*window.setTimeout(() => {
         const alert = document.querySelector('.alert')

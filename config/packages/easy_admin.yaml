@@ -11,6 +11,14 @@ easy_admin:
         children:
           - {entity: Department, label: 'Departments List', icon: 'th-list'}
           - {entity: Department, label: 'Add New Department', icon: 'plus', params: {action: 'new'}}
+      - label: "Conseil de Prudence"
+        children:
+          - {entity: ConseilPrudence, label: 'Liste de Conseil', icon: 'th-list'}
+          - {entity: ConseilPrudence, label: 'Ajouter Conseil', icon: 'plus', params: {action: 'new'}}
+      - label: "Mention de Danger"
+        children:
+          - {entity: MentionDanger, label: 'Liste de Conseil', icon: 'th-list'}
+          - {entity: MentionDanger, label: 'Ajouter Conseil', icon: 'plus', params: {action: 'new'}}
       - { label: "User Managment", permission: ROLE_ADMIN}
       - label: "Users"
         permission: ROLE_ADMIN
@@ -40,6 +48,11 @@ easy_admin:
     Product:
       label: "Products"
       class: App\Entity\Product
+      form:
+        fields:
+          - productName
+          - { property: 'conseil', label: "Conseils", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
+          - { property: 'mentionDangers', label: "Dangers", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
     Department:
       label: "Departments"
       class: App\Entity\Department
@@ -48,3 +61,25 @@ easy_admin:
           - { property: 'departmentName', label: 'Nom du département', type: text }
           - { property: 'manager', type_options: {by_reference: true}}
           - { property: 'employees', type_options: { by_reference: false }}
+    ConseilPrudence:
+      label: 'Conseils de Prudence'
+      class: App\Entity\ConseilPrudence
+      list:
+        fields:
+          - code
+          - text
+      form:
+        fields:
+          - code
+          - text
+    MentionDanger:
+      label: 'Mention de Danger'
+      class: App\Entity\MentionDanger
+      list:
+        fields:
+          - code
+          - text
+      form:
+        fields:
+          - code
+          - text
