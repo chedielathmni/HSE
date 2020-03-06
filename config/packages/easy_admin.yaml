@@ -1,7 +1,11 @@
 easy_admin:
   site_name: "HSE Panel Admin"
+  edit:
+    actions:
+      - { name: 'show', css_class: "btn btn-outline-primary" }
   design:
     menu:
+      - { label: 'Homepage', url: 'http://localhost:8000', rel: 'index', icon: 'home' }
       - { label: "Entities"}
       - label: "Products"
         children:
@@ -47,12 +51,22 @@ easy_admin:
       controller: App\Controller\UserController
     Product:
       label: "Products"
+      title: "Ajouter Produit"
       class: App\Entity\Product
       form:
         fields:
+          - { type: 'tab', label: 'Informations'}
+          - { type: 'group', columns: 12, label: 'Informations' }
           - productName
+          - productCode
+          - { property: 'numeroUrgence', label: "Numéro d'urgence", type: 'tel'}
           - { property: 'conseil', label: "Conseils", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
           - { property: 'mentionDangers', label: "Dangers", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
+          - { type: 'tab', label: "Fournisseur"}
+          - { type: 'group', columns: 6, label: ' ' }
+          - { property: "fournisseur", label: " ", type: 'App\Form\FournisseurType', type_options: { by_reference: true}}
+          - { type: 'group', columns: 6, label: ' ' }
+          - { property: "adresseFournisseur", label: " ", type: 'App\Form\AdresseType', type_options: { by_reference: true}}
     Department:
       label: "Departments"
       class: App\Entity\Department
@@ -72,6 +86,10 @@ easy_admin:
         fields:
           - code
           - text
+      show:
+        fields:
+          - code
+          - text
     MentionDanger:
       label: 'Mention de Danger'
       class: App\Entity\MentionDanger
@@ -80,6 +98,10 @@ easy_admin:
           - code
           - text
       form:
+        fields:
+          - code
+          - text
+      show:
         fields:
           - code
           - text

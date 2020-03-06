@@ -33,6 +33,26 @@ class Product
      */
     private $mentionDangers;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $productCode;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $numeroUrgence;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Fournisseur", inversedBy="products", cascade={"persist"})
+     */
+    private $fournisseur;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist", "remove"})
+     */
+    private $adresseFournisseur;
+
     public function __construct()
     {
         $this->conseil = new ArrayCollection();
@@ -117,30 +137,53 @@ class Product
 
         return $this;
     }
+
+    public function getProductCode(): ?string
+    {
+        return $this->productCode;
+    }
+
+    public function setProductCode(string $productCode): self
+    {
+        $this->productCode = $productCode;
+
+        return $this;
+    }
+
+    public function getNumeroUrgence(): ?string
+    {
+        return $this->numeroUrgence;
+    }
+
+    public function setNumeroUrgence(string $numeroUrgence): self
+    {
+        $this->numeroUrgence = $numeroUrgence;
+
+        return $this;
+    }
+
+    public function getFournisseur(): ?Fournisseur
+    {
+        return $this->fournisseur;
+    }
+
+    public function setFournisseur(?Fournisseur $fournisseur): self
+    {
+        $this->fournisseur = $fournisseur;
+
+        return $this;
+    }
+
+    public function getAdresseFournisseur(): ?Adresse
+    {
+        return $this->adresseFournisseur;
+    }
+
+    public function setAdresseFournisseur(?Adresse $adresseFournisseur): self
+    {
+        $this->adresseFournisseur = $adresseFournisseur;
+
+        return $this;
+    }
 }
 
-
-
-/*
-
-We have : 
-    - Product Name
-    - Conseil de Prudence
-    - Mention de danger
-
-We Need to add:
-
-    ---- Identification ----
-    
-    - Code Produit : string - required 
-    - Fournisseur : Entity - required ManyToOne
-    - Numero Urgence : string - required
-
-    ---- Dangers ----
-    - Pictogrammes : string 
-    - Identificateur Produit : string required
-    - Fiche de données de sécurité : fichier 
-
-
-
-/*
