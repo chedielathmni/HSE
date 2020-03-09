@@ -59,6 +59,13 @@ easy_admin:
           - {entity: MentionDanger, label: 'Liste Mention de Danger', icon: 'th-list'}
           - {entity: MentionDanger, label: 'Ajouter Mention de Danger', icon: 'plus', params: {action: 'new'}}
 
+          
+      - label: "Pictogrammes"
+        icon: "exclamation-triangle"
+        children:
+          - {entity: Pictogramme, label: 'Liste de Pictogrammes', icon: 'th-list'}
+          - {entity: Pictogramme, label: 'Ajouter Pictogramme', icon: 'plus', params: {action: 'new'}}
+
 
       - { label: "Gestion des Utilisateurs", permission: ROLE_ADMIN}
 
@@ -122,6 +129,18 @@ easy_admin:
           - { property: 'fournisseur'}
           - { property: 'numeroUrgence', label: "Numéro d'urgene", type: 'tel'}
 
+      show:
+        title: "%%entity_name%%"
+        fields:
+          - { property: 'productCode', label: 'Code Produit'}
+          - { property: 'productName', label: 'Nom Produit'}
+          - { property: 'fournisseur'}
+          - { property: 'adresseFournisseur', label: 'Adresse du Fournisseur'}
+          - { property: 'numeroUrgence', label: "Numéro d'urgene", type: 'tel'}
+          - { property: 'conseil', label: "Conseils de Prudence"}
+          - { property: 'mentionDangers', label: "Mentions de Danger"}
+          - { property: 'pictogramme', label: 'Pictrogrammes', template: 'admin/pictogrammes/show.html.twig'}
+
       form:
         fields:
           - { type: 'tab', label: 'Informations'}
@@ -133,6 +152,7 @@ easy_admin:
           - { property: 'conseil', label: "Conseils", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
           - { property: 'mentionDangers', label: "Dangers", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
           - { type: 'group', columns: 6, label: 'Pictogrammes' }
+          - { property: 'pictogramme', label: 'Pictogrammes', type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
           - { type: 'tab', label: "Fournisseur"}
           - { type: 'group', columns: 6, label: ' ' }
           - { property: "fournisseur", label: " ", type: 'App\Form\FournisseurType', type_options: { by_reference: true}}
@@ -207,6 +227,24 @@ easy_admin:
           - { property: 'canManageGroups', label: "Gestion de Groupes"}
       
 
+    Pictogramme:
+
+      label: 'Pictogrammes'
+      class: App\Entity\Pictogramme
+      disabled_actions: ['edit', 'delete', 'show', 'search']
+      list:
+        sort: ['code', 'ASC']
+        fields:
+          - { property: 'code', label: 'Code'}
+          - { property: 'image', type: 'image', base_path: '%app.path.pictograms_images%'}
+      show:
+        fields:
+          - { property: 'code', label: 'Code'}
+          - { property: 'image', type: 'image', base_path: '%app.path.pictograms_images%'}
+      form:
+        fields:
+          - { property: 'code', label: 'Code'}
+          - { property: 'imageFile', type: 'vich_image' }
 
 
 

@@ -1,0 +1,15 @@
+{% block body %}
+{% if item.pictogramme is defined %}
+<div class="container">
+    <div class="row">
+        {% for item in item.pictogramme %}
+        <div class="col-4">
+            <img  src="{{vich_uploader_asset(item, 'imageFile')}}" alt="" style="width: 150px; height: 150px;">
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endif %}
+{% endblock %}

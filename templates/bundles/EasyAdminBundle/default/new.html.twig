@@ -1,0 +1,19 @@
+{% extends "@!EasyAdmin/default/new.html.twig" %}
+
+
+{# {% block content_title %}
+    {% apply spaceless %}
+        {% set _default_title = 'new.page_title'|trans(_trans_parameters, 'EasyAdminBundle') %}
+        {{ _entity_config.new.title is defined ? _entity_config.new.title|trans(_trans_parameters) : _default_title }}
+    {% endapply %}
+{% endblock %}
+
+{% block content_footer_wrapper '' %}
+
+{% block main %}
+    {% block entity_form %}
+        {{ form(form) }}
+        {{ dump(form)}}
+    {% endblock entity_form %}
+{% endblock %} #}
+
