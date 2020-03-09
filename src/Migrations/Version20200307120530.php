@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200306103314 extends AbstractMigration
+final class Version20200307120530 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,8 +22,7 @@ final class Version20200306103314 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE mention_danger (id INT AUTO_INCREMENT NOT NULL, product_id INT DEFAULT NULL, code VARCHAR(255) NOT NULL, text VARCHAR(255) NOT NULL, INDEX IDX_CFDBFA514584665A (product_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE mention_danger ADD CONSTRAINT FK_CFDBFA514584665A FOREIGN KEY (product_id) REFERENCES product (id)');
+        $this->addSql('ALTER TABLE user_group ADD can_manage_users TINYINT(1) NOT NULL, ADD can_manage_products TINYINT(1) NOT NULL, ADD can_manage_groups TINYINT(1) NOT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -31,6 +30,6 @@ final class Version20200306103314 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP TABLE mention_danger');
+        $this->addSql('ALTER TABLE user_group DROP can_manage_users, DROP can_manage_products, DROP can_manage_groups');
     }
 }

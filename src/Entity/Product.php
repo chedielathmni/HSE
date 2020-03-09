@@ -53,10 +53,16 @@ class Product
      */
     private $adresseFournisseur;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Pictogramme")
+     */
+    private $pictogramme;
+
     public function __construct()
     {
         $this->conseil = new ArrayCollection();
         $this->mentionDangers = new ArrayCollection();
+        $this->pictogramme = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -182,6 +188,32 @@ class Product
     public function setAdresseFournisseur(?Adresse $adresseFournisseur): self
     {
         $this->adresseFournisseur = $adresseFournisseur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Pictogramme[]
+     */
+    public function getPictogramme(): Collection
+    {
+        return $this->pictogramme;
+    }
+
+    public function addPictogramme(Pictogramme $pictogramme): self
+    {
+        if (!$this->pictogramme->contains($pictogramme)) {
+            $this->pictogramme[] = $pictogramme;
+        }
+
+        return $this;
+    }
+
+    public function removePictogramme(Pictogramme $pictogramme): self
+    {
+        if ($this->pictogramme->contains($pictogramme)) {
+            $this->pictogramme->removeElement($pictogramme);
+        }
 
         return $this;
     }

@@ -8,29 +8,63 @@ easy_admin:
     actions:
       - { name: 'show', css_class: "btn btn-outline-primary" }
 
+  list:
+    actions:
+      - { name: 'new', label: "Ajouter %%entity_label%%" }
+      - { name: 'show', icon: 'search' , label: ''}
+      - { name: 'edit', label: "Modifier" }
+      - { name: 'delete', label: "Supprimer" }
+
+
 
   design:
     menu:
       - { label: 'Acceuil', url: 'http://localhost:8000', rel: 'index', icon: 'home' }
       - { label: "Entities"}
       - label: "Produits"
+        icon: "flask"
         children:
           - {entity: Product, label: 'Liste de Produits', icon: 'th-list'}
           - {entity: Product, label: 'Ajouter Produit', icon: 'plus', params: {action: 'new'}}
+
+
+
       - label: "Departements"
         children:
           - {entity: Department, label: 'Liste de Départements', icon: 'th-list'}
           - {entity: Department, label: 'Ajouter Département', icon: 'plus', params: {action: 'new'}}
+
+
+
+      - label: "Groupes"
+        icon: 'users'
+        children:
+          - {entity: Group, label: 'Liste de Groupes', icon: 'th-list'}
+          - {entity: Group, label: 'Ajouter Groupe', icon: 'plus', params: {action: 'new'}}
+
+
+
+
+
       - label: "Conseil de Prudence"
+        icon: "exclamation-circle"
         children:
           - {entity: ConseilPrudence, label: 'Liste de Conseils', icon: 'th-list'}
           - {entity: ConseilPrudence, label: 'Ajouter Conseil', icon: 'plus', params: {action: 'new'}}
+
+          
       - label: "Mention de Danger"
+        icon: "exclamation-triangle"
         children:
           - {entity: MentionDanger, label: 'Liste Mention de Danger', icon: 'th-list'}
           - {entity: MentionDanger, label: 'Ajouter Mention de Danger', icon: 'plus', params: {action: 'new'}}
+
+
       - { label: "Gestion des Utilisateurs", permission: ROLE_ADMIN}
+
+
       - label: "Utilisateur"
+        icon: "user"
         permission: ROLE_ADMIN
         children:
           - {entity: User, label: "Liste d'Utilisatuer", icon: 'th-list'}
@@ -40,8 +74,6 @@ easy_admin:
 
 
   entities:
-
-
 
 
     User:
@@ -83,6 +115,7 @@ easy_admin:
 
       list:
         batch_actions: ['delete']
+        sort: ['productCode', 'ASC']
         fields:
           - { property: 'productCode', label: 'Code Produit', type: 'text'}
           - { property: 'productName', label: 'Nom Produit', type: 'text'}
@@ -92,13 +125,14 @@ easy_admin:
       form:
         fields:
           - { type: 'tab', label: 'Informations'}
-          - { type: 'group', columns: 6, label: 'Informations' }
-          - productName
-          - productCode
+          - { property: 'productName', label: 'Nom Produit'}
+          - { property: 'productCode', label: 'Code Produit'}
           - { property: 'numeroUrgence', label: "Numéro d'urgence", type: 'tel'}
+          - { type: 'tab' ,label: 'Securité' }
           - { type: 'group', columns: 6, label: 'Messages' }
           - { property: 'conseil', label: "Conseils", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
           - { property: 'mentionDangers', label: "Dangers", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
+          - { type: 'group', columns: 6, label: 'Pictogrammes' }
           - { type: 'tab', label: "Fournisseur"}
           - { type: 'group', columns: 6, label: ' ' }
           - { property: "fournisseur", label: " ", type: 'App\Form\FournisseurType', type_options: { by_reference: true}}
@@ -116,13 +150,14 @@ easy_admin:
       list:
         batch_actions: ['delete']
         fields:
-          - { property: 'departmentName', label: 'Nom Groupe', type: 'text'}
+          - { property: 'departmentName', label: 'Nom Departement', type: 'text'}
 
       form:
         fields:
           - { property: 'departmentName', label: 'Nom du département', type: text }
           - { property: 'manager', type_options: {by_reference: true}}
           - { property: 'employees', type_options: { by_reference: false }}
+
 
 
 
@@ -134,6 +169,7 @@ easy_admin:
 
       list:
         title: "Conseils de Prudence"
+        sort: ['code', 'ASC']
         fields:
           - code
           - { property: 'text', label: 'Message'} 
@@ -148,6 +184,28 @@ easy_admin:
         fields:
           - code
           - text
+
+
+    Group:
+
+      label: 'Groupes'
+      class: App\Entity\UserGroup
+      list:
+        title: "Gestion de Groupe d'Utilisateur"
+        fields:
+          - { property: 'groupName', label: "Nom du Groupe"}
+          - { property: 'canManageUsers', label: "Gestion d'Utilisateur"}
+          - { property: 'canManageProducts', label: "Gestion de Produits"}
+          - { property: 'canManageGroups', label: "Gestion de Groupes"}
+      
+      form:
+        title: "Gestion de Groupe d'Utilisateur"
+        fields:
+          - { property: 'groupName', label: "Nom du Groupe"}
+          - { property: 'canManageUsers', label: "Gestion d'Utilisateur"}
+          - { property: 'canManageProducts', label: "Gestion de Produits"}
+          - { property: 'canManageGroups', label: "Gestion de Groupes"}
+      
 
 
 
@@ -159,6 +217,7 @@ easy_admin:
 
       list:
         title: "Mention de Danger"
+        sort: ['code', 'ASC']
         fields:
           - code
           - { property: 'text', label: 'Message'} 
@@ -173,3 +232,5 @@ easy_admin:
         fields:
           - code
           - text
+
+
