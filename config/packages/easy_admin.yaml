@@ -19,7 +19,11 @@ easy_admin:
 
   design:
     menu:
+
+
       - { label: 'Acceuil', url: 'http://localhost:8000', rel: 'index', icon: 'home' }
+
+
       - { label: "Entities"}
       - label: "Produits"
         icon: "flask"
@@ -29,20 +33,11 @@ easy_admin:
 
 
 
-      - label: "Departements"
-        children:
-          - {entity: Department, label: 'Liste de Départements', icon: 'th-list'}
-          - {entity: Department, label: 'Ajouter Département', icon: 'plus', params: {action: 'new'}}
-
-
-
       - label: "Groupes"
         icon: 'users'
         children:
-          - {entity: Group, label: 'Liste de Groupes', icon: 'th-list'}
-          - {entity: Group, label: 'Ajouter Groupe', icon: 'plus', params: {action: 'new'}}
-
-
+          - {entity: Department, label: 'Liste des Groupes', icon: 'th-list'}
+          - {entity: Department, label: 'Ajouter Groupe', icon: 'plus', params: {action: 'new'}}
 
 
 
@@ -61,11 +56,15 @@ easy_admin:
 
           
       - label: "Pictogrammes"
-        icon: "exclamation-triangle"
+        icon: "radiation"
         children:
           - {entity: Pictogramme, label: 'Liste de Pictogrammes', icon: 'th-list'}
           - {entity: Pictogramme, label: 'Ajouter Pictogramme', icon: 'plus', params: {action: 'new'}}
 
+      - label: "Rapport"
+        children:
+          - {entity: Report, label: 'Liste des Rapports', icon: 'th-list'}
+          - {entity: Report, label: 'Ajouter Rapport', icon: 'plus', params: {action: 'new'}}
 
       - { label: "Gestion des Utilisateurs", permission: ROLE_ADMIN}
 
@@ -100,16 +99,32 @@ easy_admin:
           - roles
           - { property: 'department', label: "Département" }
           - { property: 'loginStatus', label: 'En ligne', type: 'boolean' }
+      
+
+      edit:
+        fields: ['-password']
+      show:
+        fields:
+          - { property: 'userName', label: "Nom d'utilisateur", type: 'text'}
+          - { property: 'fullName', label: "Nom et Prénom" }
+          - { property: 'department', label: "Département" }
+          - { property: 'roles', label: "Roles", template: 'admin/roles/show.html.twig' }
+          - adresse
+          
+
 
       form:
         fields:
+          - { type: 'tab', label: 'Informations de base', icon: 'clipboard'}
           - { property: 'userName', label: "Nom d'utilisateur", type: 'text'}
           - { property: 'lastName', label: "Nom", type: 'text' }
           - { property: 'firstName', label: "Prénom", type: 'text' }
           - password
           - { property: 'roles', type: 'choice', type_options: { multiple: true, expanded: true, mapped: true, choices: { 'User': 'ROLE_USER', 'Administrateur': 'ROLE_ADMIN', 'Moderateur Securité': 'ROLE_MOD_S', 'Moderateur Environnement': 'ROLE_MOD_E','Moderateur Hygiéne': 'ROLE_MOD_H','Gestionnaire de Stock': 'ROLE_GES_STOCK'} } }
-          - { property: 'department'}
-
+          - { property: 'department', label: 'group'}
+          - { type: 'tab', label: 'Coordonnées', icon: 'phone'}
+          - { type: 'group', column: 6}
+          - { property: "adresse", label: " ", type: 'App\Form\AdresseType', type_options: { by_reference: true}}
 
 
 
@@ -143,17 +158,17 @@ easy_admin:
 
       form:
         fields:
-          - { type: 'tab', label: 'Informations'}
+          - { type: 'tab', label: 'Informations de base', icon: 'clipboard'}
           - { property: 'productName', label: 'Nom Produit'}
           - { property: 'productCode', label: 'Code Produit'}
           - { property: 'numeroUrgence', label: "Numéro d'urgence", type: 'tel'}
-          - { type: 'tab' ,label: 'Securité' }
+          - { type: 'tab' ,label: 'Securité', icon: 'lock'}
           - { type: 'group', columns: 6, label: 'Messages' }
           - { property: 'conseil', label: "Conseils", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
           - { property: 'mentionDangers', label: "Dangers", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
           - { type: 'group', columns: 6, label: 'Pictogrammes' }
           - { property: 'pictogramme', label: 'Pictogrammes', type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
-          - { type: 'tab', label: "Fournisseur"}
+          - { type: 'tab', label: "Fournisseur", icon: 'truck'}
           - { type: 'group', columns: 6, label: ' ' }
           - { property: "fournisseur", label: " ", type: 'App\Form\FournisseurType', type_options: { by_reference: true}}
           - { type: 'group', columns: 6, label: ' ' }
@@ -171,12 +186,28 @@ easy_admin:
         batch_actions: ['delete']
         fields:
           - { property: 'departmentName', label: 'Nom Departement', type: 'text'}
+          - { property: 'canManageUsers', label: "Gestion d'Utilisateur"}
+          - { property: 'canManageProducts', label: "Gestion de Produits"}
+          - { property: 'canManageGroups', label: "Gestion de Groupes"}
+          - { property: 'canManageStock', label: "Gestion de Stock"}
+        
 
       form:
         fields:
+          - { type: 'tab', label: 'Permissions'}
           - { property: 'departmentName', label: 'Nom du département', type: text }
           - { property: 'manager', type_options: {by_reference: true}}
           - { property: 'employees', type_options: { by_reference: false }}
+          - { property: 'canManageUsers', label: "Gestion d'Utilisateur"}
+          - { property: 'canManageProducts', label: "Gestion de Produits"}
+          - { property: 'canManageGroups', label: "Gestion de Groupes"}
+          - { property: 'canManageStock', label: "Gestion de Stock"}
+          - { type: 'tab', label: 'Options Avancées'}
+          - { type: 'group', columns: 6,  label: 'Users'}
+          - { type: 'group', columns: 6,  label: 'Products'}
+          - { type: 'group', columns: 6,  label: 'Groups'}
+          - { type: 'group', columns: 6,  label: 'Stock'}
+          
 
 
 
@@ -205,26 +236,6 @@ easy_admin:
           - code
           - text
 
-
-    Group:
-
-      label: 'Groupes'
-      class: App\Entity\UserGroup
-      list:
-        title: "Gestion de Groupe d'Utilisateur"
-        fields:
-          - { property: 'groupName', label: "Nom du Groupe"}
-          - { property: 'canManageUsers', label: "Gestion d'Utilisateur"}
-          - { property: 'canManageProducts', label: "Gestion de Produits"}
-          - { property: 'canManageGroups', label: "Gestion de Groupes"}
-      
-      form:
-        title: "Gestion de Groupe d'Utilisateur"
-        fields:
-          - { property: 'groupName', label: "Nom du Groupe"}
-          - { property: 'canManageUsers', label: "Gestion d'Utilisateur"}
-          - { property: 'canManageProducts', label: "Gestion de Produits"}
-          - { property: 'canManageGroups', label: "Gestion de Groupes"}
       
 
     Pictogramme:
@@ -272,3 +283,25 @@ easy_admin:
           - text
 
 
+    Report:
+
+      label: 'Rapports'
+      class: App\Entity\Report
+
+
+      list:
+        fields:
+          - { property: 'title', label: 'Titre'}
+          - { property: 'createdAt', label: 'date de Création'}
+
+
+      form:
+        fields:
+          - { property: 'title', label: 'Titre'}
+          - { property: 'content', label: ' ', type: "text_editor"}
+
+      show:
+        fields:
+          - { property: 'title', label: 'Titre'}
+          - { property: 'createdAt', label: 'date de Création'}
+          - { property: 'content', label: ' ', type: "raw"}

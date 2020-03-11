@@ -58,6 +58,7 @@ class User implements UserInterface
      */
     private $department;
 
+
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
@@ -68,6 +69,12 @@ class User implements UserInterface
      */
     private $lastName;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist", "remove"})
+     */
+    private $adresse;
+
+
 
 
 
@@ -75,6 +82,8 @@ class User implements UserInterface
     {
         $this->cripted = false;
     }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -233,5 +242,17 @@ class User implements UserInterface
     public function getFullName(): ?string
     {
         return $this->firstName . ' ' . $this->lastName;
+    }
+
+    public function getAdresse(): ?Adresse
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?Adresse $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
     }
 }

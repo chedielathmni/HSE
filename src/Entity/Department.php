@@ -33,6 +33,27 @@ class Department
      */
     private $employees;
 
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $canManageUsers;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $canManageProducts;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $canManageGroups;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $canManageStock;
+
     public function __construct()
     {
         $this->employees = new ArrayCollection();
@@ -98,6 +119,56 @@ class Department
         return $this;
     }
 
+
+    public function getCanManageUsers(): ?bool
+    {
+        return $this->canManageUsers;
+    }
+
+    public function setCanManageUsers(bool $canManageUsers): self
+    {
+        $this->canManageUsers = $canManageUsers;
+
+        return $this;
+    }
+
+    public function getCanManageProducts(): ?bool
+    {
+        return $this->canManageProducts;
+    }
+
+    public function setCanManageProducts(bool $canManageProducts): self
+    {
+        $this->canManageProducts = $canManageProducts;
+
+        return $this;
+    }
+
+    public function getCanManageGroups(): ?bool
+    {
+        return $this->canManageGroups;
+    }
+
+    public function setCanManageGroups(bool $canManageGroups): self
+    {
+        $this->canManageGroups = $canManageGroups;
+
+        return $this;
+    }
+
+    public function getCanManageStock(): ?bool
+    {
+        return $this->canManageStock;
+    }
+
+    public function setCanManageStock(bool $canManageStock): self
+    {
+        $this->canManageStock = $canManageStock;
+
+        return $this;
+    }
+
+    
     public function __toString()
     {
         return $this->departmentName;

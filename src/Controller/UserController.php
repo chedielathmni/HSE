@@ -9,8 +9,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 
 class UserController extends EasyAdminController
 {
-    protected function persistUserEntity($user)
-    {   
+    protected function  persistUserEntity($user)
+    {  
         if (!$user->getCripted()){
         $encodedPassword = $this->encodePassword($user, $user->getPassword());
         $user->setPassword($encodedPassword);
