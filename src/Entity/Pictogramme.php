@@ -38,6 +38,11 @@ class Pictogramme
      */
     private $imageFile;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $text;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,5 +91,17 @@ class Pictogramme
     public function __toString()
     {
         return $this->code;
+    }
+
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    public function setText(?string $text): self
+    {
+        $this->text = $text;
+
+        return $this;
     }
 }

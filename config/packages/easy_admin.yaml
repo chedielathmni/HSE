@@ -22,6 +22,7 @@ easy_admin:
 
 
       - { label: 'Acceuil', url: 'http://localhost:8000', rel: 'index', icon: 'home' }
+      - { label: 'Dashboard', url: 'http://localhost:8000', rel: 'index', icon: 'shart' }
 
 
       - { label: "Entities"}
@@ -242,19 +243,22 @@ easy_admin:
 
       label: 'Pictogrammes'
       class: App\Entity\Pictogramme
-      disabled_actions: ['edit', 'delete', 'show', 'search']
+      disabled_actions: ['delete', 'show', 'search']
       list:
         sort: ['code', 'ASC']
         fields:
           - { property: 'code', label: 'Code'}
+          - { property: 'text', label: 'Message'}
           - { property: 'image', type: 'image', base_path: '%app.path.pictograms_images%'}
       show:
         fields:
           - { property: 'code', label: 'Code'}
+          - { property: 'text', label: 'Message'}
           - { property: 'image', type: 'image', base_path: '%app.path.pictograms_images%'}
       form:
         fields:
           - { property: 'code', label: 'Code'}
+          - { property: 'text', label: 'Message'}
           - { property: 'imageFile', type: 'vich_image' }
 
 
