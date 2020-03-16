@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     app.path.pictograms_images: /uploads/images/pictogramms
+    app.path.protection_images: /uploads/images/protection
 
 services:
     # default configuration for services in *this* file

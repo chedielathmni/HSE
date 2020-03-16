@@ -5,3 +5,7 @@ vich_uploader:
       pictograms_images:
         uri_prefix: '%app.path.pictograms_images%'
         upload_destination: '%kernel.project_dir%/public%app.path.pictograms_images%'
+
+      protection_images:
+        uri_prefix: '%app.path.protection_images%'
+        upload_destination: '%kernel.project_dir%/public%app.path.protection_images%'

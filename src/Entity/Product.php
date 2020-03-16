@@ -63,11 +63,17 @@ class Product
      */
     private $premiersSecours;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Protection")
+     */
+    private $protection;
+
     public function __construct()
     {
         $this->conseil = new ArrayCollection();
         $this->mentionDangers = new ArrayCollection();
         $this->pictogramme = new ArrayCollection();
+        $this->protection = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -231,6 +237,32 @@ class Product
     public function setPremiersSecours(?PremiersSecours $premiersSecours): self
     {
         $this->premiersSecours = $premiersSecours;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Protection[]
+     */
+    public function getProtection(): Collection
+    {
+        return $this->protection;
+    }
+
+    public function addProtection(Protection $protection): self
+    {
+        if (!$this->protection->contains($protection)) {
+            $this->protection[] = $protection;
+        }
+
+        return $this;
+    }
+
+    public function removeProtection(Protection $protection): self
+    {
+        if ($this->protection->contains($protection)) {
+            $this->protection->removeElement($protection);
+        }
 
         return $this;
     }

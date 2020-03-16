@@ -1,0 +1,22 @@
+{% block body %}
+{% if item.protection is defined %}
+<div class="container mt-5">
+    <div class="row">
+        {% for item in item.protection %}
+        <div class="col-4">
+            <img  src="{{vich_uploader_asset(item, 'imageFile')}}" alt="" style="width: 150px; height: 150px;">
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <ul class="mt-5">
+            {% for item in item.protection %}
+            <li>{{item.name}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+{% endif %}
+{% endblock %}
