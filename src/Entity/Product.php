@@ -58,6 +58,11 @@ class Product
      */
     private $pictogramme;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\PremiersSecours", cascade={"persist", "remove"})
+     */
+    private $premiersSecours;
+
     public function __construct()
     {
         $this->conseil = new ArrayCollection();
@@ -214,6 +219,18 @@ class Product
         if ($this->pictogramme->contains($pictogramme)) {
             $this->pictogramme->removeElement($pictogramme);
         }
+
+        return $this;
+    }
+
+    public function getPremiersSecours(): ?PremiersSecours
+    {
+        return $this->premiersSecours;
+    }
+
+    public function setPremiersSecours(?PremiersSecours $premiersSecours): self
+    {
+        $this->premiersSecours = $premiersSecours;
 
         return $this;
     }

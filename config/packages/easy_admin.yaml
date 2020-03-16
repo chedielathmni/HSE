@@ -156,6 +156,7 @@ easy_admin:
           - { property: 'conseil', label: "Conseils de Prudence"}
           - { property: 'mentionDangers', label: "Mentions de Danger"}
           - { property: 'pictogramme', label: 'Pictrogrammes', template: 'admin/pictogrammes/show.html.twig'}
+          - { property: 'premiersSecours', label: ' ', template: 'admin/premiers secours/show.html.twig'}
 
       form:
         fields:
@@ -169,6 +170,9 @@ easy_admin:
           - { property: 'mentionDangers', label: "Dangers", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
           - { type: 'group', columns: 6, label: 'Pictogrammes' }
           - { property: 'pictogramme', label: 'Pictogrammes', type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
+          - { type: 'tab', label: "Premiers Secours", icon: 'first-aid'}
+          - { type: 'group', label: ' ', css_class: 'w-100'}
+          - { property: 'premiersSecours', label: ' ', type: 'App\Form\PremiersSecoursType'}
           - { type: 'tab', label: "Fournisseur", icon: 'truck'}
           - { type: 'group', columns: 6, label: ' ' }
           - { property: "fournisseur", label: " ", type: 'App\Form\FournisseurType', type_options: { by_reference: true}}
