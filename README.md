@@ -1,8 +1,11 @@
 # HSE
 
 Start By cloning the project
+
 cd HSE
+
 composer install
+
 edit your ".env" file adding your mysql login and password
 
 
