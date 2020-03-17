@@ -157,6 +157,7 @@ easy_admin:
         fields:
           - { property: 'productCode', label: 'Code Produit'}
           - { property: 'productName', label: 'Nom Produit'}
+          - { property: 'fiche', template: 'admin/fiche/show.html.twig', base_path: '%app.path.fiches%'}
           - { property: 'fournisseur'}
           - { property: 'adresseFournisseur', label: 'Adresse du Fournisseur'}
           - { property: 'numeroUrgence', label: "Numéro d'urgene", type: 'tel'}
