@@ -150,6 +150,7 @@ easy_admin:
           - { property: 'productName', label: 'Nom Produit', type: 'text'}
           - { property: 'fournisseur'}
           - { property: 'numeroUrgence', label: "Numéro d'urgene", type: 'tel'}
+          - { property: 'fiche', typ: 'file', template: 'admin/fiche/show.html.twig', base_path: '%app.path.fiches%'}
 
       show:
         title: "%%entity_name%%"
@@ -171,6 +172,7 @@ easy_admin:
           - { property: 'productName', label: 'Nom Produit'}
           - { property: 'productCode', label: 'Code Produit'}
           - { property: 'numeroUrgence', label: "Numéro d'urgence", type: 'tel'}
+          - { property: 'ficheFile', type: 'vich_file'}
           - { type: 'tab' ,label: 'Securité', icon: 'lock'}
           - { type: 'group', columns: 6, label: 'Messages' }
           - { property: 'conseil', label: "Conseils", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}

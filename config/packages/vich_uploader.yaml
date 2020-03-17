@@ -9,3 +9,9 @@ vich_uploader:
       protection_images:
         uri_prefix: '%app.path.protection_images%'
         upload_destination: '%kernel.project_dir%/public%app.path.protection_images%'
+
+
+      fiches:
+        uri_prefix: '/uploads/files/fiches'
+        upload_destination: '%kernel.project_dir%/public/uploads/files/fiches'
+        namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

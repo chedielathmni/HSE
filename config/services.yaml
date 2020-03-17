@@ -6,6 +6,7 @@
 parameters:
     app.path.pictograms_images: /uploads/images/pictogramms
     app.path.protection_images: /uploads/images/protection
+    app.path.fiches: /uploads/files/fiches
 
 services:
     # default configuration for services in *this* file
