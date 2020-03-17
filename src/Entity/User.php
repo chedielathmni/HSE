@@ -74,6 +74,11 @@ class User implements UserInterface
      */
     private $adresse;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $grade;
+
 
 
 
@@ -252,6 +257,18 @@ class User implements UserInterface
     public function setAdresse(?Adresse $adresse): self
     {
         $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getGrade(): ?string
+    {
+        return $this->grade;
+    }
+
+    public function setGrade(?string $grade): self
+    {
+        $this->grade = $grade;
 
         return $this;
     }
