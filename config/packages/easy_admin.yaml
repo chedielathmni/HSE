@@ -200,6 +200,7 @@ easy_admin:
 
       label: "Departements"
       class: App\Entity\Department
+      controller: App\Controller\GroupController
 
       list:
         batch_actions: ['delete']
