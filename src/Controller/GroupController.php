@@ -17,13 +17,14 @@ class GroupController extends EasyAdminController
     
     protected function updateDepartmentEntity($entity) {
 
+        $permissions = ['canManageUsers', 'canManageProducts', 'canManageGroups', 'canManageStock'];
         $members = $entity->getEmployees();
         $request = $this->requestStack->getCurrentRequest();
 
         $change = $request->query->get('property');
         $value = $request->query->get('newValue');
 
-        if ( in_array($change,['canManageUsers', 'canManageProducts', 'canManageGroups', 'canManageStock'])) {
+        if (in_array($change,$permissions)) {
 
             $role = $this->getRole($change);
 
@@ -31,7 +32,7 @@ class GroupController extends EasyAdminController
             if ($value == 'true') {
                 $member->setRoles(array_merge($member->getRoles(),[$role]));
             }
-                if ($value == 'false') {
+            else {
                 $member->setRoles(array_diff($member->getRoles(),[$role]));
             }
         }

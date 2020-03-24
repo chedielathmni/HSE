@@ -119,6 +119,12 @@ class Department
         return $this;
     }
 
+    public function deleteAllEmployees(): self
+    {
+        $this->employees = null;
+        return $this;
+    }
+
 
     public function getCanManageUsers(): ?bool
     {
@@ -172,5 +178,11 @@ class Department
     public function __toString()
     {
         return $this->departmentName;
+    }
+
+    public function removeAssociations() {
+        foreach($this->getEmployees() as $employee) {
+            $this->removeEmployee($employee);
+        }
     }
 }

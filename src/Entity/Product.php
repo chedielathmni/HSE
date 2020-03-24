@@ -339,5 +339,15 @@ class Product
 
         return $this;
     }
+
+    public function removeAssociations():self
+    {
+        foreach($this->getConseil() as $c) $this->removeConseil($c);
+        foreach($this->getPictogramme() as $p) $this->removePictogramme($p);
+        foreach($this->getMentionDangers() as $d) $this->removeMentionDanger($d);
+        foreach($this->getProtection() as $p) $this->removeProtection($p);
+
+        return $this;
+    }
 }
 

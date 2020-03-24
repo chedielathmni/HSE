@@ -144,6 +144,7 @@ easy_admin:
       label: "Produits"
       title: "Ajouter Produit"
       class: App\Entity\Product
+      controller: App\Controller\ProductController
 
       list:
         batch_actions: ['delete']

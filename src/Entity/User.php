@@ -49,6 +49,11 @@ class User implements UserInterface
     private $firstName;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $lastName;
+
+    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Profile", mappedBy="owner", cascade={"persist", "remove"})
      */
     private $profile;
@@ -63,11 +68,6 @@ class User implements UserInterface
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $cripted;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $lastName;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist", "remove"})
