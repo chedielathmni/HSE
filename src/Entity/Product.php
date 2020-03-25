@@ -47,7 +47,7 @@ class Product
     private $numeroUrgence;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Fournisseur", inversedBy="products", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Fournisseur", inversedBy="products", cascade={"persist", "remove"})
      */
     private $fournisseur;
 

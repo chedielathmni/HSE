@@ -129,7 +129,7 @@ easy_admin:
           - { property: 'lastName', label: "Nom", type: 'text' }
           - { property: 'firstName', label: "Prénom", type: 'text' }
           - password
-          - { property: 'roles', type: 'choice', type_options: { multiple: true, expanded: true, mapped: true, choices: { 'Utilisateur': 'ROLE_USER', 'Administrateur': 'ROLE_ADMIN', 'Moderateur Securité': 'ROLE_MOD_S', 'Moderateur Environnement': 'ROLE_MOD_E','Moderateur Hygiéne': 'ROLE_MOD_H','Ressource Humaine': 'ROLE_RH', 'Gestionnaire de Stock': 'ROLE_GES_STOCK'} } }
+          - { property: 'roles', type: 'choice', type_options: { multiple: true, expanded: true, mapped: true, choices: {'Administrateur': 'ROLE_ADMIN'} } }
           - grade
           - { property: 'department', label: 'group'}
           - { type: 'tab', label: 'Coordonnées', icon: 'phone'}
@@ -144,7 +144,6 @@ easy_admin:
       label: "Produits"
       title: "Ajouter Produit"
       class: App\Entity\Product
-      controller: App\Controller\ProductController
 
       list:
         batch_actions: ['delete']
