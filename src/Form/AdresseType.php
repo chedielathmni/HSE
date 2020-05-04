@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Adresse;
-use Doctrine\DBAL\Types\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -18,6 +18,7 @@ class AdresseType extends AbstractType
     {
         $builder
             ->add('number', NumberType::class, [
+                'label' => 'Numero',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuiller entrer une valeur',
@@ -25,6 +26,7 @@ class AdresseType extends AbstractType
                 ]
             ])
             ->add('streetName', TextType::class, [
+                'label' => 'Rue',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuiller entrer une valeur',
@@ -32,6 +34,7 @@ class AdresseType extends AbstractType
                 ]
             ])
             ->add('zipCode', TextType::class, [
+                'label' => 'Code postal',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuiller entrer une valeur',
@@ -39,13 +42,16 @@ class AdresseType extends AbstractType
                 ]
             ])
             ->add('city', TextType::class, [
+                'label' => 'Ville',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuiller entrer une valeur',
                     ]),
                 ]
             ])
-            ->add('country', CountryType::class)
+            ->add('country', CountryType::class, [
+                'label' => 'Pays'
+                ])
         ;
     }
 

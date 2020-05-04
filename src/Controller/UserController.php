@@ -11,6 +11,13 @@ class UserController extends EasyAdminController
 {
     protected function  persistUserEntity($user)
     {  
+
+        /*  if (!$user->getDepartment()) {
+            $user->setRoles(['ROLE_USER']);
+            parent::persistEntity($user);
+        } */
+
+
         if (!$user->getCripted()){
         $encodedPassword = $this->encodePassword($user, $user->getPassword());
         $user->setPassword($encodedPassword);
@@ -18,6 +25,24 @@ class UserController extends EasyAdminController
 
         parent::persistEntity($user);
         }
+
+    }
+
+
+
+    protected function updateUserEntity($user)
+    
+    
+    {
+        if ($user->getDepartment()) {
+            $user->setRoles($user->getDepartment()->getRoles());
+        }
+        else
+        {
+            $user->setRoles(['ROLE_USER']);
+        }
+
+        parent::updateEntity($user);
     }
 
     

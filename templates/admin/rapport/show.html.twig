@@ -1,0 +1,16 @@
+{% if value is not null and value != '' %}
+    {% if filename is defined %}
+    
+        <a href="{{ value }}" target="_blank">Voir Fiche (PDF)</a>
+    
+    {% else %}
+        
+        <a href="{{ field_options.base_path ~ '/' ~ value }}" target="_blank">Voir Fiche (PDF)</a>
+        <embed src="{{ field_options.base_path ~ '/' ~ value ~ '#toolbar=0&navpanes=0&scrollbar=0&page=5' }}" type="application/pdf" width="100%" height="400px" />
+
+
+    {% endif %}
+
+{% else %}
+    Pas de Fichier PDF
+{% endif %}

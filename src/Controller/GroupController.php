@@ -17,7 +17,7 @@ class GroupController extends EasyAdminController
     
     protected function updateDepartmentEntity($entity) {
 
-        $permissions = ['canManageUsers', 'canManageProducts', 'canManageGroups', 'canManageStock'];
+        $permissions = ['administrator', 'moderator', 'canManageUsers', 'canManageProducts', 'canManageGroups', 'canManageStock'];
         $members = $entity->getEmployees();
         $request = $this->requestStack->getCurrentRequest();
 
@@ -26,8 +26,18 @@ class GroupController extends EasyAdminController
 
         if (in_array($change,$permissions)) {
 
+            
             $role = $this->getRole($change);
-
+            
+            if ($value == 'true')
+            {
+                $entity->setRoles(array_merge($entity->getRoles(),[$role]));
+            }
+            else
+            {
+                $entity->setRoles(array_diff($entity->getRoles(), [$role]));
+            }
+            
         foreach($members as $member) {
             if ($value == 'true') {
                 $member->setRoles(array_merge($member->getRoles(),[$role]));
@@ -39,20 +49,39 @@ class GroupController extends EasyAdminController
     }
         parent::persistEntity($entity);
     }
-    
 
+
+
+
+/*     protected function persistDepartmentEntity($entity) {
+
+        $members = $entity->getEmployees();
+
+        foreach($members as $member) {
+            
+            parent::persistEntity($member);
+        
+        }
+
+    } */
 
     
     private function getRole($change) {
         switch($change){
-            case 'canManageUsers':
-                $role = 'ROLE_USER';
-            break;
-            case 'canManageProducts':
+            case 'administrator':
                 $role = 'ROLE_ADMIN';
             break;
+            case 'moderator':
+                $role = 'ROLE_MOD';
+            break;
+            case 'canManageUsers':
+                $role = 'ROLE_MOD_USERS';
+            break;
+            case 'canManageProducts':
+                $role = 'ROLE_MOD_PRODUCTS';
+            break;
             case 'canManageGroups':
-                $role = 'ROLE_MOD_S';
+                $role = 'ROLE_MOD_GROUPS';
             break;
             case 'canManageStock':
                 $role = 'ROLE_GES_STOCK';

@@ -15,3 +15,8 @@ vich_uploader:
         uri_prefix: '/uploads/files/fiches'
         upload_destination: '%kernel.project_dir%/public/uploads/files/fiches'
         namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+      reports:
+        uri_prefix: '/uploads/files/reports'
+        upload_destination: '%kernel.project_dir%/public/uploads/files/reports'
+        namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

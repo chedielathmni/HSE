@@ -122,4 +122,16 @@ class PremiersSecours
 
         return $this;
     }
+
+    public function getInhatation(): ?string
+    {
+        return $this->inhatation;
+    }
+
+    public function setInhatation(string $inhatation): self
+    {
+        $this->inhatation = $inhatation;
+
+        return $this;
+    }
 }

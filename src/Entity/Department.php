@@ -54,6 +54,21 @@ class Department
      */
     private $canManageStock;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $administrator;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $moderator;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $roles = [];
+
     public function __construct()
     {
         $this->employees = new ArrayCollection();
@@ -184,5 +199,41 @@ class Department
         foreach($this->getEmployees() as $employee) {
             $this->removeEmployee($employee);
         }
+    }
+
+    public function getAdministrator(): ?bool
+    {
+        return $this->administrator;
+    }
+
+    public function setAdministrator(bool $administrator): self
+    {
+        $this->administrator = $administrator;
+
+        return $this;
+    }
+
+    public function getModerator(): ?bool
+    {
+        return $this->moderator;
+    }
+
+    public function setModerator(bool $moderator): self
+    {
+        $this->moderator = $moderator;
+
+        return $this;
+    }
+
+    public function getRoles(): ?array
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(?array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 }

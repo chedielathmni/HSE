@@ -7,8 +7,11 @@ easy_admin:
   edit:
     actions:
       - { name: 'show', css_class: "btn btn-outline-primary" }
+    title: Edition
+
 
   list:
+    title: 'Liste des %%entity_label%%'
     actions:
       - { name: 'new', label: "Ajouter %%entity_label%%" }
       - { name: 'show', icon: 'search' , label: ''}
@@ -22,7 +25,7 @@ easy_admin:
 
 
       - { label: 'Acceuil', url: 'http://localhost:8000', rel: 'index', icon: 'home' }
-      - { label: 'Dashboard', url: 'http://localhost:8000', rel: 'index', icon: 'shart' }
+      - { label: 'Dashboard', url: 'http://localhost:8000', rel: 'index', icon: 'chart-pie' }
 
 
       - { label: "Entities"}
@@ -69,6 +72,7 @@ easy_admin:
 
 
       - label: "EPI"
+        icon: "glasses"
         children:
           - {entity: Protection, label: 'Liste des EPI', icon: 'th-list'}
           - {entity: Protection, label: 'Ajouter EPI', icon: 'plus', params: {action: 'new'}}
@@ -96,7 +100,7 @@ easy_admin:
       controller: App\Controller\UserController
 
       list:
-        title: 'Utilisateurs'
+        title: "Liste d'utilisateurs"
         item_permission: 'ROLE_ADMIN'
         batch_actions: ['delete']
         filters: ['username', 'department']
@@ -108,7 +112,8 @@ easy_admin:
           - { property: 'department', label: "Département" }
           - { property: 'loginStatus', label: 'En ligne', type: 'boolean' }
       
-
+      new:
+        title: 'Ajouter Nouvel Utilisateur'
       edit:
         fields: ['-password']
       show:
@@ -128,13 +133,13 @@ easy_admin:
           - { property: 'userName', label: "Nom d'utilisateur", type: 'text'}
           - { property: 'lastName', label: "Nom", type: 'text' }
           - { property: 'firstName', label: "Prénom", type: 'text' }
-          - password
-          - { property: 'roles', type: 'choice', type_options: { multiple: true, expanded: true, mapped: true, choices: {'Administrateur': 'ROLE_ADMIN'} } }
+          - { property: 'password', label: "Mot de passe", type: 'password'}
+          - { property: 'roles', label: "Administrateur", type: 'choice', type_options: { multiple: true, expanded: true, mapped: true, choices: {' ': 'ROLE_ADMIN'} } }
           - grade
           - { property: 'department', label: 'group'}
           - { type: 'tab', label: 'Coordonnées', icon: 'phone'}
           - { type: 'group', column: 6}
-          - { property: "adresse", label: " ", type: 'App\Form\AdresseType', type_options: { by_reference: true}}
+          - { property: "adresse", label: "Adresse", type: 'App\Form\AdresseType', type_options: { by_reference: true}}
 
 
 
@@ -153,8 +158,10 @@ easy_admin:
           - { property: 'productName', label: 'Nom Produit', type: 'text'}
           - { property: 'fournisseur'}
           - { property: 'numeroUrgence', label: "Numéro d'urgene", type: 'tel'}
-          - { property: 'fiche', typ: 'file', template: 'admin/fiche/show.html.twig', label: 'Fiche de données de sécurité' , base_path: '%app.path.fiches%'}
+          - { property: 'fiche', type: 'file', template: 'admin/fiche/show.html.twig', label: 'Fiche de données de sécurité' , base_path: '%app.path.fiches%'}
 
+      new:
+        title: 'Ajouter Nouveau Produit'
       show:
         title: "%%entity_name%%"
         fields:
@@ -203,25 +210,27 @@ easy_admin:
       controller: App\Controller\GroupController
 
       list:
+        title: 'Liste des Groupes'
         batch_actions: ['delete']
         fields:
           - { property: 'departmentName', label: 'Nom Departement', type: 'text'}
-          - { property: 'canManageUsers', label: "Gestion d'Utilisateur"}
-          - { property: 'canManageProducts', label: "Gestion de Produits"}
-          - { property: 'canManageGroups', label: "Gestion de Groupes"}
-          - { property: 'canManageStock', label: "Gestion de Stock"}
+          - { property: 'administrator', label: 'Administrateur'}
+          - { property: 'moderator', label: 'Modérateur'}
+          - { property: 'canManageUsers', label: "Mod Utilisateur"}
+          - { property: 'canManageProducts', label: "Mod Produits"}
+          - { property: 'canManageGroups', label: "Mod Groupes"}
+          - { property: 'canManageStock', label: "Mod Stock"}
         
+
+      new:
+        title: 'Ajouter Nouveau Groupe'
 
       form:
         fields:
           - { type: 'tab', label: 'Permissions'}
           - { property: 'departmentName', label: 'Nom du département', type: text }
           - { property: 'manager', type_options: {by_reference: true}}
-          - { property: 'employees', type_options: { by_reference: false }}
-          - { property: 'canManageUsers', label: "Gestion d'Utilisateur"}
-          - { property: 'canManageProducts', label: "Gestion de Produits"}
-          - { property: 'canManageGroups', label: "Gestion de Groupes"}
-          - { property: 'canManageStock', label: "Gestion de Stock"}
+          - { property: 'employees', label: 'Membre(s)', type_options: { by_reference: false }}
           - { type: 'tab', label: 'Options Avancées'}
           - { type: 'group', columns: 6,  label: 'Users'}
           - { type: 'group', columns: 6,  label: 'Products'}
@@ -239,13 +248,14 @@ easy_admin:
       class: App\Entity\ConseilPrudence
 
       list:
-        title: "Conseils de Prudence"
         sort: ['code', 'ASC']
         fields:
           - code
           - { property: 'text', label: 'Message'} 
         batch_actions: ['delete']
 
+      new:
+        title: 'Ajouter Nouveau Conseil'
       form:
         fields:
           - code
@@ -269,6 +279,10 @@ easy_admin:
           - { property: 'code', label: 'Code'}
           - { property: 'text', label: 'Message'}
           - { property: 'image', type: 'image', base_path: '%app.path.pictograms_images%'}
+      
+      new:
+        title: 'Ajouter Nouveau Pictogramme'
+
       show:
         fields:
           - { property: 'code', label: 'Code'}
@@ -288,12 +302,14 @@ easy_admin:
       class: App\Entity\MentionDanger
 
       list:
-        title: "Mention de Danger"
         sort: ['code', 'ASC']
         fields:
           - code
           - { property: 'text', label: 'Message'} 
         batch_actions: ['delete']
+
+      new:
+        title: 'Ajouter Nouvel Mention'
 
       form:
         fields:
@@ -310,24 +326,34 @@ easy_admin:
 
       label: 'Rapports'
       class: App\Entity\Report
+      controller: App\Controller\ReportController
 
 
       list:
+        batch_actions: ['delete']
+        sort: ['createdAt', 'DESC']
         fields:
           - { property: 'title', label: 'Titre'}
-          - { property: 'createdAt', label: 'date de Création'}
+          - type
+          - { property: 'createdAt', label: 'Date de création', format: 'd/m/Y H:i:s'}
+          - { property: 'author', label: 'Auteur' }
+          - { property: 'file', type: 'file', template: 'admin/rapport/show.html.twig', label: 'Rapport' , base_path: '%app.path.reports%'}
 
 
       form:
         fields:
           - { property: 'title', label: 'Titre'}
+          - type
           - { property: 'content', label: ' ', type: "text_editor"}
+          - { property: 'reportFile', type: 'vich_file', label: 'Rapport', help: '(Ajouter le rapport en format PDF)' }
 
       show:
         fields:
           - { property: 'title', label: 'Titre'}
           - { property: 'createdAt', label: 'date de Création'}
           - { property: 'content', label: ' ', type: "raw"}
+          - { property: 'file', template: 'admin/rapport/show.html.twig', base_path: '%app.path.reports%'}
+
 
 
     Protection:
@@ -340,6 +366,9 @@ easy_admin:
         fields:
           - { property: 'name', label: 'Message'}
           - { property: 'image', type: 'image', base_path: '%app.path.protection_images%' }
+
+      new:
+        title: 'Ajouter Nouveau équipement de protection'
 
       list:
         fields:

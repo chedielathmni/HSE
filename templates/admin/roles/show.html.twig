@@ -8,15 +8,16 @@
             {% endif %}
             {% if item == 'ROLE_USER' %}
                 Utilisateur
-
             {% elseif item == 'ROLE_ADMIN' %}
                 Administrateur
-            {% elseif item == 'ROLE_MOD_H' %}
-                Gestion Module Hygiéne
-            {% elseif item == 'ROLE_MOD_S' %}
-                Gestion Module Sécurité
-            {% elseif item == 'ROLE_MOD_E' %}
-                Gestion Module Environnement
+            {% elseif item == 'ROLE_MOD_USERS' %}
+                Gestion Utilisateur
+            {% elseif item == 'ROLE_MOD_PRODUCTS' %}
+                Gestion Produits
+            {% elseif item == 'ROLE_MOD_GROUPS' %}
+                Gestion Groupes
+            {% elseif item == 'ROLE_MOD' %}
+                Modérateur
             {% elseif item == 'ROLE_GES_STOCK' %}
                 Gestion de Stock
             {% elseif item == 'ROLE_RH' %}
