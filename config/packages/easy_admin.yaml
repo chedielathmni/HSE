@@ -13,7 +13,7 @@ easy_admin:
   list:
     title: 'Liste des %%entity_label%%'
     actions:
-      - { name: 'new', label: "Ajouter %%entity_label%%" }
+      - { name: 'new', label: "Ajouter %%entity_label%%"}
       - { name: 'show', icon: 'search' , label: ''}
       - { name: 'edit', label: "Modifier" }
       - { name: 'delete', label: "Supprimer" }
@@ -31,6 +31,7 @@ easy_admin:
       - { label: "Entities"}
       - label: "Produits"
         icon: "flask"
+        permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_PRODUCTS']
         children:
           - {entity: Product, label: 'Liste de Produits', icon: 'th-list'}
           - {entity: Product, label: 'Ajouter Produit', icon: 'plus', params: {action: 'new'}}
@@ -39,6 +40,7 @@ easy_admin:
 
       - label: "Groupes"
         icon: 'users'
+        permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_GROUPS']
         children:
           - {entity: Department, label: 'Liste des Groupes', icon: 'th-list'}
           - {entity: Department, label: 'Ajouter Groupe', icon: 'plus', params: {action: 'new'}}
@@ -47,6 +49,7 @@ easy_admin:
 
       - label: "Conseil de Prudence"
         icon: "exclamation-circle"
+        permission: ['ROLE_ADMIN']
         children:
           - {entity: ConseilPrudence, label: 'Liste de Conseils', icon: 'th-list'}
           - {entity: ConseilPrudence, label: 'Ajouter Conseil', icon: 'plus', params: {action: 'new'}}
@@ -54,6 +57,7 @@ easy_admin:
           
       - label: "Mention de Danger"
         icon: "exclamation-triangle"
+        permission: ['ROLE_ADMIN']
         children:
           - {entity: MentionDanger, label: 'Liste Mention de Danger', icon: 'th-list'}
           - {entity: MentionDanger, label: 'Ajouter Mention de Danger', icon: 'plus', params: {action: 'new'}}
@@ -61,11 +65,13 @@ easy_admin:
           
       - label: "Pictogrammes"
         icon: "radiation"
+        permission: ['ROLE_ADMIN']
         children:
           - {entity: Pictogramme, label: 'Liste de Pictogrammes', icon: 'th-list'}
           - {entity: Pictogramme, label: 'Ajouter Pictogramme', icon: 'plus', params: {action: 'new'}}
 
       - label: "Rapport"
+        permission: ['ROLE_ADMIN', 'ROLE_MOD']
         children:
           - {entity: Report, label: 'Liste des Rapports', icon: 'th-list'}
           - {entity: Report, label: 'Ajouter Rapport', icon: 'plus', params: {action: 'new'}}
@@ -73,6 +79,7 @@ easy_admin:
 
       - label: "EPI"
         icon: "glasses"
+        permission: ['ROLE_ADMIN']
         children:
           - {entity: Protection, label: 'Liste des EPI', icon: 'th-list'}
           - {entity: Protection, label: 'Ajouter EPI', icon: 'plus', params: {action: 'new'}}
@@ -82,7 +89,7 @@ easy_admin:
 
       - label: "Utilisateur"
         icon: "user"
-        permission: ROLE_ADMIN
+        permission: ['ROLE_ADMIN', 'ROLE_MOD_USERS']
         children:
           - {entity: User, label: "Liste d'Utilisatuer", icon: 'th-list'}
           - {entity: User, label: 'Ajouter Utilisateur', icon: 'plus', params: {action: 'new'}}
@@ -101,19 +108,18 @@ easy_admin:
 
       list:
         title: "Liste d'utilisateurs"
-        item_permission: 'ROLE_ADMIN'
+        item_permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_USERS']
         batch_actions: ['delete']
-        filters: ['username', 'department']
+        filters: [{ property: 'roles', label: 'Roles'}, { property: 'department', label: 'Groupes'}]
         fields:
           - { property: 'userName', label: "Nom d'utilisateur" }
           - { property: 'fullName', label: "Nom et Prénom" }
-          - { property: 'roles', , template: 'admin/roles/show.html.twig'}
-          - grade
-          - { property: 'department', label: "Département" }
-          - { property: 'loginStatus', label: 'En ligne', type: 'boolean' }
+          - { property: 'roles', template: 'admin/roles/show.html.twig'}
+          - { property: 'department', label: "Groupe", template: 'admin/user/groupField.html.twig' }
       
       new:
         title: 'Ajouter Nouvel Utilisateur'
+        item_permission: ['ROLE_ADMIN', 'ROLE_MOD_USERS']
       edit:
         fields: ['-password']
       show:
@@ -121,7 +127,6 @@ easy_admin:
           - { property: 'userName', label: "Nom d'utilisateur", type: 'text'}
           - { property: 'fullName', label: "Nom et Prénom" }
           - { property: 'department', label: "Département" }
-          - grade
           - { property: 'roles', label: "Roles", template: 'admin/roles/show.html.twig' }
           - adresse
           
@@ -134,8 +139,7 @@ easy_admin:
           - { property: 'lastName', label: "Nom", type: 'text' }
           - { property: 'firstName', label: "Prénom", type: 'text' }
           - { property: 'password', label: "Mot de passe", type: 'password'}
-          - { property: 'roles', label: "Administrateur", type: 'choice', type_options: { multiple: true, expanded: true, mapped: true, choices: {' ': 'ROLE_ADMIN'} } }
-          - grade
+          - { property: 'roles', label: "Administrateur", type: 'choice', permission: 'ROLE_ADMIN', type_options: { multiple: true, expanded: true, mapped: true, choices: {' ': 'ROLE_ADMIN'} } }
           - { property: 'department', label: 'group'}
           - { type: 'tab', label: 'Coordonnées', icon: 'phone'}
           - { type: 'group', column: 6}
@@ -152,6 +156,7 @@ easy_admin:
 
       list:
         batch_actions: ['delete']
+        item_permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_PRODUCTS']
         sort: ['productCode', 'ASC']
         fields:
           - { property: 'productCode', label: 'Code Produit', type: 'text'}
@@ -211,9 +216,12 @@ easy_admin:
 
       list:
         title: 'Liste des Groupes'
+        item_permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_GROUPS']
+        actions:
+          - { name: 'new', label: 'Ajouter un groupe'}
         batch_actions: ['delete']
         fields:
-          - { property: 'departmentName', label: 'Nom Departement', type: 'text'}
+          - { property: 'departmentName', label: 'Nom du Groupe', type: 'text'}
           - { property: 'administrator', label: 'Administrateur'}
           - { property: 'moderator', label: 'Modérateur'}
           - { property: 'canManageUsers', label: "Mod Utilisateur"}
@@ -228,7 +236,7 @@ easy_admin:
       form:
         fields:
           - { type: 'tab', label: 'Permissions'}
-          - { property: 'departmentName', label: 'Nom du département', type: text }
+          - { property: 'departmentName', label: 'Nom du groupe', type: text }
           - { property: 'manager', type_options: {by_reference: true}}
           - { property: 'employees', label: 'Membre(s)', type_options: { by_reference: false }}
           - { type: 'tab', label: 'Options Avancées'}
@@ -248,6 +256,7 @@ easy_admin:
       class: App\Entity\ConseilPrudence
 
       list:
+        item_permission: ['ROLE_ADMIN']
         sort: ['code', 'ASC']
         fields:
           - code
@@ -274,6 +283,7 @@ easy_admin:
       class: App\Entity\Pictogramme
       disabled_actions: ['delete', 'show', 'search']
       list:
+        item_permission: ['ROLE_ADMIN']
         sort: ['code', 'ASC']
         fields:
           - { property: 'code', label: 'Code'}
@@ -302,6 +312,7 @@ easy_admin:
       class: App\Entity\MentionDanger
 
       list:
+        item_permission: ['ROLE_ADMIN']
         sort: ['code', 'ASC']
         fields:
           - code
@@ -332,6 +343,8 @@ easy_admin:
       list:
         batch_actions: ['delete']
         sort: ['createdAt', 'DESC']
+        item_permission: ['ROLE_ADMIN']
+        filters: ['type', { property: 'createdAt', label: 'Date de création'}]
         fields:
           - { property: 'title', label: 'Titre'}
           - type
@@ -371,6 +384,7 @@ easy_admin:
         title: 'Ajouter Nouveau équipement de protection'
 
       list:
+        item_permission: ['ROLE_ADMIN']
         fields:
           - { property: 'name', label: 'Message'}
           - { property: 'image', type: 'image', base_path: '%app.path.protection_images%' }

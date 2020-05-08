@@ -212,6 +212,8 @@ class User implements UserInterface
     public function setDepartment(?Department $department): self
     {
         $this->department = $department;
+        if ($department)
+        $this->roles = $department->getRoles();
 
         return $this;
     }
@@ -273,4 +275,5 @@ class User implements UserInterface
 
         return $this;
     }
+
 }

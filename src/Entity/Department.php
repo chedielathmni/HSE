@@ -72,6 +72,12 @@ class Department
     public function __construct()
     {
         $this->employees = new ArrayCollection();
+        $this->administrator = false;
+        $this->moderator = false;
+        $this->canManageGroups = false;
+        $this->canManageProducts = false;
+        $this->canManageStock = false;
+        $this->canManageUsers = false;
     }
 
     public function getId(): ?int
