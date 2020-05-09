@@ -37,6 +37,11 @@ easy_admin:
           - {entity: Product, label: 'Ajouter Produit', icon: 'plus', params: {action: 'new'}}
 
 
+      - label: "Fournisseur"
+        children:
+          - {entity: Fournisseur, label: 'Liste des Fournisseur', icon: 'th-list'}
+          - {entity: Fournisseur, label: 'Ajouter Fournisseur', icon: 'plus', params: {action: 'new'}}
+
 
       - label: "Groupes"
         icon: 'users'
@@ -151,8 +156,9 @@ easy_admin:
     Product:
 
       label: "Produits"
-      title: "Ajouter Produit"
+      title: "Liste des Produits"
       class: App\Entity\Product
+      controller: App\Controller\ProductController
 
       list:
         batch_actions: ['delete']
@@ -201,9 +207,36 @@ easy_admin:
           - { property: 'premiersSecours', label: ' ', type: 'App\Form\PremiersSecoursType'}
           - { type: 'tab', label: "Fournisseur", icon: 'truck'}
           - { type: 'group', columns: 6, label: ' ' }
-          - { property: "fournisseur", label: " ", type: 'App\Form\FournisseurType', type_options: { by_reference: true}}
+          - { property: "fournisseur", label: "Choisir un Fournisseur existant" , type_options: { by_reference: true}}
+          - { property: "newFournisseur", label: "Créer Nouveau Fournisseur", type: 'App\Form\FournisseurType', type_options: { by_reference: true}}
           - { type: 'group', columns: 6, label: ' ' }
           - { property: "adresseFournisseur", label: " ", type: 'App\Form\AdresseType', type_options: { by_reference: true}}
+
+
+
+
+    Fournisseur:
+
+      label: "Fournisseur"
+      title: "Liste des Fournisseur"
+      class: App\Entity\Fournisseur
+
+      new:
+        title: 'Ajouter Nouveau Produit'
+
+      list:
+        fields:
+          - raisonSocial
+          - telephone
+          - email
+
+      edit:
+        fields:
+          - raisonSocial
+          - telephone
+          - email
+          - { property: 'products', label: 'Produits'}
+
 
 
 

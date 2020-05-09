@@ -52,7 +52,7 @@ class Product
     private $fournisseur;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist"})
      */
     private $adresseFournisseur;
 
@@ -89,6 +89,11 @@ class Product
      */
     private $fiche;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Fournisseur", cascade={"persist"})
+     */
+    private $newFournisseur;
+
     public function __construct()
     {
         $this->conseil = new ArrayCollection();
@@ -96,6 +101,8 @@ class Product
         $this->pictogramme = new ArrayCollection();
         $this->protection = new ArrayCollection();
         $this->updatedAt = new \DateTime('now');
+
+        $this->newFournisseur ? $this->fournisseur = $this->newFournisseur: null ;
     }
 
     public function getId(): ?int
@@ -346,6 +353,23 @@ class Product
         foreach($this->getPictogramme() as $p) $this->removePictogramme($p);
         foreach($this->getMentionDangers() as $d) $this->removeMentionDanger($d);
         foreach($this->getProtection() as $p) $this->removeProtection($p);
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->productName . '-' . $this->productCode;
+    }
+
+    public function getNewFournisseur(): ?Fournisseur
+    {
+        return $this->newFournisseur;
+    }
+
+    public function setNewFournisseur(?Fournisseur $newFournisseur): self
+    {
+        $this->newFournisseur = $newFournisseur;
 
         return $this;
     }
