@@ -94,6 +94,11 @@ class Product
      */
     private $newFournisseur;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Entry", mappedBy="product", orphanRemoval=true)
+     */
+    private $entries;
+
     public function __construct()
     {
         $this->conseil = new ArrayCollection();
@@ -103,6 +108,7 @@ class Product
         $this->updatedAt = new \DateTime('now');
 
         $this->newFournisseur ? $this->fournisseur = $this->newFournisseur: null ;
+        $this->entries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -370,6 +376,37 @@ class Product
     public function setNewFournisseur(?Fournisseur $newFournisseur): self
     {
         $this->newFournisseur = $newFournisseur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Entry[]
+     */
+    public function getEntries(): Collection
+    {
+        return $this->entries;
+    }
+
+    public function addEntry(Entry $entry): self
+    {
+        if (!$this->entries->contains($entry)) {
+            $this->entries[] = $entry;
+            $entry->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntry(Entry $entry): self
+    {
+        if ($this->entries->contains($entry)) {
+            $this->entries->removeElement($entry);
+            // set the owning side to null (unless already changed)
+            if ($entry->getProduct() === $this) {
+                $entry->setProduct(null);
+            }
+        }
 
         return $this;
     }

@@ -37,7 +37,24 @@ easy_admin:
           - {entity: Product, label: 'Ajouter Produit', icon: 'plus', params: {action: 'new'}}
 
 
+      - label: "Stock"
+        icon: "boxes"
+        children:
+          - {entity: Entry, label: 'Liste des Produits en Stock', icon: 'th-list'}
+          - {entity: Entry, label: 'Ajouter des Produits au Stock', icon: 'plus', params: {action: 'new'}}
+
+
+
+      - label: "Zones de stockage"
+        icon: 'box'
+        children:
+          - {entity: Zone, label: 'Liste des Zone de stockage', icon: 'th-list'}
+          - {entity: Zone, label: 'Ajouter Zone de stockage', icon: 'plus', params: {action: 'new'}}
+
+
+
       - label: "Fournisseur"
+        icon: "truck"
         children:
           - {entity: Fournisseur, label: 'Liste des Fournisseur', icon: 'th-list'}
           - {entity: Fournisseur, label: 'Ajouter Fournisseur', icon: 'plus', params: {action: 'new'}}
@@ -211,6 +228,88 @@ easy_admin:
           - { property: "newFournisseur", label: "Créer Nouveau Fournisseur", type: 'App\Form\FournisseurType', type_options: { by_reference: true}}
           - { type: 'group', columns: 6, label: ' ' }
           - { property: "adresseFournisseur", label: " ", type: 'App\Form\AdresseType', type_options: { by_reference: true}}
+
+
+
+    Zone:
+
+      label: "Zone de stockage"
+      title: "Liste des Zones de stockage"
+      class: App\Entity\Zone
+
+      list:
+        fields:
+          - { property: 'name', label: 'Nom'}
+          - type
+          - description
+
+      new:
+        fields:
+          - { property: 'name', label: 'Nom'}
+          - type
+          - description
+
+      edit:
+        fields:
+          - { property: 'name', label: 'Nom'}
+          - type
+          - description
+
+      show:
+        fields:
+          - { property: 'name', label: 'Nom'}
+          - type
+          - description
+
+
+
+
+    Entry:
+      
+      label: 'Stock'
+      title: 'Liste des Produits en Stock'
+      class: App\Entity\Entry
+
+
+      list:
+        title: 'Liste des Produits en Stock'
+        fields:
+          - { property: 'product', label: 'Produit'}
+          - { property: 'quantity', label: 'Quatité'}
+          - type
+          - { property: 'entryDate', label: "Date d'entrée"}
+          - zone
+
+      new:
+        title: 'Ajouter Produit au Stock'
+        fields:
+          - { property: 'product', label: 'Produit'}
+          - { property: 'quantity', label: 'Quatité'}
+          - type
+          - { property: 'entryDate', label: "Date d'entrée"}
+          - { property: 'zone', type_options: { by_reference: true}}
+
+
+      edit:
+        title: 'Modifier'
+        fields:
+          - { property: 'product', label: 'Produit'}
+          - { property: 'quantity', label: 'Quatité'}
+          - { property: 'zone', type_options: { by_reference: true}}
+
+
+      show:
+        fields:
+          - { property: 'product', label: 'Produit'}
+          - { property: 'quantity', label: 'Quatité'}
+          - type
+          - { property: 'entryDate', label: "Date d'entrée"}
+          - zone
+
+
+
+
+
 
 
 
