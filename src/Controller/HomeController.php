@@ -33,6 +33,3 @@ class HomeController extends AbstractController
         return $this->redirectToRoute('home');
     }
 }
-
-// Users + Products + Group permissions managments
-// + Entities

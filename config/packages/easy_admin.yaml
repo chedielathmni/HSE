@@ -24,8 +24,8 @@ easy_admin:
     menu:
 
 
-      - { label: 'Acceuil', url: 'http://localhost:8000', rel: 'index', icon: 'home' }
-      - { label: 'Dashboard', url: 'http://localhost:8000', rel: 'index', icon: 'chart-pie' }
+      - { label: 'Acceuil', url: '%app.path%', rel: 'index', icon: 'home' }
+      - { label: 'Dashboard', url: '%app.path%', rel: 'index', icon: 'chart-pie' }
 
 
       - { label: "Entities"}
@@ -42,6 +42,7 @@ easy_admin:
         children:
           - {entity: Entry, label: 'Liste des Produits en Stock', icon: 'th-list'}
           - {entity: Entry, label: 'Ajouter des Produits au Stock', icon: 'plus', params: {action: 'new'}}
+          - { label: 'Destockage', url: '%app.path.destock%', rel: 'index', icon: 'minus' }
 
 
 
@@ -58,14 +59,6 @@ easy_admin:
         children:
           - {entity: Fournisseur, label: 'Liste des Fournisseur', icon: 'th-list'}
           - {entity: Fournisseur, label: 'Ajouter Fournisseur', icon: 'plus', params: {action: 'new'}}
-
-
-      - label: "Groupes"
-        icon: 'users'
-        permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_GROUPS']
-        children:
-          - {entity: Department, label: 'Liste des Groupes', icon: 'th-list'}
-          - {entity: Department, label: 'Ajouter Groupe', icon: 'plus', params: {action: 'new'}}
 
 
 
@@ -115,6 +108,14 @@ easy_admin:
         children:
           - {entity: User, label: "Liste d'Utilisatuer", icon: 'th-list'}
           - {entity: User, label: 'Ajouter Utilisateur', icon: 'plus', params: {action: 'new'}}
+
+
+      - label: "Groupes"
+        icon: 'users'
+        permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_GROUPS']
+        children:
+          - {entity: Department, label: 'Liste des Groupes', icon: 'th-list'}
+          - {entity: Department, label: 'Ajouter Groupe', icon: 'plus', params: {action: 'new'}}
 
 
 
@@ -269,10 +270,16 @@ easy_admin:
       label: 'Stock'
       title: 'Liste des Produits en Stock'
       class: App\Entity\Entry
+      templates:
+        list: 'admin/entries/entry_list.html.twig'
 
 
       list:
         title: 'Liste des Produits en Stock'
+        actions:
+          - { name: 'new', label: 'Ajouter Produit au Stock'}
+          #- { name: 'test', type: 'route', label: 'test', css_class: 'btn btn-info', title: 'Liste des Produits en Stock'}
+
         fields:
           - { property: 'product', label: 'Produit'}
           - { property: 'quantity', label: 'Quatité'}

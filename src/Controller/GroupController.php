@@ -29,14 +29,10 @@ class GroupController extends EasyAdminController
             
             $role = $this->getRole($change);
             
-            if ($value == 'true')
-            {
-                $entity->setRoles(array_merge($entity->getRoles(),[$role]));
-            }
-            else
-            {
+            $role == 'true' ? 
+                $entity->setRoles(array_merge($entity->getRoles(),[$role])):
                 $entity->setRoles(array_diff($entity->getRoles(), [$role]));
-            }
+            
             
         foreach($members as $member) {
             if ($value == 'true') {
@@ -51,19 +47,6 @@ class GroupController extends EasyAdminController
     }
 
 
-
-
-/*     protected function persistDepartmentEntity($entity) {
-
-        $members = $entity->getEmployees();
-
-        foreach($members as $member) {
-            
-            parent::persistEntity($member);
-        
-        }
-
-    } */
 
     
     private function getRole($change) {

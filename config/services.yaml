@@ -8,6 +8,8 @@ parameters:
     app.path.protection_images: /uploads/images/protection
     app.path.fiches: /uploads/files/fiches
     app.path.reports: /uploads/files/reports
+    app.path.destock: /admin/destock?menuIndex=4&submenuIndex=2
+    app.path: /
 
 services:
     # default configuration for services in *this* file

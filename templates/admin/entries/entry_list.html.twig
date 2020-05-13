@@ -1,0 +1,6 @@
+{% extends '@EasyAdmin/default/list.html.twig' %}
+
+{% block global_actions  %}
+    {{ parent() }}
+    <a href="{{ path('destock', {  menuIndex: '4', submenuIndex: '2'  }) }}" class="btn btn-primary">Destocker</a>
+{% endblock %}
