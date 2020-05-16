@@ -1,0 +1,59 @@
+{% extends "base.html.twig" %}
+
+{% block head %}
+    {% block title %}
+        Fiche {{product.productName}}
+    {% endblock %}
+{% endblock %}
+
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row text-center" id="product-name">
+            <div class="col bg-primary text-white py-3"><h1>{{product.productName}}</h1></div>
+        </div>
+        <div class="row" id="product-id">
+            <div class="col d-flex">
+                <h3 class="my-2">Code du Produit: {{product.productCode}}</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col bg-primary" style="height: 8px;"></div>
+        </div>
+        <div class="row my-5" id="pictogrammes">
+            {% for item in product.pictogramme %}
+                <div class="col text-center">
+                    <img  src="{{vich_uploader_asset(item, 'imageFile')}}" alt="" style="width: 150px; height: 150px;">
+                    <h3 class="my-2">{{item.getCode()}}</h3>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row" id="avertissement">
+            <div class="row mb-4">
+                <h1>DANGERS</h1>
+            </div>
+        </div>
+        <div class="row" id="mention-danger">
+            <div class="col">
+            {% for item in product.mentionDangers %}
+                <p>{{item.getCode()}} : {{item.getText()}}</p>
+            {% endfor %}
+            {% for item in product.conseil %}
+                <p>{{item.getCode()}} : {{item.getText()}}</p>
+            {% endfor %}
+            </div>
+        </div>
+        <div class="row" id="info-sup"></div>
+        <div class="row text-center my-4" id="fournisseur">
+            <div class="col border border-dark">
+                <h4>{{product.fournisseur.raisonSocial}}
+                - Rue {{product.adresseFournisseur.streetName}} - {{product.adresseFournisseur.city}} - Tel: {{product.fournisseur.telephone}}</h4>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+
+{% endblock %}

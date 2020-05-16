@@ -42,6 +42,16 @@ class Entry
      */
     private $zone;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateLimite;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateFabrication;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -110,5 +120,29 @@ class Entry
     public function __toString()
     {
         return $this->product->getProductName() . '-' . $this->product->getProductCode();
+    }
+
+    public function getDateLimite(): ?\DateTimeInterface
+    {
+        return $this->dateLimite;
+    }
+
+    public function setDateLimite(?\DateTimeInterface $dateLimite): self
+    {
+        $this->dateLimite = $dateLimite;
+
+        return $this;
+    }
+
+    public function getDateFabrication(): ?\DateTimeInterface
+    {
+        return $this->dateFabrication;
+    }
+
+    public function setDateFabrication(?\DateTimeInterface $dateFabrication): self
+    {
+        $this->dateFabrication = $dateFabrication;
+
+        return $this;
     }
 }

@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Entry;
 use App\Repository\EntryRepository;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class EntryController extends EasyAdminController
@@ -33,7 +36,7 @@ class EntryController extends EasyAdminController
 
         foreach($entries as $entry) {
             array_push($data, [
-                "productName" => $entry->getProduct()->getProductName() . " " .$entry->getProduct()->getProductCode(),
+                "productName" => $entry->getProduct()->getProductName(),
                 "quantity" => $entry->getQuantity()
             ]);
         }
@@ -46,5 +49,36 @@ class EntryController extends EasyAdminController
             'entity' => $this->entity,
             'config' => $this->config
         ]);
+    }
+
+    /**
+     * @Route("/admin/destock/save", name="destock_save")
+     */
+    public function save(Array $data, ProductRepository $productRepo) : Response 
+    {
+        $user = $this->user;
+        if(!$user) return $this->json([
+            'code' => 403,
+            'message' => 'Unauthorized'
+        ],403);
+
+        foreach($data as $product) {
+            $prod = $productRepo->findOneBy([
+                'productName' => $product[0]
+            ]);
+            
+            if ($product[1] == 0) $this->em->remove($prod);
+            else $prod->setQuantity = $product[1];
+            $this->em->flush();
+
+
+            return $this->json([
+                'code' => 200,
+                'message' => 'it works'
+            ],200);
+        }
+
+
+        
     }
 }

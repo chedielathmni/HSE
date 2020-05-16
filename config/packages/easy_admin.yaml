@@ -179,6 +179,9 @@ easy_admin:
       controller: App\Controller\ProductController
 
       list:
+        actions:
+          - { name: 'stock', label: ' ', icon: 'plus-square'}
+          - { name: 'product_print', label: ' ', icon: 'print', type: 'route'}
         batch_actions: ['delete']
         item_permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_PRODUCTS']
         sort: ['productCode', 'ASC']
@@ -278,11 +281,12 @@ easy_admin:
         title: 'Liste des Produits en Stock'
         actions:
           - { name: 'new', label: 'Ajouter Produit au Stock'}
-          #- { name: 'test', type: 'route', label: 'test', css_class: 'btn btn-info', title: 'Liste des Produits en Stock'}
 
         fields:
           - { property: 'product', label: 'Produit'}
-          - { property: 'quantity', label: 'Quatité'}
+          - { property: 'quantity', label: 'Quantité'}
+          - { property: 'dateFabrication', label: 'Date de Fabrication'}
+          - { property: 'dateLimite', label: 'Date Limite'}
           - type
           - { property: 'entryDate', label: "Date d'entrée"}
           - zone
@@ -292,6 +296,8 @@ easy_admin:
         fields:
           - { property: 'product', label: 'Produit'}
           - { property: 'quantity', label: 'Quatité'}
+          - { property: 'dateFabrication', label: 'Date de Fabrication'}
+          - { property: 'dateLimite', label: 'Date Limite'}
           - type
           - { property: 'entryDate', label: "Date d'entrée"}
           - { property: 'zone', type_options: { by_reference: true}}
@@ -302,6 +308,8 @@ easy_admin:
         fields:
           - { property: 'product', label: 'Produit'}
           - { property: 'quantity', label: 'Quatité'}
+          - { property: 'dateFabrication', label: 'Date de Fabrication'}
+          - { property: 'dateLimite', label: 'Date Limite'}
           - { property: 'zone', type_options: { by_reference: true}}
 
 
@@ -309,6 +317,8 @@ easy_admin:
         fields:
           - { property: 'product', label: 'Produit'}
           - { property: 'quantity', label: 'Quatité'}
+          - { property: 'dateFabrication', label: 'Date de Fabrication'}
+          - { property: 'dateLimite', label: 'Date Limite'}
           - type
           - { property: 'entryDate', label: "Date d'entrée"}
           - zone
