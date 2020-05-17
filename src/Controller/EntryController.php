@@ -7,6 +7,7 @@ use App\Repository\EntryRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,10 +16,11 @@ class EntryController extends EasyAdminController
 
 
 
-    public function __construct(EntityManagerInterface $em, EntryRepository $repository)
+    public function __construct(EntityManagerInterface $em, EntryRepository $repository, RequestStack $requestStack)
     {
         $this->em = $em;
         $this->repository = $repository;
+        $this->requestStack = $requestStack;
     }
 
 
@@ -56,7 +58,18 @@ class EntryController extends EasyAdminController
      */
     public function save(Array $data, ProductRepository $productRepo) : Response 
     {
-        $user = $this->user;
+
+
+        $request = $this->requestStack->getCurrentRequest();
+        $data = $request->query->get('newData');
+
+
+
+        return $this->render('test/index.html.twig', [
+            'data' => $data
+        ]);
+
+        /* $user = $this->user;
         if(!$user) return $this->json([
             'code' => 403,
             'message' => 'Unauthorized'
@@ -78,7 +91,7 @@ class EntryController extends EasyAdminController
             ],200);
         }
 
-
+ */
         
     }
 }

@@ -180,7 +180,7 @@ easy_admin:
 
       list:
         actions:
-          - { name: 'stock', label: ' ', icon: 'plus-square'}
+          - { name: 'add_stock', label: ' ', icon: 'plus-square', type: 'route'}
           - { name: 'product_print', label: ' ', icon: 'print', type: 'route'}
         batch_actions: ['delete']
         item_permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_PRODUCTS']

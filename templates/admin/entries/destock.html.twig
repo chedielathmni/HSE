@@ -48,22 +48,23 @@
                     {% if data is defined and data != null %}
                     {% for item in data %}
 
-                        <div class="col-4">
-                            <label id="product-name0" type="text" name="product-name" >{{item.productName}}</label>
-                        </div>
-                        <div class="col-4">
-                            <div class="btn" id="sub{{loop.index}}" onclick="change('{{loop.index}}','sub')">-</div>
-                            <input type="text" id="quantity{{loop.index}}" name="product-quantity"
-                                style="width: 14%; text-align: center;" max={{item.quantity}}>
-                            <div class="btn" id="add{{loop.index}}" onclick="change('{{loop.index}}','add')">+</div>
-                        </div>
-                        <div class="col-4">
-                            <div class="btn btn-danger" id="reset{{loop.index}}" onclick="reset('{{loop.index}}')">X</div>
-                        </div>
+                    <div class="col-4" id="labels">
+                        <label id="product-name{{loop.index}}" type="text"
+                            name="product-name">{{item.productName}}</label>
+                    </div>
+                    <div class="col-4">
+                        <div class="btn" id="sub{{loop.index}}" onclick="change('{{loop.index}}','sub')">-</div>
+                        <input type="text" id="quantity{{loop.index}}" name="product-quantity"
+                            style="width: 14%; text-align: center;" max={{item.quantity}}>
+                        <div class="btn" id="add{{loop.index}}" onclick="change('{{loop.index}}','add')">+</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="btn btn-danger" id="reset{{loop.index}}" onclick="reset('{{loop.index}}')">X</div>
+                    </div>
 
                     {% endfor %}
 
-                    
+
                     {% else %}
                     <h1 class="text-center">Il n'y a aucun Produit en stock</h1>
                     {% endif %}
@@ -107,7 +108,7 @@
     }
 
 
-    function change(id,s) {
+    function change(id, s) {
 
 
         value = parseInt(document.getElementById('quantity' + id).value)
@@ -140,32 +141,35 @@
 
 
     $("#valider").click(() => {
-        
+
         names = [...document.querySelectorAll('label')]
         quantity = [...document.querySelectorAll('input')]
-        quantity.shift()
 
         newData = []
-        for ( let i = 0 ; i < names.length ; i++ ) {
-            newData.push([names[i].innerText,quantity[i].max - quantity[i].value])
+        for (let i = 0; i < names.length; i++) {
+            newData.push([names[i].innerText, quantity[i].max - quantity[i].value])
         }
+
+
+        $.ajax({
+            url: 'localhost:8000/admin/destock/save',
+            type: 'POST',
+            data: JSON.stringify({ paramName: newData }),
+            dataType: "json",
+            success: function (code_html, statut) { 
+                console.log(code_html)
+            },
+
+            error: function (result, status, error) {
+                console.log("status => ",status)
+                console.log("error =>", error)
+                console.log("result => ",result)
+            }
+        })
 
     })
 
 
-
-/* $.ajax({
-    type: "POST",
-    url: '{{ path('avisDemandeur', {dossier: dossier.cbMarq}) }}',
-    data: {"commentaire": val, "Decision": acceptation},
-    success: function (data) {
-        {% if dossier.TypeDossier.cbMarq == 1 %}
-        window.location = '{{ path('comission', {dossier: dossier.cbMarq}) }}';
-        {% else %}
-        window.location = '{{ path('Décision', {dossier: dossier.cbMarq}) }}';
-        {% endif %}
-    }
-});*/
 </script>
 {% endblock body_javascript %}
 
