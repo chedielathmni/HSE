@@ -99,6 +99,16 @@ class Product
      */
     private $entries;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $dureeConservation;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $dechet;
+
     public function __construct()
     {
         $this->conseil = new ArrayCollection();
@@ -359,6 +369,7 @@ class Product
         foreach($this->getPictogramme() as $p) $this->removePictogramme($p);
         foreach($this->getMentionDangers() as $d) $this->removeMentionDanger($d);
         foreach($this->getProtection() as $p) $this->removeProtection($p);
+        $this->fournisseur = null;
 
         return $this;
     }
@@ -407,6 +418,30 @@ class Product
                 $entry->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDureeConservation(): ?int
+    {
+        return $this->dureeConservation;
+    }
+
+    public function setDureeConservation(int $dureeConservation): self
+    {
+        $this->dureeConservation = $dureeConservation;
+
+        return $this;
+    }
+
+    public function getDechet(): ?string
+    {
+        return $this->dechet;
+    }
+
+    public function setDechet(string $dechet): self
+    {
+        $this->dechet = $dechet;
 
         return $this;
     }

@@ -1,0 +1,134 @@
+{% extends '@!EasyAdmin/default/layout.html.twig' %}
+
+
+{% block page_title %}Utilisation Produits{% endblock %}
+
+
+{% block content %}
+<div class="content">
+    {% block content_header_wrapper %}
+    {% set _has_content_help = _entity_config is defined and _entity_config[app.request.query.get('action')]['help']|default(false) %}
+    <section class="content-header {{ _has_content_help ? 'has-content-help' }}">
+        {% block content_header %}
+        <div class="d-flex flex-row justify-content-between align-content-center w-100">
+            <div class="content-header-title">
+                {% if entry.getType == "Produit chimique" %}
+                <h1 class="title">Utiliser {{entry.getProduct().getProductName()}}</h1>
+                {% else %}
+                <h1 class="title">Se debarasser de {{entry.getProduct().getProductName()}}</h1>
+                {% endif %}
+            </div>
+        </div>
+
+        {% block content_help %}
+        {% if _entity_config is defined and _entity_config[app.request.query.get('action')]['help']|default(false) %}
+        <div class="content-header-help">
+            {{ _entity_config[app.request.query.get('action')]['help']|trans(domain = _entity_config.translation_domain)|raw }}
+        </div>
+        {% endif %}
+        {% endblock content_help %}
+        {% endblock content_header %}
+    </section>
+    {% endblock content_header_wrapper %}
+
+    <section id="main" class="content-body">
+        {% block main %}
+        <div class="container">
+            {{ form_start(form) }}
+            {% if entry.getType == "Produit chimique" %}
+            <div class="row justify-content-center my-2">
+                <div class="col-lg-3">
+                    {{ form_label(form.quantityUsed, 'Quantité de produit à utiliser') }}
+                </div>
+                <div class="col-lg-4">
+                    {{ form_widget(form.quantityUsed) }}
+                </div>
+            </div>
+
+            <div class="row justify-content-center my-4">
+                <div class="col-lg-3">
+                    {{ form_label(form.wasteQuantity, 'Quantité de déchets produit') }}
+                </div>
+                <div class="col-lg-4">
+                    {{ form_widget(form.wasteQuantity) }}
+                </div>
+            </div>
+
+            <div class="row justify-content-center my-4">
+                <div class="col-lg-3">
+                    {{ form_label(form.volume, 'Volume en Litre') }}
+                </div>
+                <div class="col-lg-4">
+                    {{ form_widget(form.volume) }}
+                </div>
+            </div>
+            
+
+            {% else %}
+            <div class="row justify-content-center my-2">
+                <div class="col d-none" id="nope">
+                    {{ form_row(form.quantityUsed) }}
+                </div>
+            </div>
+
+            <div class="row justify-content-center my-4">
+                <div class="col-lg-3">
+                    {{ form_label(form.wasteQuantity, 'Quantité de déchets à jeter') }}
+                </div>
+                <div class="col-lg-4">
+                    {{ form_widget(form.wasteQuantity) }}
+                </div>
+            </div>
+
+            <div class="row justify-content-center my-2">
+                <div class="col d-none" id="nope">
+                    {{ form_row(form.volume) }}
+                </div>
+            </div>
+            {% endif %}
+            <div class="row justify-content-center my-4">
+                <div class="col-lg-3">
+                    {{ form_label(form.zone) }}
+                </div>
+                <div class="col-lg-4">
+                    {{ form_widget(form.zone) }}
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>  
+
+        {% endblock %}
+    </section>
+
+    {% block content_footer_wrapper %}
+    <section class="content-footer">
+        {% block content_footer %}
+        <div id="valider" class="btn btn-primary float-right mb-3 mx-4">Valider</div>
+        <a class=" btn btn-link pr-0 action-list float-right mb-3" title="" href="/admin/?entity=Entry&amp;action=list"
+            target="_self">Retour à la liste</a>
+        {% endblock %}
+    </section>
+    {% endblock %}
+</div>
+
+{% block body_javascripts %}
+    <script>
+        waste = document.getElementById('entry_wasteQuantity')
+        quantity = document.getElementById('entry_quantityUsed')
+        if ('{{entry.type}}' == 'dechet')
+        {
+            document.getElementById("entry_quantityUsed").value = 0;
+            waste.setAttribute('max', '{{entry.quantity}}');
+        }
+        waste.setAttribute('min', 0);
+        quantity.setAttribute('min', 0);
+        quantity.setAttribute('max', '{{entry.quantity}}');
+        
+        $('#valider').click((e) => {
+            document.querySelector('form').submit();
+        })
+    </script>
+{% endblock %}
+
+
+{% endblock content %}

@@ -29,13 +29,13 @@ class ProductController extends EasyAdminController {
     /**
      * @Route(path = "/admin/product/print", name = "product_print")
      */
-    public function printAction(Request $request, ProductRepository $prodRepository, EntryRepository $entryRepositort) {
+    public function printAction(Request $request, ProductRepository $prodRepository) {
 
         $id = $request->query->get('id');
         $product = $prodRepository->find($id);
 
         
-        return $this->render('admin/fiche/print.html.twig', [
+        return $this->render('admin/product/print.html.twig', [
             'product' => $product
             ]);
             

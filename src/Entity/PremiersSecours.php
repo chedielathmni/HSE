@@ -19,7 +19,7 @@ class PremiersSecours
     /**
      * @ORM\Column(type="text")
      */
-    private $inhatation;
+    private $inhalation;
 
     /**
      * @ORM\Column(type="text")
@@ -53,12 +53,12 @@ class PremiersSecours
 
     public function getInhalation(): ?string
     {
-        return $this->inhatation;
+        return $this->inhalation;
     }
 
-    public function setInhalation(string $inhatation): self
+    public function setInhalation(string $inhalation): self
     {
-        $this->inhatation = $inhatation;
+        $this->inhalation = $inhalation;
 
         return $this;
     }
@@ -123,15 +123,9 @@ class PremiersSecours
         return $this;
     }
 
-    public function getInhatation(): ?string
-    {
-        return $this->inhatation;
-    }
 
-    public function setInhatation(string $inhatation): self
+    public function __toString()
     {
-        $this->inhatation = $inhatation;
-
-        return $this;
+        return 'test';
     }
 }

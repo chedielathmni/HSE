@@ -1,0 +1,15 @@
+{% extends '@EasyAdmin/default/new.html.twig' %}
+
+
+{% block body_javascript %}
+{{parent()}}
+
+<script>
+
+    [...document.getElementsByClassName("form-group  field-textarea")].forEach((el) => {
+        el.style.position = 'relative'
+        el.style.right = '300px'
+    });
+
+</script>
+{% endblock %}

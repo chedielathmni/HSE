@@ -29,19 +29,24 @@
             {% endfor %}
         </div>
         <div class="row" id="avertissement">
-            <div class="row mb-4">
+            <div class="col-lg-6 mb-4">
                 <h1>DANGERS</h1>
+            </div>
+            <div class="col-lg-6">
+                <h1>Type de dechet: {{product.getDechet()}}</h1>
             </div>
         </div>
         <div class="row" id="mention-danger">
-            <div class="col">
             {% for item in product.mentionDangers %}
+            <div class="col-lg-6">
                 <p>{{item.getCode()}} : {{item.getText()}}</p>
+            </div>
             {% endfor %}
             {% for item in product.conseil %}
+            <div class="col-lg-6">
                 <p>{{item.getCode()}} : {{item.getText()}}</p>
-            {% endfor %}
             </div>
+            {% endfor %}
         </div>
         <div class="row" id="info-sup"></div>
         <div class="row text-center my-4" id="fournisseur">

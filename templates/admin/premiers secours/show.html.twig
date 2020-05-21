@@ -1,19 +1,68 @@
+{% if item.getPremiersSecours() is not null %}
 {% block body %}
-    <div class="container mt-5">
+    <div class="container" >
         <div class="row">
-            <h2>Description des premiers secours</h2>
-            <h5 class="mt-3 ml-1"><strong>En cas d'inhalation:</strong></h5>
-            <p class="ml-3">{{item.premiersSecours.getInhalation()}}</p>
-            <h5 class="mt-2 ml-1"><strong>En cas de contact avec les yeux:</strong></h5>
-            <p class="ml-3">{{item.premiersSecours.getYeux()}}</p>
-            <h5 class="mt-2 ml-1"><strong>En cas de contact avec la peau:</strong></h5>
-            <p class="ml-3">{{item.premiersSecours.getPeau()}}</p>
-            <h5 class="mt-2 ml-1"><strong>En cas d'ingestion:</strong></h5>
-            <p class="ml-3">{{item.premiersSecours.getIngestion()}}</p>
-            <h2 class="mt-3 ml-1">Principaux symptômes et effets, aigus et différés</h2>
-            <p class="ml-3">{{item.premiersSecours.getSymptomes() | raw}}</p>
-            <h2 class="mt-3 ml-1">Indication des éventuels soins médicaux immédiats et traitements particuliers nécessaires</h2>
-            <p class="ml-3">{{item.premiersSecours.getSoins() | raw }}</p>
+            {% if item.premiersSecours.getInhalation() is defined %}
+
+            <div class="col-12 mb-3">
+                <h5 class="mt-3 ml-1"><strong>En cas d'inhalation:</strong></h5>
+            </div>
+            <div class="col-12">
+                <p class="ml-3">{{item.premiersSecours.getInhalation()}}</p>
+            </div>
+            
+            {% endif %}
+
+            {% if item.premiersSecours.getYeux() is defined %}
+                <div class="col-12 my-3">
+                    <h5 class="mt-2 ml-1"><strong>En cas de contact avec les yeux:</strong></h5>
+                </div>
+                <div class="col-12">
+                    <p class="ml-3">{{item.premiersSecours.getYeux()}}</p>
+                </div>
+
+            {% endif %}
+
+            {% if item.premiersSecours.getPeau() is defined %}
+            <div class="col-12 my-3">
+                <h5 class="mt-2 ml-1"><strong>En cas de contact avec la peau:</strong></h5>
+            </div>
+            <div class="col-12">
+                <p class="ml-3">{{item.premiersSecours.getPeau()}}</p>
+            </div>
+            
+            {% endif %}
+
+            {% if item.premiersSecours.getIngestion() is defined %}
+            <div class="col-12 my-3">
+                <h5 class="mt-2 ml-1"><strong>En cas d'ingestion:</strong></h5>
+            </div>
+            <div class="col-12">
+                <p class="ml-3">{{item.premiersSecours.getIngestion()}}</p>
+            </div>
+            
+            {% endif %}
+
+            {% if item.premiersSecours.getSymptomes() is defined %}
+            <div class="col-12 my-3">
+                <h2 class="mt-3 ml-1">Principaux symptômes et effets, aigus et différés</h2>
+            </div>
+            <div class="col-12">
+                <p class="ml-3">{{item.premiersSecours.getSymptomes() | raw}}</p>
+            </div>
+
+            {% endif %}
+
+            {% if item.premiersSecours.getSoins() is defined %}
+            <div class="col-12 my-3">
+                <h2 class="mt-3 ml-1">Indication des éventuels soins médicaux immédiats et traitements particuliers nécessaires</h2>
+            </div>
+            <div class="col-12">
+                <p class="ml-3">{{item.premiersSecours.getSoins() | raw }}</p>
+            </div>
+
+            {% endif %}
         </div>
     </div>
-{% endblock %}
+    {% endblock %}
+{% endif %}

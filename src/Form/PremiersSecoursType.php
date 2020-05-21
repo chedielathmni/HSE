@@ -23,7 +23,7 @@ class PremiersSecoursType extends AbstractType
                 'label' => "En cas de contact avec la peau:"
             ])
             ->add('ingestion', TextareaType::class, [
-                'label' => "En cas d'ingestion':"
+                'label' => "En cas d'ingestion:"
             ])
             ->add('symptomes', TextareaType::class, [
                 'label' => "Principaux symptômes et effets, aigus et différés:"

@@ -21,6 +21,12 @@ easy_admin:
 
 
   design:
+
+    form_theme:
+      - '@EasyAdmin/form/bootstrap_4.html.twig'
+      - 'admin/custom/form.html.twig'
+
+
     menu:
 
 
@@ -177,11 +183,13 @@ easy_admin:
       title: "Liste des Produits"
       class: App\Entity\Product
       controller: App\Controller\ProductController
+      templates:
+        new: 'admin/product/new.html.twig'
 
       list:
         actions:
           - { name: 'add_stock', label: ' ', icon: 'plus-square', type: 'route'}
-          - { name: 'product_print', label: ' ', icon: 'print', type: 'route'}
+          - { name: 'product_print', label: ' ', icon: 'print', type: 'route', target: '_blank'}
         batch_actions: ['delete']
         item_permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_PRODUCTS']
         sort: ['productCode', 'ASC']
@@ -203,11 +211,13 @@ easy_admin:
           - { property: 'fournisseur'}
           - { property: 'adresseFournisseur', label: 'Adresse du Fournisseur'}
           - { property: 'numeroUrgence', label: "Numéro d'urgene", type: 'tel'}
+          - { property: 'dureeConservation', label: "Durée de conservation", template: 'admin/product/dureeConservation.html.twig'}
+          - { property: 'dechet', label: 'Type de dechet'}
           - { property: 'conseil', label: "Conseils de Prudence"}
           - { property: 'mentionDangers', label: "Mentions de Danger"}
           - { property: 'pictogramme', label: 'Pictrogrammes', template: 'admin/pictogrammes/show.html.twig'}
           - { property: 'protection', label: 'Equipement de protection individuel', template: 'admin/protection/show.html.twig'}
-          - { property: 'premiersSecours', label: ' ', template: 'admin/premiers secours/show.html.twig'}
+          - { property: 'premiersSecours', label: 'Description des premiers secours', template: 'admin/premiers secours/show.html.twig'}
 
       form:
         fields:
@@ -217,15 +227,16 @@ easy_admin:
           - { property: 'numeroUrgence', label: "Numéro d'urgence", type: 'tel'}
           - { property: 'ficheFile', type: 'vich_file', label: 'Fiche de données de sécurité', help: '(Ajouter la fiche de données de sécurité en format PDF)' }
           - { type: 'tab' ,label: 'Securité', icon: 'lock'}
-          - { type: 'group', columns: 6, label: 'Messages' }
+          - { type: 'group', columns: 6, label: ' ' }
+          - { property: 'dureeConservation', label: "Durée de conservation (en mois)"}
           - { property: 'conseil', label: "Conseils", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
           - { property: 'mentionDangers', label: "Dangers", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
-          - { type: 'group', columns: 6, label: 'Pictogrammes' }
+          - { type: 'group', columns: 6, label: ' ' }
+          - { property: 'dechet', type: 'choice', type_options: { multiple: false, expanded: false, mapped: true, choices: {'Solide dangereux': 'Solide dangereux', 'Solide non dangereux': 'Solide non dangereux','Liquide dangereux': 'Liquide dangereux','Liquide non dangereux': 'Liquide non dangereux'} } }
           - { property: 'pictogramme', label: 'Pictogrammes', type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
           - { property: 'protection', label: 'Equipenet de protection individuel', type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
           - { type: 'tab', label: "Premiers Secours", icon: 'first-aid'}
-          - { type: 'group', label: ' ', css_class: 'w-100'}
-          - { property: 'premiersSecours', label: ' ', type: 'App\Form\PremiersSecoursType'}
+          - { property: 'premiersSecours', label: ' ', type: 'App\Form\PremiersSecoursType', type_options: { block_name: 'custom_title' }}
           - { type: 'tab', label: "Fournisseur", icon: 'truck'}
           - { type: 'group', columns: 6, label: ' ' }
           - { property: "fournisseur", label: "Choisir un Fournisseur existant" , type_options: { by_reference: true}}
@@ -273,6 +284,7 @@ easy_admin:
       label: 'Stock'
       title: 'Liste des Produits en Stock'
       class: App\Entity\Entry
+      controller: App\Controller\EntryController
       templates:
         list: 'admin/entries/entry_list.html.twig'
 
@@ -281,26 +293,28 @@ easy_admin:
         title: 'Liste des Produits en Stock'
         actions:
           - { name: 'new', label: 'Ajouter Produit au Stock'}
+          - { name: 'use_entry', label: ' ', icon: 'minus-square', type: 'route'}
+        filters: ['type', 'zone']
 
         fields:
           - { property: 'product', label: 'Produit'}
           - { property: 'quantity', label: 'Quantité'}
+          - type
+          - zone
+          - { property: 'entryDate', label: "Date d'entrée"}
           - { property: 'dateFabrication', label: 'Date de Fabrication'}
           - { property: 'dateLimite', label: 'Date Limite'}
-          - type
-          - { property: 'entryDate', label: "Date d'entrée"}
-          - zone
 
       new:
         title: 'Ajouter Produit au Stock'
         fields:
           - { property: 'product', label: 'Produit'}
           - { property: 'quantity', label: 'Quatité'}
+          - { property: 'type', type: 'choice', type_options: { multiple: false, expanded: true, mapped: true, choices: {'Produit chimique': 'Produit chimique', 'Dechét': 'Dechét'} } }
+          - { property: 'zone', type_options: { by_reference: true}}
           - { property: 'dateFabrication', label: 'Date de Fabrication'}
           - { property: 'dateLimite', label: 'Date Limite'}
-          - type
           - { property: 'entryDate', label: "Date d'entrée"}
-          - { property: 'zone', type_options: { by_reference: true}}
 
 
       edit:
@@ -308,20 +322,21 @@ easy_admin:
         fields:
           - { property: 'product', label: 'Produit'}
           - { property: 'quantity', label: 'Quatité'}
+          - { property: 'type', type: 'choice', type_options: { multiple: false, expanded: true, mapped: true, choices: {'Produit chimique': 'Produit chimique', 'Dechét': 'Dechét'} } }
+          - { property: 'zone', type_options: { by_reference: true}}
           - { property: 'dateFabrication', label: 'Date de Fabrication'}
           - { property: 'dateLimite', label: 'Date Limite'}
-          - { property: 'zone', type_options: { by_reference: true}}
 
 
       show:
         fields:
           - { property: 'product', label: 'Produit'}
           - { property: 'quantity', label: 'Quatité'}
+          - type
+          - zone
+          - { property: 'entryDate', label: "Date d'entrée"}
           - { property: 'dateFabrication', label: 'Date de Fabrication'}
           - { property: 'dateLimite', label: 'Date Limite'}
-          - type
-          - { property: 'entryDate', label: "Date d'entrée"}
-          - zone
 
 
 

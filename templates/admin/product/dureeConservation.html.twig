@@ -1,0 +1,7 @@
+{% block body %}
+    {% if item.dureeConservation > 0 %}
+        {{item.getDureeConservation()}} mois
+    {% else %}
+        Aucune donée n'est disponible
+    {% endif %}
+{% endblock %}

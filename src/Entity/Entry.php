@@ -52,6 +52,11 @@ class Entry
      */
     private $dateFabrication;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $volume;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -142,6 +147,18 @@ class Entry
     public function setDateFabrication(?\DateTimeInterface $dateFabrication): self
     {
         $this->dateFabrication = $dateFabrication;
+
+        return $this;
+    }
+
+    public function getVolume(): ?int
+    {
+        return $this->volume;
+    }
+
+    public function setVolume(?int $volume): self
+    {
+        $this->volume = $volume;
 
         return $this;
     }
