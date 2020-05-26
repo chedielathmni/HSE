@@ -16,4 +16,9 @@ class TestController extends AbstractController
             'controller_name' => 'TestController',
         ]);
     }
+
+    private function doNothing() {
+        dump('nothing');
+    }
 }
+
