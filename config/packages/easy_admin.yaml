@@ -124,6 +124,29 @@ easy_admin:
           - {entity: Department, label: 'Ajouter Groupe', icon: 'plus', params: {action: 'new'}}
 
 
+      - label: 'Carburant'
+        icon: ''
+        permission: ['ROLE_ADMIN']
+        children:
+          - {entity: GasPurchase, label: 'Liste des Achats', icon: 'th-list'}
+          - {entity: GasPurchase, label: "Ajout Achat", icon: 'plus', params: { action: 'new' }}
+
+
+      - label: "Transporteurs"
+        icon: 'truck'
+        permission: ['ROLE_ADMIN']
+        children:
+          - {entity: Transporter, label: 'Liste des Transporteurs', icon: 'th-list'}
+          - {entity: Transporter, label: 'Ajouter Transporteur', icon: 'plus', params: {action: 'new'}}
+
+
+      - label: "Vahicules"
+        icon: 'car'
+        permission: ['ROLE_ADMIN']
+        children:
+          - {entity: Car, label: 'Liste des Vahicules', icon: 'th-list'}
+          - {entity: Car, label: 'Ajouter Vahicule', icon: 'plus', params: {action: 'new'}}
+
 
 
   entities:
@@ -558,3 +581,114 @@ easy_admin:
         fields:
           - { property: 'name', label: 'Message'}
           - { property: 'imageFile', type: 'vich_image' }
+
+
+
+    GasPurchase:
+      label: 'Carburant'
+      class: App\Entity\GasPurchase
+
+
+      list:
+        title: 'Liste des Achat de Carburant'
+        filters: [{ property: 'driver', label: 'Conducteur'}, { property: 'purchaseDate', label: "Date d'achat"}]
+        batch_actions: ['delete']
+        actions:
+          - {name: 'new', label: 'Ajouter Achat'}
+        fields: 
+          - { property: 'driver', label: 'Conducteur'}
+          - { property: 'car', label: 'Matricule'}
+          - { property: 'purchaseDate', label: "Date d'achat"}
+          - { property: 'price', label: 'Prix'}
+          - { property: 'gasType', label: 'Type'}
+
+
+      form:
+        fields: 
+          - { property: 'driver', label: 'Conducteur'}
+          - { property: 'car', label: 'Matricule'}
+          - { property: 'purchaseDate', label: "Date d'achat"}
+          - { property: 'price', label: 'Prix'}
+          - { property: 'gasType', label: 'Type'}
+
+
+      show:
+        fields: 
+          - { property: 'driver', label: 'Conducteur'}
+          - { property: 'car', label: 'Matricule'}
+          - { property: 'purchaseDate', label: "Date d'achat"}
+          - { property: 'price', label: 'Prix'}
+          - { property: 'gasType', label: 'Type'}
+
+
+
+    Transporter:
+      label: 'Transporteur'
+      class: App\Entity\Transporter
+
+      list:
+        title: "Liste des Transporteurs"
+        fields:
+          - { property: 'phoneNumber', label: 'Numero de téléphone'}
+          - { property: 'firstName', label: 'Prènom'}
+          - { property: 'lastName', label: 'Nom'}
+          - car
+
+      form:
+        fields:
+          - { property: 'phoneNumber', label: 'Numero de téléphone'}
+          - { property: 'firstName', label: 'Prènom'}
+          - { property: 'lastName', label: 'Nom'}
+          - { property: 'car', label: 'Matricule'}
+
+      show:
+        fields:
+          - { property: 'phoneNumber', label: 'Numero de téléphone'}
+          - { property: 'firstName', label: 'Prènom'}
+          - { property: 'lastName', label: 'Nom'}
+
+
+
+    Car:
+      label: 'Car'
+      class: App\Entity\Car
+      controller: App\Controller\CarController
+
+
+      list: 
+        fields:
+          - { property: 'number', label: 'Matricule'}
+          - { property: 'model', label: 'Modele'}
+          - { property: 'carteGrise', label: 'Numero Carte grise'}
+
+      form:
+        fields:
+          - { property: 'number', label: 'Matricule'}
+          - { property: 'model', label: 'Modele'}
+          - { property: 'carteGrise', label: 'Numero Carte grise'}
+          - { property: 'lastInspectionDate', label: 'Date de dernière inspection'}
+          - { property: 'airbag', label: 'Airbag'}
+          - kilometrage
+          - { property: 'frWheelChangeDate', label: 'Date changement pneu avant droit'}
+          - { property: 'flWheelChangeDate', label: 'Date changement pneu avant gauche'}
+          - { property: 'brWheelChangeDate', label: 'Date changement pneu arriere droit'}
+          - { property: 'blWheelChangeDate', label: 'Date changement pneu arriere gauche'}
+          - { property: 'frontBrakesChangeDate', label: 'Date changement plaquettes de frein avant'}
+          - { property: 'backBrakesChangeDate', label: 'Date changement plaquettes de frein arriere'}
+
+      show:
+        fields:
+          - { property: 'number', label: 'Matricule'}
+          - { property: 'model', label: 'Modele'}
+          - { property: 'carteGrise', label: 'Numero Carte grise'}
+          - { property: 'updatedAt', label: 'Date de dernière mise à jour'}
+          - { property: 'lastInspectionDate', label: 'Date de dernière inspection'}
+          - { property: 'oilDate', label: 'Date du dernier vidange'}
+          - { property: 'airbag', label: 'Airbag'}
+          - kilometrage
+          - { property: 'frWheelChangeDate', label: 'Date changement pneu avant droit'}
+          - { property: 'flWheelChangeDate', label: 'Date changement pneu avant gauche'}
+          - { property: 'brWheelChangeDate', label: 'Date changement pneu arriere droit'}
+          - { property: 'blWheelChangeDate', label: 'Date changement pneu arriere gauche'}
+          - { property: 'frontBrakesChangeDate', label: 'Date changement plaquettes de frein avant'}
+          - { property: 'backBrakesChangeDate', label: 'Date changement plaquettes de frein arriere'}
