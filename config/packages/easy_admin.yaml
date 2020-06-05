@@ -601,6 +601,8 @@ easy_admin:
           - { property: 'purchaseDate', label: "Date d'achat"}
           - { property: 'price', label: 'Prix'}
           - { property: 'gasType', label: 'Type'}
+          - { property: 'utility', label: 'Utilité'}
+
 
 
       form:
@@ -610,6 +612,7 @@ easy_admin:
           - { property: 'purchaseDate', label: "Date d'achat"}
           - { property: 'price', label: 'Prix'}
           - { property: 'gasType', label: 'Type'}
+          - { property: 'utility', label: 'Utilité'}
 
 
       show:
@@ -619,12 +622,14 @@ easy_admin:
           - { property: 'purchaseDate', label: "Date d'achat"}
           - { property: 'price', label: 'Prix'}
           - { property: 'gasType', label: 'Type'}
+          - { property: 'utility', label: 'Utilité'}
 
 
 
     Transporter:
       label: 'Transporteur'
       class: App\Entity\Transporter
+      controller: App\Controller\TransporterController
 
       list:
         title: "Liste des Transporteurs"
@@ -633,6 +638,7 @@ easy_admin:
           - { property: 'firstName', label: 'Prènom'}
           - { property: 'lastName', label: 'Nom'}
           - car
+          - { property: 'valid', label: 'Validé'}
 
       form:
         fields:

@@ -63,6 +63,11 @@ class Transporter
      */
     private $car;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $valid;
+
 
     public function getApiKey() : string {
         return $this->apiKey;
@@ -196,6 +201,18 @@ class Transporter
     public function setCar(?Car $car): self
     {
         $this->car = $car;
+
+        return $this;
+    }
+
+    public function getValid(): ?bool
+    {
+        return $this->valid;
+    }
+
+    public function setValid(bool $valid): self
+    {
+        $this->valid = $valid;
 
         return $this;
     }

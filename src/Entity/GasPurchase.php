@@ -58,6 +58,11 @@ class GasPurchase
      */
     private $car;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $utility;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +126,18 @@ class GasPurchase
     public function setCar(?Car $car): self
     {
         $this->car = $car;
+
+        return $this;
+    }
+
+    public function getUtility(): ?string
+    {
+        return $this->utility;
+    }
+
+    public function setUtility(?string $utility): self
+    {
+        $this->utility = $utility;
 
         return $this;
     }
