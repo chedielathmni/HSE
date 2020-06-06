@@ -25,7 +25,10 @@ easy_admin:
     form_theme:
       - '@EasyAdmin/form/bootstrap_4.html.twig'
       - 'admin/custom/form.html.twig'
-
+    
+    assets:
+      css:
+        - 'css/admin.css'
 
     menu:
 
@@ -98,7 +101,7 @@ easy_admin:
           - {entity: Report, label: 'Ajouter Rapport', icon: 'plus', params: {action: 'new'}}
 
 
-      - label: "EPI"
+      - label: "Equipement de protection individuelle"
         icon: "glasses"
         permission: ['ROLE_ADMIN']
         children:
@@ -125,7 +128,7 @@ easy_admin:
 
 
       - label: 'Carburant'
-        icon: ''
+        icon: 'gas-pump'
         permission: ['ROLE_ADMIN']
         children:
           - {entity: GasPurchase, label: 'Liste des Achats', icon: 'th-list'}
@@ -298,6 +301,7 @@ easy_admin:
           - { property: 'name', label: 'Nom'}
           - type
           - description
+          - { property: 'entries', label: "Produits en stock", template: 'admin/zone/products.html.twig'}
 
 
 

@@ -1,0 +1,8 @@
+<ul>
+{% for entry in item.entries %}
+    <li style="list-style-type: none;" class="mb-3">
+        {{ entry }} - Quantity : {{  entry.getQuantity()  }}
+    </li>
+{% endfor %}
+
+</ul>

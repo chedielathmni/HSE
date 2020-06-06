@@ -19,16 +19,19 @@ class TransporterController extends EasyAdminController {
     }
 
     public function updateTransporterEntity($entity) {
+        
 
         $request = $this->requestStack->getCurrentRequest();
 
         $property = $request->query->get('property');
         $value = $request->query->get('newValue');
 
+        
+
         if ($property == 'valid' and $value == 'true') {
             $email = (new Email())
-                ->from('test@test.com')
-                ->to('deidara.liverpool@gmail.com')
+            ->from('chedielathmni@gmail.com')
+            ->to('deidara.liverpool@gmail.com')
             //->cc('cc@example.com')
             //->bcc('bcc@example.com')
             //->replyTo('fabien@example.com')
@@ -37,8 +40,9 @@ class TransporterController extends EasyAdminController {
             ->text('Sending emails is fun again!')
             ->html('<p>See Twig integration for better HTML integration!</p>');
 
+
         $this->mailer->send($email);
         }
-
+        parent::updateEntity($entity);
     }
 }
