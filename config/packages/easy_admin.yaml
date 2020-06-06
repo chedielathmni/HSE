@@ -28,16 +28,31 @@ easy_admin:
     
     assets:
       css:
-        - 'css/admin.css'
+        - '/assets/bs-tags/bootstrap-tagsinput.css'
+        - '/assets/smart-wizard/css/smart_wizard.css'
+        - '/assets/smart-wizard/css/smart_wizard_theme_arrows.css'
+        - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css
+        - assets/css/select2.css
+        - assets/css/ct.css
+      js:
+        - assets/js/popper.js
+        - assets/js/bootstrap.js
+        - assets/js/app-style-switcher.js
+        - assets/js/perfect-scrollbar.jquery.min.js
+        - assets/js/feather.js
+        - assets/js/sidebar.js
+        - assets/js/custom.js
+        - '/assets/bs-tags/bootstrap-tagsinput.js'
+        - '/assets/smart-wizard/js/jquery.smartWizard.js'
 
     menu:
 
 
       - { label: 'Acceuil', url: '%app.path%', rel: 'index', icon: 'home' }
-      - { label: 'Dashboard', url: '%app.path%', rel: 'index', icon: 'chart-pie' }
+      - { label: 'Dashboard', url: '%app.path.dashboard%', rel: 'index', icon: 'chart-pie' }
 
 
-      - { label: "Entities"}
+      - { label: "Gestion des Produits"}
       - label: "Produits"
         icon: "flask"
         permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_PRODUCTS']
@@ -101,7 +116,7 @@ easy_admin:
           - {entity: Report, label: 'Ajouter Rapport', icon: 'plus', params: {action: 'new'}}
 
 
-      - label: "Equipement de protection individuelle"
+      - label: "Equipements de protection"
         icon: "glasses"
         permission: ['ROLE_ADMIN']
         children:
@@ -126,7 +141,7 @@ easy_admin:
           - {entity: Department, label: 'Liste des Groupes', icon: 'th-list'}
           - {entity: Department, label: 'Ajouter Groupe', icon: 'plus', params: {action: 'new'}}
 
-
+      - { label: "Gestion du transport"}
       - label: 'Carburant'
         icon: 'gas-pump'
         permission: ['ROLE_ADMIN']

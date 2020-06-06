@@ -9,6 +9,7 @@ parameters:
     app.path.fiches: /uploads/files/fiches
     app.path.reports: /uploads/files/reports
     app.path.destock: /admin/destock?menuIndex=4&submenuIndex=2
+    app.path.dashboard: /dashboard
     app.path: /
 
 services:
