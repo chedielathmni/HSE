@@ -239,7 +239,7 @@ easy_admin:
           - { property: 'productName', label: 'Nom Produit', type: 'text'}
           - { property: 'fournisseur'}
           - { property: 'numeroUrgence', label: "Numéro d'urgene", type: 'tel'}
-          - { property: 'fiche', type: 'file', template: 'admin/fiche/show.html.twig', label: 'Fiche de données de sécurité' , base_path: '%app.path.fiches%'}
+          #- { property: 'fiche', type: 'file', template: 'admin/fiche/show.html.twig', label: 'Fiche de données de sécurité' , base_path: '%app.path.fiches%'}
 
       new:
         title: 'Ajouter Nouveau Produit'

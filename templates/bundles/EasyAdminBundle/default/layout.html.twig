@@ -200,6 +200,27 @@
         {% for js_asset in easyadmin_config('design.assets.js') %}
             <script src="{{ asset(js_asset) }}"></script>
         {% endfor %}
+
+        <script>
+
+                // Optimalisation: Store the references outside the event handler:
+                var $window = $(window);
+            
+                function checkWidth() {
+                    var windowsize = $window.width();
+                    if (windowsize < 1400) {
+                        $('.action-delete').html('<i class="fas fa-trash"></i>')
+                        $('.action-edit').html('<i class="far fa-edit"></i>')
+                        }
+                    else {
+                        $('.action-delete').html('Supprimer')
+                        $('.action-edit').html('Editer') 
+                    }
+                    }
+                // Execute on load
+                // Bind event listener
+                $(window).resize(checkWidth);
+        </script> 
     {% endblock body_custom_javascript %}
 
     </body>

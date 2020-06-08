@@ -200,7 +200,8 @@
 
                         {% if _list_item_actions|length > 0 %}
                             {% set _column_label =  'list.row_actions'|trans(_trans_parameters, 'EasyAdminBundle') %}
-                            <td class="actions">
+                            <td class="actions navbar navbar-expand-lg">
+                                <div class="collapse navbar-collapse">
                                 {% block item_actions %}
                                     {% set _actions_template = _entity_config.list.collapse_actions
                                         ? '@EasyAdmin/default/includes/_actions_dropdown.html.twig'
@@ -216,6 +217,7 @@
                                         item: item
                                     }, with_context = false) }}
                                 {% endblock item_actions %}
+                                </div>
                             </td>
                         {% endif %}
                     </tr>
@@ -257,9 +259,9 @@
 {% endblock main %}
 
 {% block content_footer %}
-{#    {% block paginator %}#}
-{#        {{ include(_entity_config.templates.paginator) }}#}
-{#    {% endblock paginator %}#}
+    {% block paginator %}
+        {{ include(_entity_config.templates.paginator) }}
+    {% endblock paginator %}
 {% endblock %}
 
 

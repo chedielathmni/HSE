@@ -52,7 +52,7 @@
                                 {% for subitem in item.children %}
                                     {% block menu_subitem %}
                                         {% if easyadmin_is_granted(subitem.permission) %}
-                                            <li class=" sidebar-item {{ subitem.type == 'divider' ? 'header' }} {{ is_selected_menu and app.request.query.get('submenuIndex')|default(-1) == subitem.submenu_index ? 'active' }}">
+                                            <li class=" sidebar-item sidebar-child {{ subitem.type == 'divider' ? 'header' }} {{ is_selected_menu and app.request.query.get('submenuIndex')|default(-1) == subitem.submenu_index ? 'active' }}">
                                                 {{ helper.render_menu_item(subitem, _translation_domain) }}
                                             </li>
                                         {% endif %}
