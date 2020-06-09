@@ -33,6 +33,7 @@
         "symfony/validator": "5.0.*",
         "symfony/web-link": "5.0.*",
         "symfony/yaml": "5.0.*",
+        "tattali/calendar-bundle": "^1.2",
         "vich/uploader-bundle": "^1.13"
     },
     "require-dev": {

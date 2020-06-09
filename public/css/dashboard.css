@@ -1,0 +1,123 @@
+._card {
+    height: 160px;
+    color: white;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+._card-main {
+
+    text-align: left;
+}
+._card-main1 {
+    background-color: #17A2B8;
+    height: 125px;
+}
+
+p {
+    position: relative;
+    top: 35px;
+    margin-left: 3%;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 210%;
+    line-height: 75px;
+    text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.5);
+}
+
+._card-icon {
+    font-size: 90px;
+    position: relative;
+    left: 70%;
+    bottom: 55%;
+    display: block;
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+._card-icon1 {
+    color: #13899C;
+}
+
+
+._card-icon2 {
+    color: #228E3A;
+}
+
+._card-icon3 {
+    color: #D9A405;
+}
+
+._card-icon4 {
+    color: #BB2D3A;
+}
+
+
+
+._card-footer {
+    background-color: #1592A5 ;
+    height: 35px;
+}
+
+._card-main2 {
+    background-color: #28A745;
+    height: 125px;
+}
+
+._card-footer2 {
+    background-color: #24963E ;
+    height: 35px;
+}
+
+._card-main3 {
+    background-color: #FFC107;
+    height: 125px;
+}
+
+._card-footer3 {
+    background-color: #E5AD06 ;
+    height: 35px;
+}
+
+._card-main4 {
+    background-color: #DC3545;
+    height: 125px;
+}
+
+._card-footer4 {
+    background-color: #C6303E ;
+    height: 35px;
+}
+
+
+@media  (max-width: 1700px) {
+    
+    ._card-icon {
+        display: none!important;
+    }
+
+    p {
+    margin-left: 0px;
+    }
+
+    ._card-main {
+        text-align: center;
+    }
+}
+
+
+@media  (max-width: 1175px) {
+    
+    ._card-icon {
+        display: block!important;
+    }
+
+    p {
+    margin-left: 5px!important;
+    }
+
+    ._card-main {
+        text-align: left;
+    }
+}

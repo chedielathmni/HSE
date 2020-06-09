@@ -1,1 +1,91 @@
 {% extends 'bundles/EasyAdminBundle/default/layout.html.twig' %}
+
+
+
+{% block page_title %}Dashboard Administration{% endblock %}
+
+
+
+{% block main %}
+    <div class="containter ml-2">
+        <div class="row">
+            <div class="col-lg-6 col-xl-3 mb-4">
+                <div class="_card" id="stats-btn">
+                    <div class="_card-main _card-main1">
+                        <p>Statistiques</p>
+                        <i class="_card-icon _card-icon1 fas fa-chart-pie"></i>
+                    </div>
+                    <div class="_card-footer _card-footer1"></div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xl-3 mb-4">
+                <div class="_card" id="zones-btn">
+                    <div class="_card-main _card-main2">
+                        <p>Zones</p>
+                        <i class="_card-icon _card-icon2 fas fa-hammer"></i>
+                    </div>
+                    <div class="_card-footer _card-footer2"></div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xl-3 mb-4">
+                <div class="_card" id="reports-btn">
+                    <div class="_card-main _card-main3">
+                        <p>Rapports</p>
+                        <i class="_card-icon _card-icon3 far fa-file-alt"></i>
+                    </div>
+                    <div class="_card-footer _card-footer3"></div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xl-3  mb-4">
+                <div class="_card" id="calender-btn">
+                    <div class="_card-main _card-main4">
+                        <p>Calendrier</p>
+                        <i class="_card-icon _card-icon4 far fa-calendar-alt"></i>
+                    </div>
+                    <div class="_card-footer _card-footer4"></div>
+                </div>
+            </div>
+        
+
+            <div class="col">
+                {% block showElement %}
+                <h1>
+                    Stats
+                </h1>
+                {% endblock %}
+            </div>
+
+    </div>
+    
+{% endblock %}
+
+{% block head_stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+{% endblock head_stylesheets %}
+
+
+{% block body_javascript %}
+    <script>
+            let calender = document.getElementById('calender-btn')
+            let zones = document.getElementById('zones-btn')
+            let reports = document.getElementById('reports-btn')
+            let stats = document.getElementById('stats-btn')
+
+            stats.addEventListener('click', () => {
+                window.location.href="{{ path('dashboard')}}";
+            })
+
+            calender.addEventListener('click', () => {
+                window.location.href="{{ path('calender')}}";
+            })
+
+            zones.addEventListener('click', () => {
+                window.location.href="{{ path('zones')}}";
+            })
+
+            reports.addEventListener('click', () => {
+                window.location.href="{{ path('reports')}}";
+            })
+    </script>
+
+{% endblock body_javascript %}
