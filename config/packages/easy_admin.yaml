@@ -616,7 +616,7 @@ easy_admin:
           - {name: 'new', label: 'Ajouter Achat'}
         fields: 
           - { property: 'driver', label: 'Conducteur'}
-          - { property: 'car', label: 'Matricule'}
+          - { property: 'car', label: 'Véhicule'}
           - { property: 'purchaseDate', label: "Date d'achat"}
           - { property: 'price', label: 'Prix'}
           - { property: 'gasType', label: 'Type'}
@@ -648,7 +648,7 @@ easy_admin:
     Transporter:
       label: 'Transporteur'
       class: App\Entity\Transporter
-      controller: App\Controller\TransporterController
+      #controller: App\Controller\TransporterController
 
       list:
         title: "Liste des Transporteurs"

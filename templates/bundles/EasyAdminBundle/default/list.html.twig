@@ -268,12 +268,50 @@
 {% block head_stylesheets %}
     <link rel="stylesheet" href="{{ asset('/assets/bootstrap-datatable/bootstrap-table.css') }}">
 {% endblock %}
-
 {% block body_javascript %}
     {{ parent() }}
 
     <script type="text/javascript">
         $(function() {
+            const toggles = document.querySelectorAll('.checkbox-switch input[type="checkbox"]');
+            for (i = 0; i < toggles.length; i++) {
+                toggles[i].addEventListener('change', function () {
+                    const toggle = this;
+                    const newValue = this.checked;
+                    const oldValue = !newValue;
+                    const propertyName = this.closest('.checkbox-switch').dataset.propertyname;
+
+                    const toggleUrl = "{{ path('easyadmin', { action: 'edit', entity: _entity_config.name, view: 'list' })|raw }}"
+                        + "&id=" + this.closest('tr').dataset.id
+                        + "&property=" + propertyName
+                        + "&newValue=" + newValue.toString();
+
+                    let toggleRequest = $.ajax({ type: "GET", url: toggleUrl, data: {} });
+
+                    toggleRequest.done(function(result) {});
+
+                    toggleRequest.fail(function() {
+                        // in case of error, restore the original value and disable the toggle
+                        toggle.checked = oldValue;
+                        toggle.disabled = true;
+                        toggle.closest('.checkbox-switch').classList.add('disabled');
+                    });
+                });
+            }
+
+            $('.action-delete').on('click', function(e) {
+                e.preventDefault();
+                const id = $(this).parents('tr').first().data('id');
+
+                $('#modal-delete').modal({ backdrop: true, keyboard: true })
+                    .off('click', '#modal-delete-button')
+                    .on('click', '#modal-delete-button', function () {
+                        let deleteForm = $('#delete-form');
+                        deleteForm.attr('action', deleteForm.attr('action').replace('__id__', id));
+                        deleteForm.trigger('submit');
+                    });
+            });
+
             {% if _has_filters %}
             // HTML5 specifies that a <script> tag inserted with innerHTML should not execute
             // https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML#Security_considerations
@@ -305,169 +343,22 @@
                 event.stopPropagation();
             });
             {% endif %}
-        });
-    </script>
 
-    {% if 'search' == app.request.get('action') %}
-        <script type="text/javascript">
-            const _search_query = "{{ app.request.get('query')|default('')|e('js') }}";
-            // the original query is prepended to allow matching exact phrases in addition to single words
-            $('#main').find('table tbody td:not(.actions)').highlight($.merge([_search_query], _search_query.split(' ')));
-        </script>
-    {% endif %}
-    {# TOUCHED #}
-    <script src="{{ asset('/assets/bootstrap-datatable/bootstrap-table.js') }}"></script>
-    {% set _bs_locale = app.request.locale|default(app.request.defaultLocale) %}
-    <script src="{{ asset('/assets/bootstrap-datatable/locale/bootstrap-table-'~ _bs_locale ~'.js') }}"></script>
-
-    <script>
-        $(document).ready(function() {
-            let $table = $('#table');
-
-            $table.bootstrapTable('destroy').bootstrapTable({
-                height: 550,
-                columns: [
-                    {% if _has_batch_actions %}
-                    {
-                        field: '#',
-                        class: 'form-batch-checkbox',
-                        checkbox: true
-                    },
-                    {% endif %}
-                    {% for field in fields %}
-                    {
-                        title: '{{ field.label }}',
-                        field: '{{ field.fieldName }}',
-                        sortable: true,
-                        formatter: function (data, row, index) {
-                            let type = '{{ field.type }}';
-                            if (type == 'boolean') {
-                                let template = `<div class="checkbox-switch" data-propertyname="{{ field.property }}" data-id="${row.id}">
-                                                    <label>
-                                                        <input type="checkbox" ${ data == true ? 'checked' : '' }>
-                                                        <span></span>
-                                                    </label>
-                                                </div>`;
-
-                                return template;
-                            } else if (type == 'association') {
-                                if (Array.isArray(data))
-                                    return data.length;
-                            } else if (type == 'datetime') {
-                                if (data)
-                                    return new Date(data).toLocaleString();
-                            } else if (type == 'image') {
-                                if (data == null) return `<span class="badge badge-warning">Vide</span>`;
-                                let template = `<a href="#" class="easyadmin-thumbnail" data-featherlight="#easyadmin-lightbox-{{ field.fieldName }}${row.id}" data-featherlight-close-on-click="anywhere">
-                                                    <img src="{{ field.base_path|default('') }}${data}">
-                                                </a>
-
-                                                <div id="easyadmin-lightbox-{{ field.fieldName }}${row.id}" class="easyadmin-lightbox">
-                                                    <img src="{{ field.base_path|default('') }}${data}">
-                                                </div>`;
-                                return template;
-                            } else if (type == 'text' || type == 'string') {
-                                if (data)
-                                    return data.length > 64 ? data.slice(0, 64)  + '...' : data;
-                            }
-                            return data;
-                        }
-                    },
-                    {% endfor %}
-                    {% if _list_item_actions|length > 0 %}
-                    {
-                        title: "{{ 'list.row_actions'|trans(_trans_parameters, 'EasyAdminBundle') }}",
-                        formatter: function (data, row, index) {
-                            let template = ``;
-                            {% for action in _list_item_actions %}
-                                {% if 'list' == action.name %}
-                                    {% set action_href = _request_parameters.referer|default('') ? _request_parameters.referer|easyadmin_urldecode : path('easyadmin', _request_parameters|merge({ action: 'list' })) %}
-                                {% elseif 'method' == action.type %}
-                                    {% set action_href = path('easyadmin', _request_parameters|merge({ action: action.name, id: '__id__' })) %}
-                                {% elseif 'route' == action.type %}
-                                    {% set action_href = path(action.name, _request_parameters|merge({ action: action.name, id: '__id__' })) %}
-                                {% endif %}
-
-                            template += `<a
-                                    class="{{ action.css_class|default('') }}"
-                                    data-id="${row.id}"
-                                    title="{{ action.title|default('') is empty ? "" : action.title|trans(_trans_parameters, _entity_config.translation_domain) }}"
-                                    href="{{ action_href }}"
-                                >
-                                    {% if action.icon %}
-                                        <i class="fa fa-fw fa-{{ action.icon }}"></i>
-                                    {% endif %}
-
-                                    {% if action.label is defined and not action.label is empty %}
-                                        {{ action.label|trans(_trans_parameters) }}
-                                    {% endif %}
-                                </a>`;
-                            {% endfor %}
-
-                            template = template.replace(/__id__/g, row.id);
-                            return template;
-                        }
-                    }
-                    {% endif %}
-                ],
-                onPostBody: function (data) {
-                    if (data.length == 0) return false;
-                    const toggles = document.querySelectorAll('.checkbox-switch input[type="checkbox"]');
-                    for (i = 0; i < toggles.length; i++) {
-                        toggles[i].addEventListener('change', function () {
-                            const toggle = this;
-                            const newValue = this.checked;
-                            const oldValue = !newValue;
-                            const propertyName = this.closest('.checkbox-switch').dataset.propertyname;
-                            const id = this.closest('.checkbox-switch').dataset.id;
-                            const toggleUrl = "{{ path('easyadmin', { action: 'edit', entity: _entity_config.name, view: 'list' })|raw }}"
-                                + "&id=" + id
-                                + "&property=" + propertyName
-                                + "&newValue=" + newValue.toString();
-
-                            let toggleRequest = $.ajax({ type: "GET", url: toggleUrl, data: {} });
-
-                            toggleRequest.done(function(result) {});
-
-                            toggleRequest.fail(function() {
-                                // in case of error, restore the original value and disable the toggle
-                                toggle.checked = oldValue;
-                                toggle.disabled = true;
-                                toggle.closest('.checkbox-switch').classList.add('disabled');
-                            });
-                        });
-                    }
-
-                    $('.action-delete').on('click', function(e) {
-                        e.preventDefault();
-                        const id = e.target.dataset.id;
-
-                        $('#modal-delete').modal({ backdrop: true, keyboard: true })
-                            .off('click', '#modal-delete-button')
-                            .on('click', '#modal-delete-button', function () {
-                                let deleteForm = $('#delete-form');
-                                deleteForm.attr('action', deleteForm.attr('action').replace('__id__', id));
-                                deleteForm.trigger('submit');
-                            });
-                    });
-                }
-            }) // end of datatable
             {% if _has_batch_actions %}
             const titleContent = $('.content-header-title > .title').html();
             $(document).on('click', '.deselect-batch-button', function () {
-                $(this).closest('body').find('input[name="btSelectAll"]').prop('checked', false).trigger('change');
+                $(this).closest('.content').find(':checkbox.form-batch-checkbox-all').prop('checked', false).trigger('change');
             });
-            $(document).on('change', 'input[name="btSelectAll"]', function () {
-                $(this).closest('body').find('.form-batch-checkbox input[name="btSelectItem"]').prop('checked', $(this).prop('checked')).trigger('change');
+            $(document).on('change', '.form-batch-checkbox-all', function () {
+                $(this).closest('.content').find(':checkbox.form-batch-checkbox').prop('checked', $(this).prop('checked')).trigger('change');
             });
             $(document).on('change', '.form-batch-checkbox', function () {
-                const $content = $(this).closest('body');
+                const $content = $(this).closest('.content');
                 let $input = $content.find(':hidden#batch_form_ids');
                 let ids = $input.val() ? $input.val().split(',') : [];
-                let $el = $(this).find('input:checkbox');
-                const id = $el.val();
+                const id = $(this).val();
 
-                if ($el.prop('checked')) {
+                if ($(this).prop('checked')) {
                     if (-1 === ids.indexOf(id)) {
                         ids.push(id);
                     }
@@ -490,19 +381,59 @@
                 $content.find('.content-header-title > .title').html(0 === ids.length ? titleContent : '');
             });
 
-            $('button[name="batch_form[name]"].ask-confirm-batch-button').on('click', function (event) {
+            let modalTitle = $('#batch-action-confirmation-title');
+            const titleContentWithPlaceholders = modalTitle.text();
+            $('button[name="batch_form[name]"].batch-action-requires-confirmation').on('click', function (event) {
                 event.preventDefault();
                 event.stopPropagation();
                 let $button = $(this);
+
+                const actionName = $button.text();
+                const numberOfSelectedItems = $('input[type="checkbox"].form-batch-checkbox:checked').length;
+                modalTitle.text(titleContentWithPlaceholders
+                    .replace('%action_name%', actionName)
+                    .replace('%num_items%', numberOfSelectedItems));
 
                 $('#modal-batch-action').modal({ backdrop : true, keyboard : true })
                     .off('click', '#modal-batch-action-button')
                     .on('click', '#modal-batch-action-button', function () {
                         $button.unbind('click');
                         $button.trigger('click');
+
+                        modalTitle.text(titleContentWithPlaceholders);
                     });
             });
             {% endif %}
-        })
+        });
     </script>
+
+    <script>
+
+        // Optimalisation: Store the references outside the event handler:
+        var $window = $(window);
+    
+        function checkWidth() {
+            var windowsize = $window.width();
+            if (windowsize < 1400) {
+                $('.action-delete').html('<i class="fas fa-trash"></i>')
+                $('.action-edit').html('<i class="far fa-edit"></i>')
+                }
+            else {
+                $('.action-delete').html('Supprimer')
+                $('.action-edit').html('Editer') 
+            }
+            }
+        // Execute on load
+        // Bind event listener
+        $(window).resize(checkWidth);
+    </script> 
+
+    {% if 'search' == app.request.get('action') %}
+        <script type="text/javascript">
+            const _search_query = "{{ app.request.get('query')|default('')|e('js') }}";
+            // the original query is prepended to allow matching exact phrases in addition to single words
+            $('#main').find('table tbody td:not(.actions)').highlight($.merge([_search_query], _search_query.split(' ')));
+        </script>
+    {% endif %}
 {% endblock %}
+

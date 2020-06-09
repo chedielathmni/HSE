@@ -18,7 +18,7 @@ class TransporterController extends EasyAdminController {
         $this->mailer = $mailer;
     }
 
-    public function updateTransporterEntity($entity) {
+    /*public function updateTransporterEntity($entity) {
         
 
         $request = $this->requestStack->getCurrentRequest();
@@ -28,7 +28,7 @@ class TransporterController extends EasyAdminController {
 
         
 
-        if ($property == 'valid' and $value == 'true') {
+        /* if ($property == 'valid' and $value == 'true') {
             $email = (new Email())
             ->from('chedielathmni@gmail.com')
             ->to('deidara.liverpool@gmail.com')
@@ -41,8 +41,8 @@ class TransporterController extends EasyAdminController {
             ->html('<p>See Twig integration for better HTML integration!</p>');
 
 
-        $this->mailer->send($email);
-        }
+        $this->mailer->send($email); 
+        } 
         parent::updateEntity($entity);
-    }
+    } */
 }

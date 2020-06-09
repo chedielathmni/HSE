@@ -55,7 +55,7 @@
                             <div data-logobg="skin6" class="navbar-header">
                                 <div id="header-logo" class="navbar-brand">
                                     <b class="logo-icon">
-                                        <img src="{{ asset('/assets/img/logo-icon.png') }}" alt="">
+                                        <a href="{{ path('easyadmin') }}"><img src="{{ asset('/assets/img/logo-icon.png') }}" alt=""></a>
                                     </b>
 
                                     <span class="logo-text">
@@ -201,26 +201,7 @@
             <script src="{{ asset(js_asset) }}"></script>
         {% endfor %}
 
-        <script>
-
-                // Optimalisation: Store the references outside the event handler:
-                var $window = $(window);
-            
-                function checkWidth() {
-                    var windowsize = $window.width();
-                    if (windowsize < 1400) {
-                        $('.action-delete').html('<i class="fas fa-trash"></i>')
-                        $('.action-edit').html('<i class="far fa-edit"></i>')
-                        }
-                    else {
-                        $('.action-delete').html('Supprimer')
-                        $('.action-edit').html('Editer') 
-                    }
-                    }
-                // Execute on load
-                // Bind event listener
-                $(window).resize(checkWidth);
-        </script> 
+        
     {% endblock body_custom_javascript %}
 
     </body>
