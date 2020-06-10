@@ -64,18 +64,16 @@
         e.stopPropagation();
     })
 
-    $('.fa-users').click((e) => {
+    $('.fa-users').hover((e) => {
         reset()
         id = e.target.id.match(/\d+/g)[0]
-        $('.products' + id ).hasClass('d-none') ? null:$('.products' + id ).addClass('d-none');
         $('.users' + id ).removeClass('d-none');
     })
 
 
-    $('.fa-flask').click((e) => {
+    $('.fa-flask').hover((e) => {
         reset()
         id = e.target.id.match(/\d+/g)[0]
-        $('.users' + id ).hasClass('d-none') ? null:$('.users' + id ).addClass('d-none');
         $('.products' + id ).removeClass('d-none');
     })
 

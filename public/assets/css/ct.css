@@ -18309,6 +18309,11 @@ body.show .form-control {
         right: 25px;
     }
 
+    .toggle  {
+        width: 75%;
+        font-size: small;
+    }
+
 
 }
 

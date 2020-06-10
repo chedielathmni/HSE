@@ -70,11 +70,11 @@ easy_admin:
 
 
 
-      - label: "Zones de stockage"
+      - label: "Zones de Stockage"
         icon: 'box'
         children:
-          - {entity: Zone, label: 'Liste des Zone de stockage', icon: 'th-list'}
-          - {entity: Zone, label: 'Ajouter Zone de stockage', icon: 'plus', params: {action: 'new'}}
+          - {entity: Zone, label: 'Liste des Zones de Stockage', icon: 'th-list'}
+          - {entity: Zone, label: 'Ajouter Zone de Stockage', icon: 'plus', params: {action: 'new'}}
 
 
 
@@ -106,7 +106,7 @@ easy_admin:
         icon: "radiation"
         permission: ['ROLE_ADMIN']
         children:
-          - {entity: Pictogramme, label: 'Liste de Pictogrammes', icon: 'th-list'}
+          - {entity: Pictogramme, label: 'Liste des Pictogrammes', icon: 'th-list'}
           - {entity: Pictogramme, label: 'Ajouter Pictogramme', icon: 'plus', params: {action: 'new'}}
 
       - label: "Rapport"
@@ -116,7 +116,7 @@ easy_admin:
           - {entity: Report, label: 'Ajouter Rapport', icon: 'plus', params: {action: 'new'}}
 
 
-      - label: "Equipements de protection"
+      - label: "Equipements de Protection"
         icon: "glasses"
         permission: ['ROLE_ADMIN']
         children:
@@ -147,11 +147,11 @@ easy_admin:
         icon: 'hammer'
         permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_GROUPS']
         children:
-          - {entity: WorkingZone, label: 'Liste des zones de travail', icon: 'th-list'}
-          - {entity: WorkingZone, label: 'Ajouter zone de travail', icon: 'plus', params: {action: 'new'}}
+          - {entity: WorkingZone, label: 'Liste des Zones de travail', icon: 'th-list'}
+          - {entity: WorkingZone, label: 'Ajouter Zone de travail', icon: 'plus', params: {action: 'new'}}
 
 
-      - { label: "Gestion du transport"}
+      - { label: "Gestion du Transport"}
       - label: 'Carburant'
         icon: 'gas-pump'
         permission: ['ROLE_ADMIN']
@@ -168,12 +168,12 @@ easy_admin:
           - {entity: Transporter, label: 'Ajouter Transporteur', icon: 'plus', params: {action: 'new'}}
 
 
-      - label: "Vahicules"
+      - label: "Véhicules"
         icon: 'car'
         permission: ['ROLE_ADMIN']
         children:
-          - {entity: Car, label: 'Liste des Vahicules', icon: 'th-list'}
-          - {entity: Car, label: 'Ajouter Vahicule', icon: 'plus', params: {action: 'new'}}
+          - {entity: Car, label: 'Liste des Véhicules', icon: 'th-list'}
+          - {entity: Car, label: 'Ajouter Véhicule', icon: 'plus', params: {action: 'new'}}
 
       - label: "Historique"
         entity: 'History'
@@ -305,7 +305,7 @@ easy_admin:
     Zone:
 
       label: "Zone de stockage"
-      title: "Liste des Zones de stockage"
+      title: "Liste des Zones de Stockage"
       class: App\Entity\Zone
 
       list:

@@ -99,8 +99,8 @@
         display: none!important;
     }
 
-    p {
-    margin-left: 0px;
+    .text {
+    margin-left: -3px;
     }
 
     ._card-main {
@@ -274,7 +274,7 @@
 
 
 .fa-users:hover {
-    color: #45e19f!important;
+    color: #5f76e8!important;
 }
 
 .fa-flask:hover {
@@ -305,8 +305,11 @@
     }
 
 
-    .zone:nth-child(n) {
+    .zone:nth-child(1) {
         animation: fadeIn 1s .5s backwards;
+    }
+    .zone:nth-child(2) {
+        animation: fadeIn 1s 1s backwards;
     }
 
     .zone:hover {
