@@ -93,11 +93,17 @@ class Car
      */
     private $lastInspectionDate;
 
+    /**
+     * @ORM\OneToMany(targetEntity=History::class, mappedBy="car")
+     */
+    private $history;
+
 
 
     public function __construct()
     {
         $this->gasPurchases = new ArrayCollection();
+        $this->history = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -306,6 +312,37 @@ class Car
     public function setLastInspectionDate(?\DateTimeInterface $lastInspectionDate): self
     {
         $this->lastInspectionDate = $lastInspectionDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|History[]
+     */
+    public function getHistory(): Collection
+    {
+        return $this->history;
+    }
+
+    public function addHistory(History $history): self
+    {
+        if (!$this->history->contains($history)) {
+            $this->history[] = $history;
+            $history->setCar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistory(History $history): self
+    {
+        if ($this->history->contains($history)) {
+            $this->history->removeElement($history);
+            // set the owning side to null (unless already changed)
+            if ($history->getCar() === $this) {
+                $history->setCar(null);
+            }
+        }
 
         return $this;
     }

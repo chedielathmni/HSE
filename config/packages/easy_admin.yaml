@@ -175,6 +175,11 @@ easy_admin:
           - {entity: Car, label: 'Liste des Vahicules', icon: 'th-list'}
           - {entity: Car, label: 'Ajouter Vahicule', icon: 'plus', params: {action: 'new'}}
 
+      - label: "Historique"
+        entity: 'History'
+        icon: 'book'
+        permission: ['ROLE_ADMIN']
+
 
 
   entities:
@@ -680,6 +685,8 @@ easy_admin:
           - { property: 'phoneNumber', label: 'Numero de téléphone'}
           - { property: 'firstName', label: 'Prènom'}
           - { property: 'lastName', label: 'Nom'}
+          - { property: 'history', label: 'Historique', template: 'admin/transporter/history.html.twig'}
+
 
 
 
@@ -726,6 +733,7 @@ easy_admin:
           - { property: 'blWheelChangeDate', label: 'Date changement pneu arriere gauche'}
           - { property: 'frontBrakesChangeDate', label: 'Date changement plaquettes de frein avant'}
           - { property: 'backBrakesChangeDate', label: 'Date changement plaquettes de frein arriere'}
+          - { property: 'history', label: 'Historique', template: 'admin/car/history.html.twig'}
 
 
 
@@ -756,3 +764,19 @@ easy_admin:
           - { property: 'image', type: 'image', base_path: '%app.path.workingZones_images%' }
           - { property: 'workers', label: 'Personnel', type_options: { by_reference: false}}
           - { property: 'products', label: 'Produits'}
+
+
+
+    History:
+      label: 'Historique'
+      class: App\Entity\History
+
+      disabled_actions: ['new']
+
+      list:
+        title: 'Historique'
+        fields: 
+          - { property: 'driver', label: 'Transporteur'}
+          - { property: 'car', label: 'Vehicule'}
+          - { property: 'beginAt', label: 'Date de debut'}
+          - { property: 'endAt', label: 'Date de fin'}

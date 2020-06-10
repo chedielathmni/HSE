@@ -1,0 +1,21 @@
+{% block body %}
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Conducteur</th>
+            <th scope="col">Date de début</th>
+            <th scope="col">Date de fin</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for elem in item.history %}
+        <tr>
+            <td><a href="{{ path('easyadmin', {'entity': 'Transporter', 'action': 'show', 'id': elem.getDriver().getId() }) }}">{{ elem.getDriver() }}</a></td>
+            <td>{{ elem.getBeginAt().format('d/m/Y') }}</td>
+            <td>{{ elem.getEndAt().format('d/m/Y') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+        {% endblock %}

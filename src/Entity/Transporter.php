@@ -68,6 +68,11 @@ class Transporter
      */
     private $valid;
 
+    /**
+     * @ORM\OneToMany(targetEntity=History::class, mappedBy="driver")
+     */
+    private $history;
+
 
     public function getApiKey() : string {
         return $this->apiKey;
@@ -82,6 +87,7 @@ class Transporter
     public function __construct()
     {
         $this->gasPurchases = new ArrayCollection();
+        $this->history = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -213,6 +219,37 @@ class Transporter
     public function setValid(bool $valid): self
     {
         $this->valid = $valid;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|History[]
+     */
+    public function getHistory(): Collection
+    {
+        return $this->history;
+    }
+
+    public function addHistory(History $history): self
+    {
+        if (!$this->history->contains($history)) {
+            $this->history[] = $history;
+            $history->setDriver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistory(History $history): self
+    {
+        if ($this->history->contains($history)) {
+            $this->history->removeElement($history);
+            // set the owning side to null (unless already changed)
+            if ($history->getDriver() === $this) {
+                $history->setDriver(null);
+            }
+        }
 
         return $this;
     }
