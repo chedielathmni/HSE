@@ -1,0 +1,46 @@
+{% extends 'dashboard/index.html.twig' %}
+
+
+    {% block showElement %}
+    <h1>Evenements</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Titre</th>
+                <td>{{ event.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ event.description }}</td>
+            </tr>
+            <tr>
+                <th>Debut</th>
+                <td>{{ event.beginAt ? event.beginAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fin</th>
+                <td>{{ event.endAt ? event.endAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a  class="btn btn-primary" href="{{ path('calendar')}}">
+                        Retour
+                    </a>
+                </td>
+                <td class="d-flex float-right">
+                    
+                    <a href="{{ path('event_edit', {'id': event.id}) }}" class="mr-3"><button class="btn btn-primary">Modifier</button></a>
+                    {{ include('event/_delete_form.html.twig') }}
+
+                </td>
+                <td>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+
+    
+    {% endblock %}

@@ -7,85 +7,96 @@
 
 
 {% block main %}
-    <div class="containter ml-2">
-        <div class="row">
-            <div class="col-lg-6 col-xl-3 mb-4">
-                <div class="_card" id="stats-btn">
-                    <div class="_card-main _card-main1">
-                        <p>Statistiques</p>
-                        <i class="_card-icon _card-icon1 fas fa-chart-pie"></i>
-                    </div>
-                    <div class="_card-footer _card-footer1"></div>
+<div class="containter ml-2">
+    <div class="row">
+        <div class="col-lg-6 col-xl-3 mb-4">
+            <div class="_card" id="stats-btn">
+                <div class="_card-main _card-main1">
+                    <p class="text">Statistiques</p>
+                    <i class="_card-icon _card-icon1 fas fa-chart-pie"></i>
                 </div>
+                <div class="_card-footer _card-footer1"></div>
             </div>
-            <div class="col-lg-6 col-xl-3 mb-4">
-                <div class="_card" id="zones-btn">
-                    <div class="_card-main _card-main2">
-                        <p>Zones</p>
-                        <i class="_card-icon _card-icon2 fas fa-hammer"></i>
-                    </div>
-                    <div class="_card-footer _card-footer2"></div>
+        </div>
+        <div class="col-lg-6 col-xl-3 mb-4">
+            <div class="_card" id="zones-btn">
+                <div class="_card-main _card-main2">
+                    <p class="text">Zones</p>
+                    <i class="_card-icon _card-icon2 fas fa-hammer"></i>
                 </div>
+                <div class="_card-footer _card-footer2"></div>
             </div>
-            <div class="col-lg-6 col-xl-3 mb-4">
-                <div class="_card" id="reports-btn">
-                    <div class="_card-main _card-main3">
-                        <p>Rapports</p>
-                        <i class="_card-icon _card-icon3 far fa-file-alt"></i>
-                    </div>
-                    <div class="_card-footer _card-footer3"></div>
+        </div>
+        <div class="col-lg-6 col-xl-3 mb-4">
+            <div class="_card" id="reports-btn">
+                <div class="_card-main _card-main3">
+                    <p class="text">Rapports</p>
+                    <i class="_card-icon _card-icon3 far fa-file-alt"></i>
                 </div>
+                <div class="_card-footer _card-footer3"></div>
             </div>
-            <div class="col-lg-6 col-xl-3  mb-4">
-                <div class="_card" id="calender-btn">
-                    <div class="_card-main _card-main4">
-                        <p>Calendrier</p>
-                        <i class="_card-icon _card-icon4 far fa-calendar-alt"></i>
-                    </div>
-                    <div class="_card-footer _card-footer4"></div>
+        </div>
+        <div class="col-lg-6 col-xl-3  mb-4">
+            <div class="_card" id="calendar-btn">
+                <div class="_card-main _card-main4">
+                    <p class="text">Calendrier</p>
+                    <i class="_card-icon _card-icon4 far fa-calendar-alt"></i>
                 </div>
+                <div class="_card-footer _card-footer4"></div>
             </div>
-        
+        </div>
 
-            <div class="col">
-                {% block showElement %}
-                <h1>
-                    Stats
-                </h1>
-                {% endblock %}
-            </div>
+
+        <div class="col">
+            {% block showElement %}
+            <h1>
+                Stats
+            </h1>
+            {% endblock %}
+        </div>
 
     </div>
-    
-{% endblock %}
 
-{% block head_stylesheets %}
+    {% endblock %}
+
+    {% block head_stylesheets %}
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
-{% endblock head_stylesheets %}
+    {% endblock head_stylesheets %}
 
 
-{% block body_javascript %}
+    {% block body_javascript %}
     <script>
-            let calender = document.getElementById('calender-btn')
-            let zones = document.getElementById('zones-btn')
-            let reports = document.getElementById('reports-btn')
-            let stats = document.getElementById('stats-btn')
+        let calendar = document.getElementById('calendar-btn')
+        let zones = document.getElementById('zones-btn')
+        let reports = document.getElementById('reports-btn')
+        let stats = document.getElementById('stats-btn')
 
-            stats.addEventListener('click', () => {
-                window.location.href="{{ path('dashboard')}}";
-            })
+        stats.addEventListener('click', () => {
+            window.location.href = "{{ path('dashboard')}}";
+        })
 
-            calender.addEventListener('click', () => {
-                window.location.href="{{ path('calender')}}";
-            })
+        calendar.addEventListener('click', () => {
+            window.location.href = "{{ path('calendar')}}";
+        })
 
-            zones.addEventListener('click', () => {
-                window.location.href="{{ path('zones')}}";
-            })
+        zones.addEventListener('click', () => {
+            window.location.href = "{{ path('zones')}}";
+        })
 
-            reports.addEventListener('click', () => {
-                window.location.href="{{ path('reports')}}";
-            })
+        reports.addEventListener('click', () => {
+            window.location.href = "{{ path('reports')}}";
+        })
+
+        document.addEventListener('DOMContentLoaded', () => {
+            let dashboard = document.getElementsByClassName('sidebar-link')[1].classList.add('active')
+
+
+
+        })
+
     </script>
 
-{% endblock body_javascript %}
+
+    
+    {% endblock %}

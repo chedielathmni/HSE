@@ -1,11 +1,85 @@
 {% extends 'dashboard/index.html.twig' %}
 
 
-    {% block showElement %}
-        <h1>Zones</h1>
-    {% endblock %}
+{% block showElement %}
+<section>
+    <div class="container">
+        <h1 class="heading">Zones de Travail</h1>
+        <div class="card-wrapper zone-wrapper">
+
+            {% for zone in zones %}
+            <div class="card zone">
+                <img src="{{ asset('workringZonesImg/bg.jpg')}}" alt="" class="card-img zone-img">
+                <img src="{{ vich_uploader_asset(zone) }}" alt="" class="profile-img">
+                <h1>{{ zone.name }}</h1>
+                <p class="about">
+                    {{ zone.description }}
+                </p>
+                <a href="{{ path('easyadmin', { 'entity': 'WorkingZone', 'action': 'show', 'id': zone.getId() }) }}"
+                    class="btn btn-primary">Voir {{ zone.name }}</a>
+                <ul class="info">
+                    <li><i class="fas fa-users" id="users-btn{{loop.index}}"></i></li>
+                    <li><i class="fas fa-flask" id="products-btn{{loop.index}}"></i></li>
+                </ul>
+
+                <div class="users users{{loop.index}} d-none">
+                    {% for worker in zone.getWorkers() %}
+                    <a href="{{ path('easyadmin', { 'entity': 'User', 'id': worker.getId(), 'action': 'show'})}}"><h3>{{ worker.firstname }} {{ worker.lastname }}</h3></a>
+                    {% endfor %}
+                </div>
+                <div class="products products{{loop.index}} d-none">
+                    {% for product in zone.getProducts() %}
+                    <a href="{{ path('easyadmin', { 'entity': 'Product', 'id': product.getId(), 'action': 'show'})}}"><h3>{{ product.productCode }} {{ product.productName }}</h3></a>
+                    {% endfor %}
+
+                </div>
+            </div>
+            
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+</section>
+{% endblock %}
 
 
+{% block body_javascript %}
+{{parent()}}
 
-    
 
+<script>
+
+    function reset() {
+        let products = $('.products')
+        let users = $('.users')
+        for( let i = 0; i < products.length; i++) products[i].className.includes('d-none') ? null: products[i].className = products[i].className.concat(' d-none');
+        for( let i = 0; i < users.length; i++) users[i].className.includes('d-none') ? null: users[i].className = users[i].className.concat(' d-none');
+    }
+
+    $('body').click(()=> {
+        reset()
+    })
+
+    $('.zone').click((e) => {
+        e.stopPropagation();
+    })
+
+    $('.fa-users').click((e) => {
+        reset()
+        id = e.target.id.match(/\d+/g)[0]
+        $('.products' + id ).hasClass('d-none') ? null:$('.products' + id ).addClass('d-none');
+        $('.users' + id ).removeClass('d-none');
+    })
+
+
+    $('.fa-flask').click((e) => {
+        reset()
+        id = e.target.id.match(/\d+/g)[0]
+        $('.users' + id ).hasClass('d-none') ? null:$('.users' + id ).addClass('d-none');
+        $('.products' + id ).removeClass('d-none');
+    })
+
+</script>
+
+
+{% endblock %}

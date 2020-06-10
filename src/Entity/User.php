@@ -79,6 +79,11 @@ class User implements UserInterface
      */
     private $grade;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=WorkingZone::class, inversedBy="workers")
+     */
+    private $workingZone;
+
 
 
 
@@ -272,6 +277,18 @@ class User implements UserInterface
     public function setGrade(?string $grade): self
     {
         $this->grade = $grade;
+
+        return $this;
+    }
+
+    public function getWorkingZone(): ?WorkingZone
+    {
+        return $this->workingZone;
+    }
+
+    public function setWorkingZone(?WorkingZone $workingZone): self
+    {
+        $this->workingZone = $workingZone;
 
         return $this;
     }

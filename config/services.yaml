@@ -6,6 +6,7 @@
 parameters:
     app.path.pictograms_images: /uploads/images/pictogramms
     app.path.protection_images: /uploads/images/protection
+    app.path.workingZones_images: /uploads/images/workingZones
     app.path.fiches: /uploads/files/fiches
     app.path.reports: /uploads/files/reports
     app.path.destock: /admin/destock?menuIndex=4&submenuIndex=2

@@ -109,6 +109,11 @@ class Product
      */
     private $dechet;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=WorkingZone::class, mappedBy="products")
+     */
+    private $workingZones;
+
     public function __construct()
     {
         $this->conseil = new ArrayCollection();
@@ -119,6 +124,7 @@ class Product
 
         $this->newFournisseur ? $this->fournisseur = $this->newFournisseur: null ;
         $this->entries = new ArrayCollection();
+        $this->workingZones = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -442,6 +448,34 @@ class Product
     public function setDechet(string $dechet): self
     {
         $this->dechet = $dechet;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|WorkingZone[]
+     */
+    public function getWorkingZones(): Collection
+    {
+        return $this->workingZones;
+    }
+
+    public function addWorkingZone(WorkingZone $workingZone): self
+    {
+        if (!$this->workingZones->contains($workingZone)) {
+            $this->workingZones[] = $workingZone;
+            $workingZone->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorkingZone(WorkingZone $workingZone): self
+    {
+        if ($this->workingZones->contains($workingZone)) {
+            $this->workingZones->removeElement($workingZone);
+            $workingZone->removeProduct($this);
+        }
 
         return $this;
     }

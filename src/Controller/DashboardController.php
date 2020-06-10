@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\WorkingZoneRepository;
+use App\Repository\ZoneRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,20 +21,27 @@ class DashboardController extends AbstractController
 
 
     /**
-     * @Route("/dashboard/calender", name="calender")
+     * @Route("/dashboard/calendar", name="calendar")
      */
-    public function calender() {
-        return $this->render('dashboard/calender.html.twig', [
+    public function calendar() {
+
+
+        return $this->render('dashboard/calendar.html.twig', [
             'controller_name' => 'DashboardController',
+
         ]);
     }
 
         /**
      * @Route("/dashboard/zones", name="zones")
      */
-    public function zones() {
+    public function zones(WorkingZoneRepository $repository) {
+
+        $zones = $repository->findAll();
+
         return $this->render('dashboard/zones.html.twig', [
             'controller_name' => 'DashboardController',
+            'zones' => $zones
         ]);
     }
 

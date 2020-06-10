@@ -20,3 +20,7 @@ vich_uploader:
         uri_prefix: '/uploads/files/reports'
         upload_destination: '%kernel.project_dir%/public/uploads/files/reports'
         namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+      workingZones_images:
+        uri_prefix: '%app.path.workingZones_images%'
+        upload_destination: '%kernel.project_dir%/public%app.path.workingZones_images%'

@@ -1,0 +1,13 @@
+{% extends 'dashboard/index.html.twig' %}
+
+
+{% block showElement %}
+<div class="m-auto pt-5" style="width: 90%">
+    <h1>Modifier evenement</h1>
+
+    {{ include('event/_form.html.twig', {'button_label': 'Update'}) }}
+
+
+    {{ include('event/_delete_form.html.twig') }}
+</div>
+{% endblock %}

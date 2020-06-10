@@ -141,6 +141,16 @@ easy_admin:
           - {entity: Department, label: 'Liste des Groupes', icon: 'th-list'}
           - {entity: Department, label: 'Ajouter Groupe', icon: 'plus', params: {action: 'new'}}
 
+
+
+      - label: "Zones de Travail"
+        icon: 'hammer'
+        permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_GROUPS']
+        children:
+          - {entity: WorkingZone, label: 'Liste des zones de travail', icon: 'th-list'}
+          - {entity: WorkingZone, label: 'Ajouter zone de travail', icon: 'plus', params: {action: 'new'}}
+
+
       - { label: "Gestion du transport"}
       - label: 'Carburant'
         icon: 'gas-pump'
@@ -602,7 +612,6 @@ easy_admin:
           - { property: 'imageFile', type: 'vich_image' }
 
 
-
     GasPurchase:
       label: 'Carburant'
       class: App\Entity\GasPurchase
@@ -675,7 +684,7 @@ easy_admin:
 
 
     Car:
-      label: 'Car'
+      label: 'Véhicule'
       class: App\Entity\Car
       controller: App\Controller\CarController
 
@@ -717,3 +726,33 @@ easy_admin:
           - { property: 'blWheelChangeDate', label: 'Date changement pneu arriere gauche'}
           - { property: 'frontBrakesChangeDate', label: 'Date changement plaquettes de frein avant'}
           - { property: 'backBrakesChangeDate', label: 'Date changement plaquettes de frein arriere'}
+
+
+
+    WorkingZone:
+      label: 'Zones de Travail'
+      class: App\Entity\WorkingZone
+
+
+      list:
+        fields:
+          - {property: 'name', label: 'Nom'}
+          - description
+
+
+      form:
+        fields:
+          - { property: 'name', label: 'Nom'}
+          - description
+          - { property: 'imageFile', type: 'vich_image'}
+          - { property: 'workers', label: 'Personnel', type_options: { by_reference: false}}
+          - { property: 'products', label: 'Produits'}
+
+
+      show: 
+        fields:
+          - { property: 'name', label: 'Nom'}
+          - description
+          - { property: 'image', type: 'image', base_path: '%app.path.workingZones_images%' }
+          - { property: 'workers', label: 'Personnel', type_options: { by_reference: false}}
+          - { property: 'products', label: 'Produits'}

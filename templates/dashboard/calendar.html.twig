@@ -1,0 +1,91 @@
+{% extends 'dashboard/index.html.twig' %}
+
+
+{% block showElement %}
+<a  href="{{ path('event_new') }}">
+    <button class="btn btn-primary">Ajouter un evenement</button>
+</a>
+
+<div id="calendar-holder"></div>
+{% endblock %}
+
+
+
+
+
+
+{% block head_stylesheets %}
+{{parent()}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/list@4.1.0/main.min.css">
+{% endblock head_stylesheets %}
+
+
+{% block body_javascript %}
+{{parent()}}
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/list@4.1.0/main.min.js"></script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        var calendarEl = document.getElementById('calendar-holder');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            defaultView: 'dayGridMonth',
+            locale: 'fr',
+            editable: true,
+            eventSources: [
+                {
+                    url: "/fc-load-events",
+                    method: "POST",
+                    extraParams: {
+                        filters: JSON.stringify({})
+                    },
+                    failure: () => {
+                        // alert("There was an error while fetching FullCalendar!");
+                    },
+                },
+            ],
+            themeSystem : 'bootstrap',
+            buttonText: {
+                today: 'Aujourd\'hui',
+                month: 'Mois',
+                week: 'Semaine',
+                day: 'Jour',
+                list: 'Liste'
+            },
+            eventColor: 'blue',
+            eventBackgroundColor : 'blue',
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay,list',
+            },
+            plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'], // https://fullcalendar.io/docs/plugin-index
+            timeZone: 'UTC',
+            views: {
+                dayGrid: {
+                  // options apply to dayGridMonth, dayGridWeek, and dayGridDay views
+                },
+                timeGrid: {
+                  // options apply to timeGridWeek and timeGridDay views
+                },
+                week: {
+                  // options apply to dayGridWeek and timeGridWeek views
+                    
+                },
+                day: {
+                  // options apply to dayGridDay and timeGridDay views
+                }
+            },
+        });
+        calendar.render();
+    });
+</script>
+{% endblock body_javascript %}
