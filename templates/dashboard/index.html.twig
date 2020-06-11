@@ -49,9 +49,8 @@
 
         <div class="col">
             {% block showElement %}
-            <h1>
-                Stats
-            </h1>
+
+            
             {% endblock %}
         </div>
 
@@ -62,10 +61,22 @@
     {% block head_stylesheets %}
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+
+    {#  ---------------------------- Chart JS CSS -------------------------------------------- #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" />
     {% endblock head_stylesheets %}
 
 
     {% block body_javascript %}
+    {#  ---------------------------- Chart JS  -------------------------------------------- #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
+
+
     <script>
         let calendar = document.getElementById('calendar-btn')
         let zones = document.getElementById('zones-btn')
@@ -90,13 +101,10 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             let dashboard = document.getElementsByClassName('sidebar-link')[1].classList.add('active')
-
-
-
         })
 
     </script>
 
 
-    
+
     {% endblock %}

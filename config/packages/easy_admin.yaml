@@ -273,7 +273,7 @@ easy_admin:
           - { property: 'mentionDangers', label: "Mentions de Danger"}
           - { property: 'pictogramme', label: 'Pictrogrammes', template: 'admin/pictogrammes/show.html.twig'}
           - { property: 'protection', label: 'Equipement de protection individuel', template: 'admin/protection/show.html.twig'}
-          - { property: 'premiersSecours', label: 'Description des premiers secours', template: 'admin/premiers secours/show.html.twig'}
+          - { property: 'premiersSecours', label: 'Description des premiers secours', template: 'admin/premiers secours/show.html.twig', css_class: 'list-group'}
 
       form:
         fields:

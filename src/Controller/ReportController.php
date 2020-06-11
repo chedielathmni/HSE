@@ -9,10 +9,11 @@ class ReportController extends EasyAdminController {
 
     protected function persistEntity($entity)
     {
-        if( !$entity->getAuthor())
+        if ( !$entity->getAuthor())
         {
             $entity->setAuthor($this->getUser());
             parent::persistEntity($entity);
         }
     }
+
 }

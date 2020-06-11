@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\EntryRepository;
+use App\Repository\ReportRepository;
 use App\Repository\WorkingZoneRepository;
-use App\Repository\ZoneRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -12,10 +13,14 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard", name="dashboard")
      */
-    public function index()
+    public function index(EntryRepository $repository)
     {
+
+        $stock = $repository->findAll();
+
         return $this->render('dashboard/index.html.twig', [
             'controller_name' => 'DashboardController',
+            'stock' => $stock
         ]);
     }
 
@@ -49,9 +54,13 @@ class DashboardController extends AbstractController
         /**
      * @Route("/dashboard/reports", name="reports")
      */
-    public function reports() {
+    public function reports(ReportRepository $repository) {
+
+        $reports = $repository->findAll();
+
         return $this->render('dashboard/reports.html.twig', [
             'controller_name' => 'DashboardController',
+            'reports' => $reports,
         ]);
     }
 }

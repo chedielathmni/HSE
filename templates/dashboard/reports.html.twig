@@ -1,11 +1,69 @@
 {% extends 'dashboard/index.html.twig' %}
 
 
-    {% block showElement %}
-        <h1>Reports</h1>
-    {% endblock %}
+{% block showElement %}
 
+<div class="container mt-3">
+    <h1 class="heading">Nouveaux rapports</h1>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Titre</th>
+                <th scope="col">Auteur</th>
+                <th scope="col">Type</th>
+                <th scope="col">Date de création</th>
+                <th scope="col">Date de dernière modification</th>
+                <th scope="col">Fichier(PDF)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for report in reports %}
+            {% if not report.seen %}
+            <tr>
+                <td>
+                    <a href="{{ path('easyadmin', { 'entity': 'Report', 'id': report.getID(), 'action' : 'show', 'menuIndex': '10', 'submenuIndex': '0'}) }}">{{ report.getTitle() }}</a>
+                </td>
+                <td> {{ report.author }} </td>
+                <td> {{ report.type }} </td>
+                <td> {{ report.getCreatedAt().format('d/m/Y') }} </td>
+                <td> {{ report.updatedAt? report.getUpdatedAt().format('d/m/Y') : 'Aucune mofication'}} </td>
+                <td class=" file "><a href="/uploads/files/reports/{{ report.file ? report.file : '404' }}"
+                        target="_blank">Voir Rapport</a></td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <h1 class="heading mt-5">anciens rapports</h1>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Titre</th>
+                <th scope="col">Auteur</th>
+                <th scope="col">Type</th>
+                <th scope="col">Date de création</th>
+                <th scope="col">Date de dernière modification</th>
+                <th scope="col">Fichier(PDF)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for report in reports %}
+            {% if report.seen %}
+            <tr>
+                <td>
+                    <a href="{{ path('easyadmin', { 'entity': 'Report', 'id': report.getID(), 'action' : 'show', 'menuIndex': '10', 'submenuIndex': '0'}) }}">{{ report.getTitle() }}</a>
+                </td>
+                <td> {{ report.author }} </td>
+                <td> {{ report.type }} </td>
+                <td> {{ report.getCreatedAt().format('d/m/Y') }} </td>
+                <td> {{ report.updatedAt? report.getUpdatedAt().format('d/m/Y') : 'Aucune mofication'}} </td>
+                <td class=" file "><a href="/uploads/files/reports/{{ report.file ? report.file : '404' }}"
+                        target="_blank">Voir Rapport</a></td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
 
-
-    
-
+</div>
+{% endblock %}

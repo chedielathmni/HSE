@@ -62,6 +62,11 @@ class Report
      */
     private $author;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $seen;
+
     public function __construct()
     {
         $this->createdAt = new DateTime();
@@ -180,6 +185,18 @@ class Report
     public function setAuthor(string $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getSeen(): ?bool
+    {
+        return $this->seen;
+    }
+
+    public function setSeen(?bool $seen): self
+    {
+        $this->seen = $seen;
 
         return $this;
     }
