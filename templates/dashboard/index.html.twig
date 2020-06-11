@@ -49,7 +49,16 @@
 
         <div class="col">
             {% block showElement %}
+            
 
+            <div class="container">
+                <div class="row">
+                    <div class="col-6" id="chart"></div>
+                    <div class="col-6"></div>
+                    <div class="col-6"></div>
+                    <div class="col-6"></div>
+                </div>
+            </div>
             
             {% endblock %}
         </div>
@@ -103,8 +112,13 @@
             let dashboard = document.getElementsByClassName('sidebar-link')[1].classList.add('active')
         })
 
-    </script>
+        
 
+    </script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        {{ gc_draw(chart, 'chart') }}
+    </script>
 
 
     {% endblock %}
