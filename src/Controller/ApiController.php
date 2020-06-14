@@ -48,7 +48,7 @@ class ApiController extends AbstractController
         $em->persist($transporter);
         $em->flush();
         
-        return $this->json($transporter, 201, [], ['goups' => 'read:tr']);
+        return $this->json($transporter, 201, [], ['groups' => 'read:tr']);
 
         } 
         catch(NotEncodableValueException $e) {

@@ -64,7 +64,7 @@ class Transporter
     private $car;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable = true)
      */
     private $valid;
 
