@@ -36,6 +36,6 @@ class UserController extends EasyAdminController
 
         $encoder = $passwordEncoderFactory->getEncoder($user);
 
-        return $encoder->encodePassword($password, "$user->getSalt()");
+        return $encoder->encodePassword($password, $user->getSalt());
     }
 }

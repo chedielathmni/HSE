@@ -44,6 +44,7 @@
         );
     </script>
 
+
     {% block wrapper_wrapper %}
         <div id="main-wrapper" class="mini-sidebar" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
             data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
@@ -70,8 +71,13 @@
                                 {% set _user_has_logout = _logout_path is not empty %}
                                 {% set _user_is_impersonated = is_granted('ROLE_PREVIOUS_ADMIN') %}
                                 {% block header_custom_menu %}
+                                
 
                                 <ul class="navbar-nav float-right">
+                                    <li>
+                                    <a href="{{path('alert')}}">
+                                        <button class="btn btn-danger mr-5 mt-3">Alert</button>
+                                    </a></li>
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                             {% if easyadmin_config('user.display_avatar') %}
@@ -175,7 +181,19 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <section id="main" class="content-body">
-                                                {% block main %}{% endblock %}
+                                                <div class="alert-modal-bg">
+                                                        <div class="alert-modal">
+                                                            <div class="alert-img"></div>
+                                                            <div class="alert-content">
+                                                                <h1>Alerte Accident!</h1>
+                                                                <h2 id="zone-accident"></h2>
+                                                            </div>
+                                                            <span class="alert-modal-close">X</span>
+                                                    </div>
+                                                </div>
+                                                {% block main %}
+                                                
+                                                {% endblock %}
                                             </section>
                                         </div>
 
@@ -201,6 +219,53 @@
             <script src="{{ asset(js_asset) }}"></script>
         {% endfor %}
 
+        <script>
+
+
+            let modalBg = document.querySelector('.alert-modal-bg')
+            let closeBtn = document.querySelector('.alert-modal-close')
+
+            closeBtn.addEventListener('click', () => {
+                modalBg.classList.remove('alert-modal-active');
+            })
+
+            document.addEventListener('DOMContentLoaded', () => {
+
+        
+                fetch('/discover').then(result => {
+        
+                    const hubUrl = result.headers.get('Link').match(/<([^>]+)>;\s+rel=(?:mercure|"[^"]*mercure[^"]*")/)[1];
+                    const hub = new URL(hubUrl);
+                    hub.searchParams.append('topic', '/alert');
+        
+                    const eventSource = new EventSource(hub);
+        
+                    let data
+                    eventSource.onmessage = e => {
+                        data = e.data
+                        console.log('data => ', data)
+                        modalBg.classList.add('alert-modal-active')
+
+                        let zone = document.getElementById('zone-accident')
+
+                        zone.innerText = data["wokringZone"]
+
+                        /*let alertDiv = document.createElement("div")
+                        alertDiv.className += " alert alert-danger"
+                        let content = document.createTextNode("Ping !")
+        
+                        alertDiv.appendChild(content)
+        
+                        document.body.insertBefore(alertDiv, document.querySelector('#wrapper_wrapper'))
+                        
+                        window.setTimeout(() => {
+                            document.querySelector('.alert').remove()
+                        },2000) */
+                    }
+                })
+        
+            })
+        </script>
         
     {% endblock body_custom_javascript %}
 

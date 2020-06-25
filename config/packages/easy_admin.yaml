@@ -456,15 +456,14 @@ easy_admin:
 
       form:
         fields:
-          - { type: 'tab', label: 'Permissions'}
+          #- { type: 'tab', label: 'Permissions'}
           - { property: 'departmentName', label: 'Nom du groupe', type: text }
-          - { property: 'manager', type_options: {by_reference: true}}
           - { property: 'employees', label: 'Membre(s)', type_options: { by_reference: false }}
-          - { type: 'tab', label: 'Options Avancées'}
-          - { type: 'group', columns: 6,  label: 'Users'}
-          - { type: 'group', columns: 6,  label: 'Products'}
-          - { type: 'group', columns: 6,  label: 'Groups'}
-          - { type: 'group', columns: 6,  label: 'Stock'}
+          #- { type: 'tab', label: 'Options Avancées'}
+          #- { type: 'group', columns: 6,  label: 'Users'}
+          #- { type: 'group', columns: 6,  label: 'Products'}
+          #- { type: 'group', columns: 6,  label: 'Groups'}
+          #- { type: 'group', columns: 6,  label: 'Stock'}
           
 
 
