@@ -14,6 +14,7 @@
     {% endblock %}
 
     {% block head_custom_stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/alert.css') }}">
         {% for css_asset in easyadmin_config('design.assets.css') %}
             <link rel="stylesheet" href="{{ asset(css_asset) }}">
         {% endfor %}
@@ -76,7 +77,7 @@
                                 <ul class="navbar-nav float-right">
                                     <li>
                                     <a href="{{path('alert')}}">
-                                        <button class="btn btn-danger mr-5 mt-3">Alert</button>
+                                        <button class="btn btn-danger px-4 mr-5 mt-3 alert-btn">Alert</button>
                                     </a></li>
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -185,10 +186,22 @@
                                                         <div class="alert-modal">
                                                             <div class="alert-img"></div>
                                                             <div class="alert-content">
-                                                                <h1>Alerte Accident!</h1>
-                                                                <h2 id="zone-accident"></h2>
+                                                                <div class="alert-title">
+                                                                    <h1>Alerte Accident!</h1>
+                                                                    <h2 id="zone-accident"></h2>
+                                                                    <span class="alert-modal-close">X</span>
+                                                                </div>
+                                                                <div class="tables">
+                                                                    <div class="workers">
+                                                                        <h3>Ouvriers</h3>
+                                                                        <ul class="workers-list"></ul>
+                                                                    </div>
+                                                                    <div class="products">
+                                                                        <h3>Produits</h3>
+                                                                        <ul class="products-list"></ul>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <span class="alert-modal-close">X</span>
                                                     </div>
                                                 </div>
                                                 {% block main %}
@@ -220,13 +233,15 @@
         {% endfor %}
 
         <script>
-
-
+            
+            
+            let audio = new Audio("{{ asset('css/audio.mp3') }}")
             let modalBg = document.querySelector('.alert-modal-bg')
             let closeBtn = document.querySelector('.alert-modal-close')
 
             closeBtn.addEventListener('click', () => {
                 modalBg.classList.remove('alert-modal-active');
+                audio.pause()
             })
 
             document.addEventListener('DOMContentLoaded', () => {
@@ -242,14 +257,40 @@
         
                     let data
                     eventSource.onmessage = e => {
-                        data = e.data
+                        console.log(e)
+                        data = JSON.parse(e.data)
                         console.log('data => ', data)
                         modalBg.classList.add('alert-modal-active')
 
                         let zone = document.getElementById('zone-accident')
+                        let workers = data.workers
+                        let products = data.products
 
-                        zone.innerText = data["wokringZone"]
+                        audio.loop = true
+                        audio.play();
 
+
+                        zone.innerHTML = "<a href=https://localhost:8000/admin/?entity=WorkingZone&action=show&id=" + data.workingZoneId + "&menuIndex=15&submenuIndex=0 target='_blank'> Zone de travail : "+ data.workingZone +"</a>"
+
+
+                        if (document.querySelector('.workers-list').children.length == 0) {
+                            for (let i = 0; i < workers.length; i++) 
+                            { 
+                                var node = document.createElement("li"); 
+                                var textnode = document.createTextNode(workers[i][1]); 
+                                node.appendChild(textnode);
+                                document.querySelector(".workers-list").appendChild(node);
+                            }	
+
+
+                            for (let i = 0; i < products.length; i++) 
+                            {
+                                var node = document.createElement("li");  
+                                var textnode = document.createTextNode(products[i][1]); 
+                                node.appendChild(textnode);
+                                document.querySelector(".products-list").appendChild(node); 
+                            }
+                        }
                         /*let alertDiv = document.createElement("div")
                         alertDiv.className += " alert alert-danger"
                         let content = document.createTextNode("Ping !")

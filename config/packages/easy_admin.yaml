@@ -52,7 +52,7 @@ easy_admin:
       - { label: 'Dashboard', url: '%app.path.dashboard%', rel: 'index', icon: 'chart-pie' }
 
 
-      - { label: "Gestion des Produits"}
+      - { label: "Gestion des Produits", permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_PRODUCTS']}
       - label: "Produits"
         icon: "flask"
         permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_PRODUCTS']
@@ -63,6 +63,7 @@ easy_admin:
 
       - label: "Stock"
         icon: "boxes"
+        permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_PRODUCTS']
         children:
           - {entity: Entry, label: 'Liste des Produits en Stock', icon: 'th-list'}
           - {entity: Entry, label: 'Ajouter des Produits au Stock', icon: 'plus', params: {action: 'new'}}
@@ -71,6 +72,7 @@ easy_admin:
 
 
       - label: "Zones de Stockage"
+        permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_PRODUCTS']
         icon: 'box'
         children:
           - {entity: Zone, label: 'Liste des Zones de Stockage', icon: 'th-list'}
@@ -79,6 +81,7 @@ easy_admin:
 
 
       - label: "Fournisseur"
+        permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_PRODUCTS']
         icon: "truck"
         children:
           - {entity: Fournisseur, label: 'Liste des Fournisseur', icon: 'th-list'}
@@ -123,12 +126,12 @@ easy_admin:
           - {entity: Protection, label: 'Liste des EPI', icon: 'th-list'}
           - {entity: Protection, label: 'Ajouter EPI', icon: 'plus', params: {action: 'new'}}
 
-      - { label: "Gestion des Utilisateurs", permission: ROLE_ADMIN}
+      - { label: "Gestion des Utilisateurs", permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_USERS', 'ROLE_MOD_GROUPS']}
 
 
       - label: "Utilisateur"
         icon: "user"
-        permission: ['ROLE_ADMIN', 'ROLE_MOD_USERS']
+        permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_USERS']
         children:
           - {entity: User, label: "Liste d'Utilisatuer", icon: 'th-list'}
           - {entity: User, label: 'Ajouter Utilisateur', icon: 'plus', params: {action: 'new'}}
@@ -145,13 +148,13 @@ easy_admin:
 
       - label: "Zones de Travail"
         icon: 'hammer'
-        permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_GROUPS']
+        permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_GROUPS', 'ROLE_MOD_USERS']
         children:
           - {entity: WorkingZone, label: 'Liste des Zones de travail', icon: 'th-list'}
           - {entity: WorkingZone, label: 'Ajouter Zone de travail', icon: 'plus', params: {action: 'new'}}
 
 
-      - { label: "Gestion du Transport"}
+      - { label: "Gestion du Transport", permission: ['ROLE_ADMIN']}
       - label: 'Carburant'
         icon: 'gas-pump'
         permission: ['ROLE_ADMIN']
@@ -220,14 +223,15 @@ easy_admin:
       form:
         fields:
           - { type: 'tab', label: 'Informations de base', icon: 'clipboard'}
-          - { property: 'userName', label: "Nom d'utilisateur", type: 'text'}
+          - { type: 'group'}
+          - { property: 'userName', label: "Nom d'utilisateur", permission: ['ROLE_ADMIN'], type: 'text'}
           - { property: 'lastName', label: "Nom", type: 'text' }
           - { property: 'firstName', label: "Prénom", type: 'text' }
           - { property: 'password', label: "Mot de passe", type: 'password'}
           - { property: 'roles', label: "Administrateur", type: 'choice', permission: 'ROLE_ADMIN', type_options: { multiple: true, expanded: true, mapped: true, choices: {' ': 'ROLE_ADMIN'} } }
-          - { property: 'department', label: 'group'}
+          - { property: 'department', label: 'group', permission: 'ROLE_ADMIN'}
           - { type: 'tab', label: 'Coordonnées', icon: 'phone'}
-          - { type: 'group', column: 6}
+          - { type: 'group'}
           - { property: "adresse", label: "Adresse", type: 'App\Form\AdresseType', type_options: { by_reference: true}}
 
 
@@ -278,6 +282,7 @@ easy_admin:
       form:
         fields:
           - { type: 'tab', label: 'Informations de base', icon: 'clipboard'}
+          - { type: 'group'}
           - { property: 'productName', label: 'Nom Produit'}
           - { property: 'productCode', label: 'Code Produit'}
           - { property: 'numeroUrgence', label: "Numéro d'urgence", type: 'tel'}
@@ -322,6 +327,7 @@ easy_admin:
 
       edit:
         fields:
+          - { type: 'group'}
           - { property: 'name', label: 'Nom'}
           - type
           - description
@@ -365,6 +371,7 @@ easy_admin:
       new:
         title: 'Ajouter Produit au Stock'
         fields:
+          - { type: 'group'}
           - { property: 'product', label: 'Produit'}
           - { property: 'quantity', label: 'Quatité'}
           - { property: 'type', type: 'choice', type_options: { multiple: false, expanded: true, mapped: true, choices: {'Produit chimique': 'Produit chimique', 'Dechét': 'Dechét'} } }
@@ -377,6 +384,7 @@ easy_admin:
       edit:
         title: 'Modifier'
         fields:
+          - { type: 'group'}
           - { property: 'product', label: 'Produit'}
           - { property: 'quantity', label: 'Quatité'}
           - { property: 'type', type: 'choice', type_options: { multiple: false, expanded: true, mapped: true, choices: {'Produit chimique': 'Produit chimique', 'Dechét': 'Dechét'} } }
@@ -411,6 +419,13 @@ easy_admin:
 
       new:
         title: 'Ajouter Nouveau Produit'
+        fields:
+          - { type: 'group'}
+          - raisonSocial
+          - telephone
+          - email
+          - { property: 'products', label: 'Produits'}
+
 
       list:
         fields:
@@ -420,6 +435,7 @@ easy_admin:
 
       edit:
         fields:
+          - { type: 'group'}
           - raisonSocial
           - telephone
           - email
@@ -457,6 +473,7 @@ easy_admin:
       form:
         fields:
           #- { type: 'tab', label: 'Permissions'}
+          - { type: 'group'}
           - { property: 'departmentName', label: 'Nom du groupe', type: text }
           - { property: 'employees', label: 'Membre(s)', type_options: { by_reference: false }}
           #- { type: 'tab', label: 'Options Avancées'}
@@ -487,6 +504,7 @@ easy_admin:
         title: 'Ajouter Nouveau Conseil'
       form:
         fields:
+          - { type: 'group'}
           - code
           - text
 
@@ -520,6 +538,7 @@ easy_admin:
           - { property: 'image', type: 'image', base_path: '%app.path.pictograms_images%'}
       form:
         fields:
+          - { type: 'group'}
           - { property: 'code', label: 'Code'}
           - { property: 'text', label: 'Message'}
           - { property: 'imageFile', type: 'vich_image' }
@@ -544,6 +563,7 @@ easy_admin:
 
       form:
         fields:
+          - { type: 'group'}
           - code
           - text
 
@@ -575,6 +595,7 @@ easy_admin:
 
       form:
         fields:
+          - { type: 'group'}
           - { property: 'title', label: 'Titre'}
           - type
           - { property: 'content', label: ' ', type: "text_editor"}
@@ -612,6 +633,7 @@ easy_admin:
 
       form:
         fields:
+          - { type: 'group'}
           - { property: 'name', label: 'Message'}
           - { property: 'imageFile', type: 'vich_image' }
 
@@ -639,6 +661,7 @@ easy_admin:
 
       form:
         fields: 
+          - { type: 'group'}
           - { property: 'driver', label: 'Conducteur'}
           - { property: 'car', label: 'Matricule'}
           - { property: 'purchaseDate', label: "Date d'achat"}
@@ -674,6 +697,7 @@ easy_admin:
 
       form:
         fields:
+          - { type: 'group'}
           - { property: 'phoneNumber', label: 'Numero de téléphone'}
           - { property: 'firstName', label: 'Prènom'}
           - { property: 'lastName', label: 'Nom'}
@@ -718,6 +742,7 @@ easy_admin:
 
       show:
         fields:
+          - { type: 'group'}
           - { property: 'number', label: 'Matricule'}
           - { property: 'model', label: 'Modele'}
           - { property: 'carteGrise', label: 'Numero Carte grise'}
@@ -749,6 +774,7 @@ easy_admin:
 
       form:
         fields:
+          - { type: 'group'}
           - { property: 'name', label: 'Nom'}
           - description
           - { property: 'imageFile', type: 'vich_image'}

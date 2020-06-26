@@ -1,0 +1,152 @@
+@media (max-width: 1170px) {
+
+    .alert-img {
+        display: none;
+    }
+
+
+    .alert-content {
+        width: 100%;
+    }
+}
+
+.alert-modal-bg {
+    z-index: 99;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.alert-modal-active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.alert-modal {
+    background-color: white;
+    width: 90%;
+    height: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 30px black;
+    border-radius: 8px;
+}
+
+.alert-img {
+    height: 100%;
+    width: 40%;
+    background-image: url('../assets/danger.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto;
+    position: relative;
+    background-color: white;
+    animation: mymove 2s infinite;
+}
+
+.alert-content {
+    height: 100%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.alert-title {
+    margin-top: 7vh;
+    height: 35%;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.alert-content  h1 {
+    font-size: 84px;
+    color: red;
+}
+
+.alert-content h2 {
+    font-size: 60px;
+    color: orange;
+}
+
+
+.tables {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    height: 300px;
+}
+
+.workers, .products {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.tables h3 {
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+    margin: 10px;
+}
+
+
+.alert-modal-close {
+    position: absolute;
+    top: 6%;
+    right: 6%;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.alert-wrapper {
+    position: relative;
+    background-color: red;
+    width: 90%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+
+
+.tables ul {
+    margin: 20px auto;
+    box-sizing: border-box;
+}
+
+.tables ul li {
+    display: flex;
+    font-size: 25px;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    color: black;
+    margin: 5px 0;
+    transition: .5s;
+    text-decoration: none;
+}
+
+@keyframes mymove {
+    from {background-color: white;}
+    to {background-color: red;}
+}
+
+
+.alert-btn {
+    font-weight: bold;
+    font-stretch: expanded;
+}

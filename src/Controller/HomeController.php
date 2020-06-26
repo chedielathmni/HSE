@@ -50,7 +50,8 @@ class HomeController extends AbstractController
             '/alert',
             json_encode([
                 'sender' => $user->getUsername(),
-                'wokringZone' => $workingZone->getName(),
+                'workingZone' => $workingZone->getName(),
+                'workingZoneId' => $workingZone->getId(),
                 'products' => $products,
                 'workers' => $workers,
                 ])
