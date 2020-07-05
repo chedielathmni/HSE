@@ -82,16 +82,16 @@
 
 
         <div class="login-box">
-            <h1>Login</h1>
+            <h1>Connexion</h1>
             <div class="textbox">
                 <i class="fa fa-user" aria-hidden="true"></i>
-                <input type="text" placeholder="Username" name="username" value="{{ last_username }}"
+                <input type="text" placeholder="Nom d'utilisateur" name="username" value="{{ last_username }}"
                     class="form-control" required autofocus>
             </div>
 
             <div class="textbox">
                 <i class="fa fa-lock" aria-hidden="true"></i>
-                <input type="password" name="password" id="inputPassword" placeholder="Password" class="form-control"
+                <input type="password" name="password" id="inputPassword" placeholder="Mot de passe" class="form-control"
                     required>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             </div>
@@ -109,12 +109,12 @@
 
             <div class="checkbox mb-3" style="margin: 20px 0;">
                 <label>
-                    <input type="checkbox" name="_remember_me" class="mt-3"> Remember me
+                    <input type="checkbox" name="_remember_me" class="mt-3"> Se souvenir de moi?
                 </label>
             </div>
 
             <button class="btn" type="submit">
-                Sign in
+                Se connecté
             </button>
         </div>
     </form>

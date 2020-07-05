@@ -11,7 +11,7 @@ easy_admin:
 
 
   list:
-    title: 'Liste des %%entity_label%%'
+    title: 'Liste des %%entity_label%%s'
     actions:
       - { name: 'new', label: "Ajouter %%entity_label%%"}
       - { name: 'show', icon: 'search' , label: ''}
@@ -50,6 +50,32 @@ easy_admin:
 
       - { label: 'Acceuil', url: '%app.path%', rel: 'index', icon: 'home' }
       - { label: 'Dashboard', url: '%app.path.dashboard%', rel: 'index', icon: 'chart-pie' }
+
+      - { label: "Gestion des Utilisateurs", permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_USERS', 'ROLE_MOD_GROUPS']}
+      - label: "Utilisateur"
+        icon: "user"
+        permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_USERS']
+        children:
+          - {entity: User, label: "Liste d'Utilisatuer", icon: 'th-list'}
+          - {entity: User, label: 'Ajouter Utilisateur', icon: 'plus', params: {action: 'new'}}
+
+
+      - label: "Groupes"
+        icon: 'users'
+        permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_GROUPS']
+        children:
+          - {entity: Department, label: 'Liste des Groupes', icon: 'th-list'}
+          - {entity: Department, label: 'Ajouter Groupe', icon: 'plus', params: {action: 'new'}}
+
+
+
+      - label: "Zones de Travail"
+        icon: 'hammer'
+        permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_GROUPS', 'ROLE_MOD_USERS']
+        children:
+          - {entity: WorkingZone, label: 'Liste des Zones de travail', icon: 'th-list'}
+          - {entity: WorkingZone, label: 'Ajouter Zone de travail', icon: 'plus', params: {action: 'new'}}
+
 
 
       - { label: "Gestion des Produits", permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_PRODUCTS']}
@@ -125,34 +151,6 @@ easy_admin:
         children:
           - {entity: Protection, label: 'Liste des EPI', icon: 'th-list'}
           - {entity: Protection, label: 'Ajouter EPI', icon: 'plus', params: {action: 'new'}}
-
-      - { label: "Gestion des Utilisateurs", permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_USERS', 'ROLE_MOD_GROUPS']}
-
-
-      - label: "Utilisateur"
-        icon: "user"
-        permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_USERS']
-        children:
-          - {entity: User, label: "Liste d'Utilisatuer", icon: 'th-list'}
-          - {entity: User, label: 'Ajouter Utilisateur', icon: 'plus', params: {action: 'new'}}
-
-
-      - label: "Groupes"
-        icon: 'users'
-        permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_GROUPS']
-        children:
-          - {entity: Department, label: 'Liste des Groupes', icon: 'th-list'}
-          - {entity: Department, label: 'Ajouter Groupe', icon: 'plus', params: {action: 'new'}}
-
-
-
-      - label: "Zones de Travail"
-        icon: 'hammer'
-        permission: ['ROLE_ADMIN', 'ROLE_MOD', 'ROLE_MOD_GROUPS', 'ROLE_MOD_USERS']
-        children:
-          - {entity: WorkingZone, label: 'Liste des Zones de travail', icon: 'th-list'}
-          - {entity: WorkingZone, label: 'Ajouter Zone de travail', icon: 'plus', params: {action: 'new'}}
-
 
       - { label: "Gestion du Transport", permission: ['ROLE_ADMIN']}
       - label: 'Carburant'
@@ -239,7 +237,7 @@ easy_admin:
       
     Product:
 
-      label: "Produits"
+      label: "Produit"
       title: "Liste des Produits"
       class: App\Entity\Product
       controller: App\Controller\ProductController
@@ -290,11 +288,11 @@ easy_admin:
           - { type: 'tab' ,label: 'Securité', icon: 'lock'}
           - { type: 'group', columns: 6, label: ' ' }
           - { property: 'dureeConservation', label: "Durée de conservation (en mois)"}
-          - { property: 'conseil', label: "Conseils", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
-          - { property: 'mentionDangers', label: "Dangers", type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
+          - { property: 'conseil', label: "Conseils", type: 'easyadmin_autocomplete', type_options: { by_reference: false, help: 'les conseils commencent par la lettre P'}}
+          - { property: 'mentionDangers', label: "Dangers", type: 'easyadmin_autocomplete', type_options: { by_reference: false, help: 'les mension de danger commencent par la lettre H / E'}}
           - { type: 'group', columns: 6, label: ' ' }
           - { property: 'dechet', type: 'choice', type_options: { multiple: false, expanded: false, mapped: true, choices: {'Solide dangereux': 'Solide dangereux', 'Solide non dangereux': 'Solide non dangereux','Liquide dangereux': 'Liquide dangereux','Liquide non dangereux': 'Liquide non dangereux'} } }
-          - { property: 'pictogramme', label: 'Pictogrammes', type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
+          - { property: 'pictogramme', label: 'Pictogrammes', type: 'easyadmin_autocomplete', type_options: { by_reference: false, help: 'les pictogrammes commencent par la lettre G'}}
           - { property: 'protection', label: 'Equipenet de protection individuel', type: 'easyadmin_autocomplete', type_options: { by_reference: false}}
           - { type: 'tab', label: "Premiers Secours", icon: 'first-aid'}
           - { property: 'premiersSecours', label: ' ', type: 'App\Form\PremiersSecoursType', type_options: { block_name: 'custom_title' }}
@@ -418,7 +416,7 @@ easy_admin:
       class: App\Entity\Fournisseur
 
       new:
-        title: 'Ajouter Nouveau Produit'
+        title: 'Ajouter Nouveau Fournisseur'
         fields:
           - { type: 'group'}
           - raisonSocial
@@ -434,6 +432,7 @@ easy_admin:
           - email
 
       edit:
+        title: 'Edition Fournisseur'
         fields:
           - { type: 'group'}
           - raisonSocial
@@ -597,7 +596,7 @@ easy_admin:
         fields:
           - { type: 'group'}
           - { property: 'title', label: 'Titre'}
-          - type
+          - { property: 'type',  type: 'choice', type_options: { multiple: false, expanded: false, mapped: true, choices: {"Document unique d'évaluation des risques professionnels": "Document unique d'évaluation des risques professionnels", "Historique professionnel d'un employé": "Historique professionnel d'un employé", "Fiche d'exposition aux facteurs de pénibilité individuelle" : "Fiche d'exposition aux facteurs de pénibilité individuelle", "Fiche d'exposition aux facteurs de pénibilité collective" : "Fiche d'exposition aux facteurs de pénibilité collective", "Tableau général des expositions aux facteurs de pénibilité" : "Tableau général des expositions aux facteurs de pénibilité"} } }
           - { property: 'content', label: ' ', type: "text_editor"}
           - { property: 'reportFile', type: 'vich_file', label: 'Rapport', help: '(Ajouter le rapport en format PDF)' }
 
@@ -688,20 +687,14 @@ easy_admin:
 
       list:
         title: "Liste des Transporteurs"
+        actions: ['-new', '-edit']
         fields:
           - { property: 'phoneNumber', label: 'Numero de téléphone'}
           - { property: 'firstName', label: 'Prènom'}
           - { property: 'lastName', label: 'Nom'}
-          - car
+          - { property: 'car', label: 'Véhicule'}
           - { property: 'valid', label: 'Validé'}
 
-      form:
-        fields:
-          - { type: 'group'}
-          - { property: 'phoneNumber', label: 'Numero de téléphone'}
-          - { property: 'firstName', label: 'Prènom'}
-          - { property: 'lastName', label: 'Nom'}
-          - { property: 'car', label: 'Matricule'}
 
       show:
         fields:
@@ -742,7 +735,6 @@ easy_admin:
 
       show:
         fields:
-          - { type: 'group'}
           - { property: 'number', label: 'Matricule'}
           - { property: 'model', label: 'Modele'}
           - { property: 'carteGrise', label: 'Numero Carte grise'}
@@ -750,7 +742,7 @@ easy_admin:
           - { property: 'lastInspectionDate', label: 'Date de dernière inspection'}
           - { property: 'oilDate', label: 'Date du dernier vidange'}
           - { property: 'airbag', label: 'Airbag'}
-          - kilometrage
+          - { property: 'kilometrage' }
           - { property: 'frWheelChangeDate', label: 'Date changement pneu avant droit'}
           - { property: 'flWheelChangeDate', label: 'Date changement pneu avant gauche'}
           - { property: 'brWheelChangeDate', label: 'Date changement pneu arriere droit'}
