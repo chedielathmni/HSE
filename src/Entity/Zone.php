@@ -119,4 +119,11 @@ class Zone
     {
         return $this->name;
     }
+
+    public function removeAssociations() {
+        foreach($this->entries as $entry) {
+            $entry->setZone = null;
+        }
+        $this->entries = [];
+    }
 }

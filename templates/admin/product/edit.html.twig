@@ -1,4 +1,4 @@
-{% extends '@EasyAdmin/default/new.html.twig' %}
+{% extends '@EasyAdmin/default/edit.html.twig' %}
 
 
 {% block body_javascript %}
@@ -10,13 +10,16 @@
     let fournisseur =  $("#product_fournisseur")
     if (fournisseur[0].value != "") {
         $(".field-fournisseur").hide()
+        $(".field-adresse").hide()
     }
     fournisseur.on('change', (e) => {
         if (e.currentTarget.value != '') {
             $(".field-fournisseur").hide()
+            $(".field-adresse").hide()
         }
         else {
             $(".field-fournisseur").show()
+            $(".field-adresse").show()
         }
     })
 

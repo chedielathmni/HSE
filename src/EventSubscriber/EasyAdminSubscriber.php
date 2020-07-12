@@ -6,9 +6,11 @@ namespace App\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use App\Entity\Department;
+use App\Entity\Fournisseur;
 use App\Entity\Product;
 use App\Entity\Report;
 use App\Entity\User;
+use App\Entity\Zone;
 use Doctrine\ORM\EntityManagerInterface;
 
 class EasyAdminSubscriber implements EventSubscriberInterface
@@ -46,11 +48,30 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             $event['entity'] = $entity;
         }
 
-        if (!($entity instanceof Department) and !($entity instanceof Product)) {
-            return;
+        if ( $entity instanceof Fournisseur) {
+
+            $products = $entity->getProducts();
+            foreach($products as $product) {
+                $product->setFournisseur(null);
+                $entity->removeProduct($product);
+            }
         }
 
-        $entity->removeAssociations();
+        if ($entity instanceof Zone) {
+
+            $entries = $entity->getEntries();
+            foreach($entries as $entry) {
+                $entry->setZone(null);
+                $entity->removeEntry($entry);
+            }
+        }
+
+        if (($entity instanceof Department) or ($entity instanceof Product)) {
+            $entity->removeAssociations();
+        }
+
+
+        
         $event['entity'] = $entity;
     }
 

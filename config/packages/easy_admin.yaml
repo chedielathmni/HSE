@@ -243,6 +243,7 @@ easy_admin:
       controller: App\Controller\ProductController
       templates:
         new: 'admin/product/new.html.twig'
+        edit: 'admin/product/edit.html.twig'
 
       list:
         actions:
@@ -702,7 +703,7 @@ easy_admin:
           - { property: 'firstName', label: 'Prènom'}
           - { property: 'lastName', label: 'Nom'}
           - { property: 'history', label: 'Historique', template: 'admin/transporter/history.html.twig'}
-
+        actions: ['-edit']
 
 
 

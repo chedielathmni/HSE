@@ -50,7 +50,7 @@ class Transporter
     private $lastName;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\GasPurchase", mappedBy="driver")
+     * @ORM\OneToMany(targetEntity="App\Entity\GasPurchase", mappedBy="driver", cascade={"remove"})
      * @Groups({"read:tr"})
      */
     private $gasPurchases;
@@ -146,7 +146,7 @@ class Transporter
 
     public function __toString()
     {
-        return $this->firstName . ' ' . $this->lastName;
+        return $this->firstName . ' ' . $this->lastName . ' - ' . $this->phoneNumber;
     }
 
     /**
