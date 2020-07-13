@@ -43,7 +43,7 @@ class Alert
     private $info;
 
     /**
-     * @ORM\Column(type="object", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $coords;
 
@@ -51,6 +51,16 @@ class Alert
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $source;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private $sender;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -137,6 +147,18 @@ class Alert
     public function setSource(?string $source): self
     {
         $this->source = $source;
+
+        return $this;
+    }
+
+    public function getSender(): ?User
+    {
+        return $this->sender;
+    }
+
+    public function setSender(?User $sender): self
+    {
+        $this->sender = $sender;
 
         return $this;
     }

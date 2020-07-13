@@ -41,7 +41,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             $members = $entity->getEmployees();
 
             foreach ($members as $member) {
-
                 $member->setRoles(['ROLE_USER']);
             }
 

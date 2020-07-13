@@ -694,7 +694,7 @@ easy_admin:
 
       list:
         title: "Liste des Transporteurs"
-        actions: ['-new', '-edit']
+        actions: ['-new']
         fields:
           - { property: 'phoneNumber', label: 'Numero de téléphone'}
           - { property: 'firstName', label: 'Prènom'}
@@ -709,7 +709,10 @@ easy_admin:
           - { property: 'firstName', label: 'Prènom'}
           - { property: 'lastName', label: 'Nom'}
           - { property: 'history', label: 'Historique', template: 'admin/transporter/history.html.twig'}
-        actions: ['-edit']
+        
+      edit: 
+        fields:
+          - { property: 'car', label: 'Véhicule'}
 
 
 
@@ -813,9 +816,22 @@ easy_admin:
     Alert:
       label: "Alertes"
       class: App\Entity\Alert
+      disabled_actions: ['new','edit']
 
       list:
         fields:
           - { property: 'driver', label: 'Transporteur'}
+          - { property: 'sender', label: 'Auteur'}
           - { property: 'car', label: 'Vehicule'}
+          - { property: 'source', label: 'Source'}
+          - { property: 'info', label: 'Information'}
           - { property: 'createdAt', label: 'Date alerte'}
+
+      form:
+        disabled_actions: ['edit']
+        fields:
+          - { property: 'driver', label: 'Transporteur'}
+          - { property: 'car', label: 'Vehicule'}
+          - { property: 'coords', label: 'Coordonnées'}
+          - { property: 'source', label: 'Source'}
+          - { property: 'info', label: 'Information'}

@@ -88,6 +88,7 @@ class Transporter
     {
         $this->gasPurchases = new ArrayCollection();
         $this->history = new ArrayCollection();
+        $this->valid = false;
     }
 
     public function getId(): ?int
