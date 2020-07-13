@@ -114,6 +114,17 @@ easy_admin:
           - {entity: Fournisseur, label: 'Ajouter Fournisseur', icon: 'plus', params: {action: 'new'}}
 
 
+      - label: "Rapport"
+        permission: ['ROLE_ADMIN', 'ROLE_MOD']
+        children:
+          - {entity: Report, label: 'Liste des Rapports', icon: 'th-list'}
+          - {entity: Report, label: 'Ajouter Rapport', icon: 'plus', params: {action: 'new'}}
+
+
+      - label: "Alertes"
+        permission: ['ROLE_ADMIN', 'ROLE_MOD']
+        children:
+          - {entity: Alert, label: 'Liste des Alertes', icon: 'th-list'}         
 
       - label: "Conseil de Prudence"
         icon: "exclamation-circle"
@@ -138,11 +149,6 @@ easy_admin:
           - {entity: Pictogramme, label: 'Liste des Pictogrammes', icon: 'th-list'}
           - {entity: Pictogramme, label: 'Ajouter Pictogramme', icon: 'plus', params: {action: 'new'}}
 
-      - label: "Rapport"
-        permission: ['ROLE_ADMIN', 'ROLE_MOD']
-        children:
-          - {entity: Report, label: 'Liste des Rapports', icon: 'th-list'}
-          - {entity: Report, label: 'Ajouter Rapport', icon: 'plus', params: {action: 'new'}}
 
 
       - label: "Equipements de Protection"
@@ -798,3 +804,18 @@ easy_admin:
           - { property: 'car', label: 'Vehicule'}
           - { property: 'beginAt', label: 'Date de debut'}
           - { property: 'endAt', label: 'Date de fin'}
+        filters: [{ property: 'driver', label: 'Transporteur'}, { property: 'car', label: 'Vehicule'}]
+
+
+    
+
+
+    Alert:
+      label: "Alertes"
+      class: App\Entity\Alert
+
+      list:
+        fields:
+          - { property: 'driver', label: 'Transporteur'}
+          - { property: 'car', label: 'Vehicule'}
+          - { property: 'createdAt', label: 'Date alerte'}
